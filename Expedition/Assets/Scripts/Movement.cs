@@ -36,6 +36,8 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var characterRot = Camera.main.transform.rotation.eulerAngles.y;
+        transform.localRotation = Quaternion.AngleAxis(characterRot, Vector3.up);
         float deltaX = Input.GetAxis("Horizontal") * speed;
         float deltaZ = Input.GetAxis("Vertical") * speed;
 
@@ -63,9 +65,9 @@ public class Movement : MonoBehaviour
 
         movement.y = verticalVelocity;
 
-        var desiredMoveDirection = Camera.main.transform.right * deltaX + Camera.main.transform.forward * deltaZ;
-        desiredMoveDirection += (transform.up * verticalVelocity);
+        //var desiredMoveDirection =  * deltaX + Camera.main.transform.forward * deltaZ;
+        //desiredMoveDirection += (transform.up * verticalVelocity);
 
-        controller.Move(desiredMoveDirection * Time.deltaTime);
+        controller.Move(transform.TransformDirection(movement) * Time.deltaTime);
     }
 }

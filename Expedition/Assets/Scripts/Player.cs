@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
 		{ _instance = this; }
 	}
 
+    public LayerMask raycastIgnoreLayers;
     private GameObject crosshair;
     private GameObject vignette;
     private CameraOperator cam;
@@ -88,9 +89,9 @@ public class Player : MonoBehaviour
         //Debug.Log(StateController.activeRegion);
 		if (!cameraDrawAllowed || !StateController.activeRegion) return;
 
-        var r = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var r = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         RaycastHit hit;
-        if (Physics.Raycast(r, out hit, cameraDrawMaxDistance))
+        if (Physics.Raycast(r, out hit, cameraDrawMaxDistance, layerMask:raycastIgnoreLayers))
         {
             Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
             StateController.activeRegion.addLineToRegion(new Vector3(hit.point.x, hit.point.y, hit.point.z));
@@ -101,11 +102,11 @@ public class Player : MonoBehaviour
 	{
 		if (!cameraDrawAllowed || !StateController.activeRegion) return;
 
-        var r = Camera.main.ScreenPointToRay(Input.mousePosition);
-       RaycastHit hit;
-        if (Physics.Raycast(r, out hit, cameraDrawMaxDistance))
+        var r = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        RaycastHit hit;
+        if (Physics.Raycast(r, out hit, cameraDrawMaxDistance, layerMask:raycastIgnoreLayers))
         {
-            Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
+            //Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
             crosshair.SetActive(true);
             StateController.activeRegion.addLinePointToRegion(new Vector3(hit.point.x, hit.point.y, hit.point.z));
         }

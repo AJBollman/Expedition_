@@ -6,7 +6,7 @@ public class RotateMapWithCharacter : MonoBehaviour
 {
     public int rotIncrement = 15;
     private GameObject player;
-    private float playerRot;
+    private float cameraRot;
 
     private float snapGoal;
     private float diff;
@@ -20,9 +20,9 @@ public class RotateMapWithCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerRot = Camera.main.transform.rotation.eulerAngles.y;
+        cameraRot = Camera.main.transform.rotation.eulerAngles.y;
 
-        snapGoal = (Mathf.Round(playerRot / rotIncrement) * rotIncrement);
+        snapGoal = (Mathf.Round(cameraRot / rotIncrement) * rotIncrement);
         //diff = Mathf.Abs(snapGoal - increment);
         //increment = Mathf.Lerp(playerRot, snapGoal, diff);
         transform.localRotation = Quaternion.AngleAxis(snapGoal, Vector3.forward);
