@@ -33,7 +33,7 @@ public class Line : MonoBehaviour
     public void addPoint(Vector3 pos)
     {
         pos = transform.InverseTransformPoint(pos);
-        if (Vector3.Distance(lastPoint, pos) < 0.025f) { return; }
+        if (Vector3.Distance(lastPoint, pos) < 0.010f) { return; }
         {
             Debug.DrawLine(transform.position, pos, Color.green, 0.5f);
             if (lineData.Count > maxLinePoints)
@@ -49,13 +49,12 @@ public class Line : MonoBehaviour
     // 'Sink' this line below the map so it's only visible on the map and not in the level.
     public void sinkLine(bool tf)
     {
-        return;
         if (tf == sunken) return; // it's not being changed.
 
         var prePos = transform.localPosition;
         transform.localPosition = new Vector3(
             prePos.x,
-            prePos.y + (tf ? -100 : 100),
+            prePos.y + (tf ? -0.25f : 0.25f),
             prePos.z
         );
         sunken = tf;

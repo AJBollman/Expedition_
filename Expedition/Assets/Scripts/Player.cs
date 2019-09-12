@@ -7,8 +7,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-	// https://gamedev.stackexchange.com/a/116010 singleton pattern.
-	private static Player _instance;
+    public bool cameraDrawAllowed = true;
+    public string cameraDrawButton = "Fire1";
+    public float cameraDrawMaxDistance = 15;
+    public LayerMask raycastIgnoreLayers;
+
+    public bool undoRedoAllowed = true;
+    public string undoKey = "z";
+    public string redoKey = "x";
+
+    // https://gamedev.stackexchange.com/a/116010 singleton pattern.
+    private static Player _instance;
 	private static Player Instance { get { return _instance; } }
 	private void Awake()
 	{
@@ -18,17 +27,17 @@ public class Player : MonoBehaviour
 		{ _instance = this; }
 	}
 
-    public LayerMask raycastIgnoreLayers;
     private GameObject crosshair;
     private GameObject vignette;
     private CameraOperator cam;
     private float preFOV;
+    private bool undoRedoPre;
 
     void Start()
     {
         crosshair = GameObject.Find("Crosshair"); if (!crosshair) throw new System.Exception("Crosshair not found. Make sure there is a gameObject named 'Crosshair'");
         vignette = GameObject.Find("Vignette"); if (!vignette) throw new System.Exception("Vignette not found. Make sure there is a gameObject named 'Vignette'");
-        cam = GetComponentInChildren<CameraOperator>(); if (!cam) throw new System.Exception("Camera Container not found. Make sure there is a Camera Container");
+        cam = GameObject.Find("CameraContainer").GetComponent<CameraOperator>(); if (!cam) throw new System.Exception("Camera Container not found. Make sure there is a Camera Container");
         preFOV = cam.defaultFOV;
     }
 
@@ -79,10 +88,6 @@ public class Player : MonoBehaviour
 
 
     /////////////////////////////////////////////////////////   RAYCAST DRAWING
-	public static bool cameraDrawAllowed = true;
-	public static string cameraDrawButton = "Fire1";
-    public static float cameraDrawMaxDistance = 25;
-
     // Instantiate a new Map Line prefab under active Region.
     private void startCameraLine()
 	{
@@ -115,18 +120,13 @@ public class Player : MonoBehaviour
     // Tell the active Region to 'sink' the latest Line under the ground.
     private void endCameraLine()
     {
-        StateController.activeRegion.sinkLatestLine();
+       StateController.activeRegion.sinkLatestLine();
     }
 
 
 
 
     /////////////////////////////////////////////////////////   UNDO AND REDO LINES
-    public static bool undoRedoAllowed = true;
-    public static string undoKey = "z";
-    public static string redoKey = "x";
-    private bool undoRedoPre;
-
     // Undoes the last drawn Line in the active Region.
     private void undoLastLine()
     {

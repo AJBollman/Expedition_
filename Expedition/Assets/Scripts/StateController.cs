@@ -33,6 +33,21 @@ public class StateController : MonoBehaviour
     {
         Debug.Log("Game state changed to "+state);
         StateController.state = state;
+
+        switch(StateController.state)
+        {
+            case gameStates.normal: {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                break;
+            }
+            default:
+            {
+               Cursor.visible = true;
+               Cursor.lockState = CursorLockMode.None;
+               break;
+            }
+        }
     }
 
 

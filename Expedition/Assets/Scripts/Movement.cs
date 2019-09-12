@@ -9,65 +9,64 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public float speed = 6f;
+    public float movementSpeed = 6f;
+    public float sprintSpeed = 9f;
     public float jumpForce = 7f;
-    private float verticalVelocity;
-    private float gravity = 14f;
-
-    Vector2 mouseLook;
-    Vector2 smoothV;
-    public float sensitivity = 5.0f;
-    public float smoothing = .20f;
+    public float gravity = 14f;
     public string sprintKey = "left shift";
     public string jumpKey = "space";
+    public bool canMove = true;
 
+    private float verticalVelocity;
     private CharacterController controller;
-    private Rigidbody chController;
+    private GameObject cam;
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        chController = GetComponent<Rigidbody>();
+        cam = GameObject.Find("CameraContainer");
+        if (!cam) throw new System.Exception("Movement could not find a 'CameraContainer'. Make sure one is placed.");
     }
 
-    // Update is called once per frame
     void Update()
     {
-        var characterRot = Camera.main.transform.rotation.eulerAngles.y;
-        transform.localRotation = Quaternion.AngleAxis(characterRot, Vector3.up);
-        float deltaX = Input.GetAxis("Horizontal") * speed;
-        float deltaZ = Input.GetAxis("Vertical") * speed;
+        // ********************************* ROTATION
+        // Set the player's Y rotation to match the main camera's.
+        float goalAngle = cam.transform.localRotation.eulerAngles.y;
+        Vector3 pRot = transform.rotation.eulerAngles;
+        pRot.y = goalAngle;
+        transform.rotation = Quaternion.Euler(pRot);
 
+
+
+        // ********************************* POSITION
+        float deltaX = 0f, deltaZ = 0f, speed = 0f;
+        if (canMove)
+        {
+            // Sprint boost.
+            if (Input.GetKeyDown(sprintKey)) { speed = sprintSpeed; }
+            else speed = movementSpeed;
+
+            // Get forward/backward and side-to-side control inputs.
+            deltaX = Input.GetAxis("Horizontal") * speed;
+            deltaZ = Input.GetAxis("Vertical") * speed;
+        }
+
+        // Create vector from inputs.
         Vector3 movement = new Vector3(deltaX, 0, deltaZ);
         movement = Vector3.ClampMagnitude(movement, speed);
 
+        // Apply gravity.
         if (controller.isGrounded)
         {
-            verticalVelocity = -gravity * Time.deltaTime;
-            if (Input.GetKeyDown(jumpKey))
-            {
-                verticalVelocity = jumpForce;
-            }
+            verticalVelocity =- gravity * Time.deltaTime;
+            // Apply jump force on [jumpKey].
+            if (Input.GetKeyDown(jumpKey)) verticalVelocity = jumpForce;
         }
-        else
-        {
-            verticalVelocity -= gravity * Time.deltaTime;
-        }
+        else verticalVelocity -= gravity * Time.deltaTime;
 
-        if (Input.GetKeyDown(sprintKey)) {speed = 8f;}
-        else
-        {
-            speed = 6f;
-        }
-
+        // Apply movement vectors.
         movement.y = verticalVelocity;
-
-        //var desiredMoveDirection =  * deltaX + Camera.main.transform.forward * deltaZ;
-        //desiredMoveDirection += (transform.up * verticalVelocity);
-
         controller.Move(transform.TransformDirection(movement) * Time.deltaTime);
     }
 }
