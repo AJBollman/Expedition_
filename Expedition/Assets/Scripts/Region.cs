@@ -63,7 +63,7 @@ public class Region : MonoBehaviour
         if (other.tag == "Player") {
             StateController.activeRegion = this;
             activateCamera(true);
-            Debug.Log("Active region: " + StateController.activeRegion.name);
+            //Debug.Log("Active region: " + StateController.activeRegion.name);
             foreach (GameObject l in lines) {l.SetActive(true);} // Show lines.
         }
     }
@@ -82,7 +82,7 @@ public class Region : MonoBehaviour
         yield return new WaitForSeconds(delay);
         if (!StateController.activeRegion)
         {
-            Debug.Log("Active region: none");
+            //Debug.Log("Active region: none");
         }
     }
 

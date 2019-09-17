@@ -25,7 +25,7 @@ public class Movement : MonoBehaviour
     private Vector3 slopeAngle;
     RaycastHit hit1, hit2, hit3, hit4, hitOrgin;
 
-    public bool moveAllowed;
+    public bool moveAllowed = true;
 
     void Start()
     {
@@ -55,7 +55,7 @@ public class Movement : MonoBehaviour
 
         // ********************************* POSITION
         float deltaX = 0f, deltaZ = 0f, speed = 0f;
-        if (canMove)
+        if (moveAllowed)
         {
             // Sprint boost.
             if (Input.GetKey(KeyCode.LeftShift)){ speed = sprintSpeed;}

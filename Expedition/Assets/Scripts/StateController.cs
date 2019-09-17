@@ -31,7 +31,7 @@ public class StateController : MonoBehaviour
 
     public static void setState(gameStates state)
     {
-        Debug.Log("Game state changed to "+state);
+        //Debug.Log("Game state changed to "+state);
         StateController.state = state;
 
         switch(StateController.state)

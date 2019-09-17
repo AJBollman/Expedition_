@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
 		{ _instance = this; }
 	}
 
+    public bool isCameraDrawing;
+    public Vector3 lastRaycastHit;
     private GameObject crosshair;
     private GameObject vignette;
     private GameObject handMap;
@@ -66,6 +68,7 @@ public class Player : MonoBehaviour
         // Start a new line in the active Region while the button is down.
         if (Input.GetButtonDown(cameraDrawButton))
         {
+            isCameraDrawing = true;
             startCameraLine();
             cam.defaultFOV = preFOV - 5f; // narrow FOV a bit while drawing.
             cam.maxFOVTweak = 0;
@@ -80,6 +83,7 @@ public class Player : MonoBehaviour
         // For now, that just means sink the line below the ground.
         if (Input.GetButtonUp(cameraDrawButton))
         {
+            isCameraDrawing = false;
             endCameraLine();
             crosshair.SetActive(false); // Hide crosshair.
             cam.defaultFOV = preFOV; // Reset FOV.
@@ -120,7 +124,9 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(r, out hit, cameraDrawMaxDistance, layerMask:raycastIgnoreLayers))
         {
             Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
-            StateController.activeRegion.addLineToRegion(new Vector3(hit.point.x, hit.point.y, hit.point.z));
+            Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+            lastRaycastHit = newHit;
+            StateController.activeRegion.addLineToRegion(newHit);
         }
 	}
     // Add a point to the active Map Line under the Active Region.
@@ -132,9 +138,11 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(r, out hit, cameraDrawMaxDistance, layerMask:raycastIgnoreLayers))
         {
-            //Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
+            Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
             crosshair.SetActive(true);
-            StateController.activeRegion.addLinePointToRegion(new Vector3(hit.point.x, hit.point.y, hit.point.z));
+            Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+            lastRaycastHit = newHit;
+            StateController.activeRegion.addLinePointToRegion(newHit);
         }
         else crosshair.SetActive(false);
     }

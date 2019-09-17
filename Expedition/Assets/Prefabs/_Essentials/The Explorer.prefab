@@ -150,6 +150,7 @@ MonoBehaviour:
   sprintKey: left shift
   jumpKey: space
   canMove: 1
+  moveAllowed: 1
 --- !u!114 &8754469251116282585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,3 +177,5 @@ MonoBehaviour:
   mapFullscreenTransitionTime: 5
   fullMapPos: {x: 0, y: 0, z: 0.12}
   miniMapPos: {x: 0.26, y: -0.1, z: 0.23}
+  isCameraDrawing: 0
+  lastRaycastHit: {x: 0, y: 0, z: 0}
