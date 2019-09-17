@@ -20,6 +20,7 @@ public class RotateMapWithCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!Player.mapSpins) return;
         cameraRot = Camera.main.transform.rotation.eulerAngles.y;
         increment = (Player.mapIsFull) ? 90 : rotIncrement;
 

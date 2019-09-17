@@ -20,8 +20,10 @@ public class Player : MonoBehaviour
     public float mapFullscreenTransitionTime = 5f;
     public Vector3 fullMapPos = new Vector3(    0,     0, 0.12f);
     public Vector3 miniMapPos = new Vector3(0.26f, -0.1f, 0.23f);
+    public string toggleMapRotKey = "l";
 
     public static bool mapIsFull;
+    public static bool mapSpins;
 
     // https://gamedev.stackexchange.com/a/116010 singleton pattern.
     private static Player _instance;
@@ -97,12 +99,16 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(redoKey)) redoLastLine();
         if (Input.GetKeyDown(fullKey)) toggleFullMap();
 
+        ////////////////////   Fullscreen map.
         Vector3 targetPos = (mapIsFull) ? fullMapPos : miniMapPos;
         handMap.transform.localPosition = Vector3.Lerp(
             handMap.transform.localPosition,
             targetPos,
             Time.deltaTime * mapFullscreenTransitionTime
         );
+
+        ////////////////////   Toggle map rotation.
+        if (Input.GetKeyDown(toggleMapRotKey)) toggleMapRot();
     }
 
 
@@ -184,6 +190,18 @@ public class Player : MonoBehaviour
         mv.moveAllowed = !mapIsFull;
         if (mapIsFull) StateController.setState(gameStates.fullmap);
         else StateController.setState(gameStates.normal);      // todo
+    }
+
+
+
+
+
+    /////////////////////////////////////////////////////////   TOGGLE MAP SPINNING
+    ///// todo make this an option in a future options menu.
+    public void toggleMapRot()
+    {
+        mapSpins = !mapSpins;
+        
     }
 
 
