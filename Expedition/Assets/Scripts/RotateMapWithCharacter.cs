@@ -21,10 +21,11 @@ public class RotateMapWithCharacter : MonoBehaviour
     void Update()
     {
         cameraRot = Camera.main.transform.rotation.eulerAngles.y;
+        increment = (Player.mapIsFull) ? 90 : rotIncrement;
 
-        snapGoal = (Mathf.Round(cameraRot / rotIncrement) * rotIncrement);
-        //diff = Mathf.Abs(snapGoal - increment);
-        //increment = Mathf.Lerp(playerRot, snapGoal, diff);
+        snapGoal = (Mathf.Round(cameraRot / increment) * increment);
+
+        //increment = Mathf.Lerp(cameraRot, snapGoal, Time.deltaTime * 0.1f); // todo
         transform.localRotation = Quaternion.AngleAxis(snapGoal, Vector3.forward);
     }
 }

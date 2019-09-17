@@ -15,6 +15,13 @@ public class Player : MonoBehaviour
     public bool undoRedoAllowed = true;
     public string undoKey = "z";
     public string redoKey = "x";
+    public bool fullMapAllowed = true;
+    public string fullKey = "f";
+    public float mapFullscreenTransitionTime = 5f;
+    public Vector3 fullMapPos = new Vector3(    0,     0, 0.12f);
+    public Vector3 miniMapPos = new Vector3(0.26f, -0.1f, 0.23f);
+
+    public static bool mapIsFull;
 
     // https://gamedev.stackexchange.com/a/116010 singleton pattern.
     private static Player _instance;
@@ -29,8 +36,11 @@ public class Player : MonoBehaviour
 
     private GameObject crosshair;
     private GameObject vignette;
+    private GameObject handMap;
     private CameraOperator cam;
+    private Movement mv;
     private float preFOV;
+    private float preFOVT;
     private bool undoRedoPre;
 
     void Start()
@@ -38,7 +48,10 @@ public class Player : MonoBehaviour
         crosshair = GameObject.Find("Crosshair"); if (!crosshair) throw new System.Exception("Crosshair not found. Make sure there is a gameObject named 'Crosshair'");
         vignette = GameObject.Find("Vignette"); if (!vignette) throw new System.Exception("Vignette not found. Make sure there is a gameObject named 'Vignette'");
         cam = GameObject.Find("CameraContainer").GetComponent<CameraOperator>(); if (!cam) throw new System.Exception("Camera Container not found. Make sure there is a Camera Container");
+        handMap = GameObject.Find("HandMap Offset"); if (!handMap) throw new System.Exception("Hand Map Offset not found. Make sure there is a Hand Map Offset");
         preFOV = cam.defaultFOV;
+        preFOVT = cam.maxFOVTweak;
+        mv = GetComponent<Movement>();
     }
 
 
@@ -78,6 +91,14 @@ public class Player : MonoBehaviour
         /////////////////////   Do undo/redo stuff.
         if (Input.GetKeyDown(undoKey)) undoLastLine();
         if (Input.GetKeyDown(redoKey)) redoLastLine();
+        if (Input.GetKeyDown(fullKey)) toggleFullMap();
+
+        Vector3 targetPos = (mapIsFull) ? fullMapPos : miniMapPos;
+        handMap.transform.localPosition = Vector3.Lerp(
+            handMap.transform.localPosition,
+            targetPos,
+            Time.deltaTime * mapFullscreenTransitionTime
+        );
     }
 
 
@@ -145,7 +166,17 @@ public class Player : MonoBehaviour
 
 
     /////////////////////////////////////////////////////////   FULLSCREEN MAP
-
+    public void toggleFullMap()
+    {
+        mapIsFull = !mapIsFull;
+        cam.maxFOVTweak = (mapIsFull) ? 0f : preFOVT;
+        cameraDrawAllowed = !mapIsFull;
+        undoRedoAllowed = !mapIsFull;
+        cam.enableControls = !mapIsFull;
+        mv.moveAllowed = !mapIsFull;
+        if (mapIsFull) StateController.setState(gameStates.fullmap);
+        else StateController.setState(gameStates.normal);      // todo
+    }
 
 
 

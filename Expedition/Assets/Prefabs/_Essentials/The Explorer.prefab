@@ -162,6 +162,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf629a694e01487b8a0195d5e974755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraDrawAllowed: 1
+  cameraDrawButton: Fire1
+  cameraDrawMaxDistance: 15
   raycastIgnoreLayers:
     serializedVersion: 2
     m_Bits: 2867
+  undoRedoAllowed: 1
+  undoKey: z
+  redoKey: x
+  fullMapAllowed: 1
+  fullKey: f
+  mapFullscreenTransitionTime: 5
+  fullMapPos: {x: 0, y: 0, z: 0.12}
+  miniMapPos: {x: 0.26, y: -0.1, z: 0.23}

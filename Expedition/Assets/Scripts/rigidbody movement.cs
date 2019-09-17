@@ -2,7 +2,7 @@
 
 // This class controls WASD movement and jumping.
 // Put it on the player prefab.
-
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,7 +33,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        // ********************************* ROTATION
+        //  ROTATION
         // Set the player's Y rotation to match the main camera's.
         float goalAngle = cam.transform.localRotation.eulerAngles.y;
         Vector3 pRot = transform.rotation.eulerAngles;
@@ -42,7 +42,7 @@ public class Movement : MonoBehaviour
 
 
 
-        // ********************************* POSITION
+        //  POSITION
         float deltaX = 0f, deltaZ = 0f, speed = 0f;
         if (canMove)
         {
@@ -60,7 +60,7 @@ public class Movement : MonoBehaviour
         movement = Vector3.ClampMagnitude(movement, speed);
 
         // Apply gravity.
-        /*if (controller.isGrounded)
+        if (controller.isGrounded)
         {
             // Apply jump force on [jumpKey].
             if (Input.GetKeyDown(jumpKey)) verticalVelocity = jumpForce;
@@ -72,22 +72,11 @@ public class Movement : MonoBehaviour
         //movement.y = verticalVelocity;
         //controller.Move(transform.TransformDirection(movement) * Time.deltaTime);
 
-
-
-        /* Vector3 l_newCameraDirection = Camera.main.transform.forward; // assigns the camera forward direction.
-         l_newCameraDirection.y = 0f; // zeros out the rotations y value to prevent walking into the air.
-         var p_rbody = GetComponent<Rigidbody>();
-         if (p_rbody.velocity.magnitude < 1f * movementSpeed)
-             p_rbody.AddForce(((l_newCameraDirection * movement.z) +
-                 (Camera.main.transform.right * movement.x)) *
-                 movementSpeed, ForceMode.Impulse);  // moves the player according to the updated camera and move direction.
-        */
-
-        movement.y = Input.GetKeyDown(jumpKey) ? jumpForce : 0f;
+        /*movement.y = Input.GetKeyDown(jumpKey) ? jumpForce : 0f;
         if (rbody.velocity.magnitude < maxMoveSpeed)
         {
             rbody.AddForce(transform.TransformDirection(movement), ForceMode.Impulse);
         }
         //else rbody.velocity = maxMoveSpeed;
     }
-}
+}*/
