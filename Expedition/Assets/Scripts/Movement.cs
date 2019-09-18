@@ -23,9 +23,17 @@ public class Movement : MonoBehaviour
     private GameObject cam;
     
     private Vector3 slopeAngle;
+    private float myAng = 0.0f;
     RaycastHit hit1, hit2, hit3, hit4, hitOrgin;
 
     public bool moveAllowed = true;
+
+    //sphere casting stuff
+    public float sphereRadius;
+    public float maxDistance;
+    public LayerMask layerMask;
+    public GameObject currentHitObject;
+    private float currentHitDistance;
 
     void Start()
     {
@@ -79,7 +87,6 @@ public class Movement : MonoBehaviour
             {
                 verticalVelocity = jumpForce;
             }
-           
         }
         else verticalVelocity -= gravity * Time.deltaTime;
 
@@ -99,7 +106,7 @@ public class Movement : MonoBehaviour
             }
         }
 
-        slopeCheck();
+        //slopeCheck();
 
         // Apply movement vectors.
         movement.y = verticalVelocity;
@@ -107,34 +114,27 @@ public class Movement : MonoBehaviour
         
     }
 
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        myAng = Vector3.Angle(Vector3.up, hit.normal);
+        if(myAng >= 45f)
+        {
+            slopeCheck();
+        }
+    }
     private void slopeCheck()
     {
         //========slope sliding===========
-        var ray = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        //ray orgin
-        if (Physics.Raycast(ray, Vector3.down, out hitOrgin))
+        RaycastHit hit;
+        if(Physics.SphereCast(transform.position, sphereRadius, transform.forward, out hit, maxDistance,layerMask, QueryTriggerInteraction.UseGlobal))
         {
-
+            currentHitObject = hit.transform.gameObject;
+            currentHitDistance = hit.distance;
         }
-        //line 1
-        if (Physics.Raycast(new Vector3(ray.x + 1, ray.y, ray.z), Vector3.down, out hit1))
+        else
         {
-
-        }
-        //line 2
-        if (Physics.Raycast(new Vector3(ray.x - 1, ray.y, ray.z), Vector3.down, out hit2))
-        {
-
-        }
-        //line 3
-        if (Physics.Raycast(new Vector3(ray.x, ray.y, ray.z + 1), Vector3.down, out hit3))
-        {
-
-        }
-        //line 4
-        if (Physics.Raycast(new Vector3(ray.x, ray.y, ray.z - 1), Vector3.down, out hit4))
-        {
-
+            currentHitDistance = maxDistance;
+            currentHitObject = null;
         }
         //controller.Move(transform.TransformDirection(slopeAngle.x, 0, slopeAngle.z) * Time.deltaTime);
     }
