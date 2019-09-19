@@ -23,8 +23,9 @@ public class Movement : MonoBehaviour
     private GameObject cam;
     
     private Vector3 slopeAngle;
-    private float myAng = 0.0f;
-    RaycastHit hit1, hit2, hit3, hit4, hitOrgin;
+    public Vector3 slideDirection;
+
+
 
     public bool moveAllowed = true;
 
@@ -34,6 +35,9 @@ public class Movement : MonoBehaviour
     public LayerMask layerMask;
     public GameObject currentHitObject;
     private float currentHitDistance;
+
+    private Vector3 orgin;
+    private Vector3 direction;
 
     void Start()
     {
@@ -106,27 +110,20 @@ public class Movement : MonoBehaviour
             }
         }
 
-        //slopeCheck();
 
         // Apply movement vectors.
         movement.y = verticalVelocity;
         controller.Move(transform.TransformDirection(movement) * Time.deltaTime);
         
     }
-
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        myAng = Vector3.Angle(Vector3.up, hit.normal);
-        if(myAng >= 45f)
-        {
-            slopeCheck();
-        }
-    }
     private void slopeCheck()
     {
         //========slope sliding===========
+        orgin = transform.position;
+        direction = Vector3.down;
+
         RaycastHit hit;
-        if(Physics.SphereCast(transform.position, sphereRadius, transform.forward, out hit, maxDistance,layerMask, QueryTriggerInteraction.UseGlobal))
+        if(Physics.SphereCast(orgin, sphereRadius, direction, out hit, maxDistance, layerMask, QueryTriggerInteraction.UseGlobal))
         {
             currentHitObject = hit.transform.gameObject;
             currentHitDistance = hit.distance;
@@ -136,6 +133,11 @@ public class Movement : MonoBehaviour
             currentHitDistance = maxDistance;
             currentHitObject = null;
         }
-        //controller.Move(transform.TransformDirection(slopeAngle.x, 0, slopeAngle.z) * Time.deltaTime);
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Debug.DrawLine(orgin, orgin + direction * currentHitDistance);
+        Gizmos.DrawWireSphere(orgin + direction * currentHitDistance, sphereRadius);
     }
 }
