@@ -21,23 +21,23 @@ public class Movement : MonoBehaviour
     private CharacterController controller;
     private Rigidbody controllerRigidbody;
     private GameObject cam;
-    
-    private Vector3 slopeAngle;
-    public Vector3 slideDirection;
 
-
+    public float slopeAngle;
+    public bool isjumping;
 
     public bool moveAllowed = true;
 
-    //sphere casting stuff
-    public float sphereRadius;
-    public float maxDistance;
-    public LayerMask layerMask;
-    public GameObject currentHitObject;
-    private float currentHitDistance;
+
+    private Vector2 playerPOS;
 
     private Vector3 orgin;
     private Vector3 direction;
+
+    private Vector3 jumpPoint;
+    private Vector3 slopeHit;
+    public Vector3 slopeParallel;
+    private Vector3 slopeSlide;
+    private Vector3 lerpVector;
 
     void Start()
     {
@@ -57,20 +57,20 @@ public class Movement : MonoBehaviour
         transform.rotation = Quaternion.Euler(pRot);
 
         //checking to see if character is allowed to move
-        if(moveAllowed == true)
+        if (moveAllowed == true)
         {
             controllerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         }
         else controllerRigidbody.constraints = RigidbodyConstraints.FreezePosition;
 
-
+        //slopeCheck();
 
         // ********************************* POSITION
         float deltaX = 0f, deltaZ = 0f, speed = 0f;
         if (moveAllowed)
         {
             // Sprint boost.
-            if (Input.GetKey(KeyCode.LeftShift)){ speed = sprintSpeed;}
+            if (Input.GetKeyDown(KeyCode.LeftShift)) { speed = sprintSpeed; }
             else speed = movementSpeed;
 
             // Get forward/backward and side-to-side control inputs.
@@ -85,12 +85,15 @@ public class Movement : MonoBehaviour
         // Apply gravity.
         if (controller.isGrounded)
         {
-            verticalVelocity =- gravity * Time.deltaTime;
+            verticalVelocity = -gravity * Time.deltaTime;
+            isjumping = false;
             // Apply jump force on [jumpKey].
             if (Input.GetKeyDown(jumpKey))
             {
                 verticalVelocity = jumpForce;
+                isjumping = true;
             }
+            else isjumping = false;
         }
         else verticalVelocity -= gravity * Time.deltaTime;
 
@@ -99,45 +102,46 @@ public class Movement : MonoBehaviour
 
         if (Physics.Raycast(transform.position, Vector3.down, out hit, controller.height / 2 * 1.5f))
         {
+            if (isjumping == true)
+            {
+                jumpPoint = hit.point;
+            }
             if (hit.normal != Vector3.up)
             {
-                slopeAngle = hit.normal;
+                //slopeAngle = hit.normal;
                 if (Input.GetKeyDown(jumpKey))
                 {
                     verticalVelocity = jumpForce;
+                    isjumping = true;
                 }
                 else verticalVelocity -= gravity * Time.deltaTime;
             }
         }
-
-
-        // Apply movement vectors.
-        movement.y = verticalVelocity;
-        controller.Move(transform.TransformDirection(movement) * Time.deltaTime);
-        
-    }
-    private void slopeCheck()
-    {
-        //========slope sliding===========
-        orgin = transform.position;
-        direction = Vector3.down;
-
-        RaycastHit hit;
-        if(Physics.SphereCast(orgin, sphereRadius, direction, out hit, maxDistance, layerMask, QueryTriggerInteraction.UseGlobal))
+        /*slopeSlide = Vector3.ProjectOnPlane(Vector3.down, slopeHit);
+       // movement.y = verticalVelocity;
+        movement = transform.TransformDirection(movement);
+        lerpVector = Vector3.Lerp(movement, slopeSlide, Mathf.Clamp(slopeAngle / 45f, 0, 1));
+        lerpVector.y = verticalVelocity;
+        controller.Move(lerpVector * Time.deltaTime);*/
+        if (slopeAngle >= controller.slopeLimit && controller.isGrounded)
         {
-            currentHitObject = hit.transform.gameObject;
-            currentHitDistance = hit.distance;
+            //slides the character
+            slopeSlide = Vector3.ProjectOnPlane(Vector3.down, slopeHit);
+            controller.Move(slopeSlide * (10 * Time.deltaTime));
+
         }
         else
         {
-            currentHitDistance = maxDistance;
-            currentHitObject = null;
+            // Apply movement vectors.
+            movement.y = verticalVelocity;
+            controller.Move(transform.TransformDirection(movement) * Time.deltaTime);
         }
     }
-    private void OnDrawGizmosSelected()
+    private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Gizmos.color = Color.red;
-        Debug.DrawLine(orgin, orgin + direction * currentHitDistance);
-        Gizmos.DrawWireSphere(orgin + direction * currentHitDistance, sphereRadius);
+        slopeAngle = Mathf.Round(Vector3.Angle(Vector3.up, hit.normal));
+        slopeHit = hit.normal;
+        Vector3 groundParallel = Vector3.Cross(transform.up, slopeHit);
+        slopeParallel = Vector3.Cross(groundParallel, slopeHit);
     }
 }
