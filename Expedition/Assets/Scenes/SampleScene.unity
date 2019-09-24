@@ -16,9 +16,9 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.34193662, g: 0.5267794, b: 0.6415094, a: 1}
+  m_FogColor: {r: 0.62144, g: 0.75369257, b: 0.8962264, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.005
+  m_FogDensity: 0.0025
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -135,6 +135,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (44)
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -215,6 +220,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &61275205
@@ -267,7 +282,7 @@ PrefabInstance:
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
       propertyPath: m_RootOrder
-      value: 33
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
@@ -351,7 +366,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: f0e45e406cfafc74a94d3b9859cd1e9b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: f0e45e406cfafc74a94d3b9859cd1e9b,
         type: 3}
@@ -385,7 +400,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -425,7 +440,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 39
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -452,6 +467,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &117086956
@@ -504,7 +529,7 @@ PrefabInstance:
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
       propertyPath: m_RootOrder
-      value: 31
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
@@ -588,7 +613,7 @@ PrefabInstance:
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
@@ -634,6 +659,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (12)
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -672,7 +702,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 50
+      value: 51
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -699,6 +729,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1 &148046616
@@ -791,7 +831,7 @@ Transform:
   m_LocalScale: {x: 2.241, y: 6.13818, z: 14.902683}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 3.1650002, y: 3.8700001, z: 9.71}
 --- !u!1 &170076733
 GameObject:
@@ -830,7 +870,7 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 0.497
+    m_Strength: 0.807
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.35
@@ -882,7 +922,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 31.391, y: -8.735001, z: 62.268}
 --- !u!1001 &221987380
 PrefabInstance:
@@ -895,6 +935,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (26)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -934,7 +979,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 64
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -976,6 +1021,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &253480132
@@ -989,6 +1044,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (38)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1070,6 +1130,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &301611611
@@ -1083,6 +1153,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1122,7 +1197,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 60
+      value: 61
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1164,6 +1239,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &318529017
@@ -1216,7 +1301,7 @@ PrefabInstance:
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
@@ -1261,6 +1346,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (39)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1327,6 +1417,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &428958725
@@ -1340,6 +1440,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (34)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1421,6 +1526,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &436281191
@@ -1434,6 +1549,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (28)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1473,7 +1593,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 66
+      value: 67
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1515,6 +1635,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &436910692
@@ -1528,6 +1658,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1567,7 +1702,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 62
+      value: 63
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1609,6 +1744,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &460413309
@@ -1622,6 +1767,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1661,7 +1811,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 52
+      value: 53
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1703,6 +1853,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &527434452
@@ -1716,6 +1876,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (52)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1797,6 +1962,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &546042818
@@ -1810,6 +1985,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1849,7 +2029,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 53
+      value: 54
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -1891,6 +2071,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &546466446
@@ -1908,7 +2098,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
@@ -1948,7 +2138,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 49
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
@@ -1980,6 +2170,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: dbf93cc8bc529b149b8c37431103018f,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: dbf93cc8bc529b149b8c37431103018f,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbf93cc8bc529b149b8c37431103018f, type: 3}
 --- !u!1001 &547317309
@@ -1993,6 +2193,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (37)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -2059,6 +2264,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1 &582716919
@@ -2151,7 +2366,7 @@ Transform:
   m_LocalScale: {x: 0.34046, y: 0.34046, z: 0.34046}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 34
+  m_RootOrder: 35
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &604719114
 PrefabInstance:
@@ -2164,6 +2379,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -2203,7 +2423,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 36
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -2230,6 +2450,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &631788637
@@ -2243,6 +2473,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (49)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -2309,6 +2544,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &634074392
@@ -2322,6 +2567,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (36)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -2403,6 +2653,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1 &638388965
@@ -2495,7 +2755,7 @@ Transform:
   m_LocalScale: {x: 2.0043826, y: 2.1443615, z: 5.750974}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 9.001, y: 9.424001, z: 89.22401}
 --- !u!1001 &672927142
 PrefabInstance:
@@ -2508,6 +2768,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (51)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -2574,6 +2839,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &674583401
@@ -2587,6 +2862,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -2626,7 +2906,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 61
+      value: 62
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -2668,6 +2948,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &674904048
@@ -2681,6 +2971,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (42)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -2762,6 +3057,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &710851104
@@ -2775,6 +3080,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -2814,7 +3124,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 59
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -2856,6 +3166,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &754254625
@@ -2869,6 +3189,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (35)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -2935,6 +3260,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1 &758325697
@@ -3027,7 +3362,7 @@ Transform:
   m_LocalScale: {x: 4.8836994, y: 6.0031643, z: 19.67536}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 1.416, y: 2.8750002, z: 10.110001}
 --- !u!1001 &770396286
 PrefabInstance:
@@ -3044,7 +3379,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -3084,7 +3419,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 45
+      value: 46
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -3126,6 +3461,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1 &783894513
@@ -3219,7 +3564,7 @@ Transform:
   m_LocalScale: {x: 3.637289, y: 3.637289, z: 3.637289}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &807828363
 PrefabInstance:
@@ -3236,7 +3581,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -3276,7 +3621,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 46
+      value: 47
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -3318,6 +3663,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &809259716
@@ -3331,6 +3686,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -3370,7 +3730,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 57
+      value: 58
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -3412,6 +3772,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &845867703
@@ -3469,7 +3839,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
@@ -3510,6 +3880,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (16)
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3548,7 +3923,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 54
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -3590,6 +3965,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &895552604
@@ -3603,6 +3988,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -3642,7 +4032,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 43
+      value: 44
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -3684,6 +4074,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &915439257
@@ -3697,6 +4097,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -3736,7 +4141,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 56
+      value: 57
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -3778,6 +4183,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &962123688
@@ -3791,6 +4206,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (43)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -3857,6 +4277,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &975414633
@@ -3909,7 +4339,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 31fd67905e4d8fc4595a8c4f311c525b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 31fd67905e4d8fc4595a8c4f311c525b,
         type: 3}
@@ -3959,6 +4389,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (40)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -4040,6 +4475,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1 &1181201312
@@ -4132,7 +4577,7 @@ Transform:
   m_LocalScale: {x: 2.55474, y: 5.4556313, z: 17.136395}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: -2.5400002, y: 97.551, z: -25.114}
 --- !u!1 &1237161901
 GameObject:
@@ -4224,7 +4669,7 @@ Transform:
   m_LocalScale: {x: 2.241, y: 6.5343323, z: 19.133923}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 32
+  m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: -2.213, y: 65.532005, z: 22.586}
 --- !u!1001 &1298187412
 PrefabInstance:
@@ -4237,6 +4682,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (27)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -4276,7 +4726,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 65
+      value: 66
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -4318,6 +4768,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &1308701566
@@ -4370,7 +4830,7 @@ PrefabInstance:
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
@@ -4416,6 +4876,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (25)
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4454,7 +4919,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 63
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -4496,6 +4961,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &1313986425
@@ -4509,6 +4984,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -4548,7 +5028,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 40
+      value: 41
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -4590,6 +5070,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &1315830997
@@ -4642,7 +5132,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -4761,7 +5251,7 @@ Transform:
   m_LocalScale: {x: 2.55474, y: 5.4556313, z: 12.338205}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: -1.8590001, y: 99.91901, z: 9.779}
 --- !u!1001 &1327643978
 PrefabInstance:
@@ -4813,7 +5303,7 @@ PrefabInstance:
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
@@ -4859,6 +5349,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (13)
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4897,7 +5392,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 51
+      value: 52
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -4939,6 +5434,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1 &1378526287
@@ -5031,7 +5536,7 @@ Transform:
   m_LocalScale: {x: 2.0043826, y: 2.2253335, z: 5.750974}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: -1.6780001, y: 9.299001, z: 90.66701}
 --- !u!20 &1445559005 stripped
 Camera:
@@ -5050,6 +5555,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -5089,7 +5599,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 58
+      value: 59
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -5131,6 +5641,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &1609860643
@@ -5183,7 +5703,7 @@ PrefabInstance:
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
@@ -5228,6 +5748,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (45)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -5294,6 +5819,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &1682024095
@@ -5346,7 +5881,7 @@ PrefabInstance:
     - target: {fileID: 2491537231845367927, guid: 903c50f722fb940ff946c62ea4f15afe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2491537231845367927, guid: 903c50f722fb940ff946c62ea4f15afe,
         type: 3}
@@ -5417,6 +5952,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (41)
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5482,6 +6022,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &1703054133
@@ -5499,7 +6049,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
@@ -5539,7 +6089,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 35
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
@@ -5581,6 +6131,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: dbf93cc8bc529b149b8c37431103018f,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: dbf93cc8bc529b149b8c37431103018f,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbf93cc8bc529b149b8c37431103018f, type: 3}
 --- !u!1001 &1706126294
@@ -5594,6 +6154,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -5633,7 +6198,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 38
+      value: 39
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -5660,6 +6225,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1 &1738644716
@@ -5735,7 +6310,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1750953192
 PrefabInstance:
@@ -5748,6 +6323,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -5787,7 +6367,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 55
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -5829,6 +6409,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &1765214400
@@ -5846,7 +6436,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
@@ -5886,7 +6476,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 48
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: dbf93cc8bc529b149b8c37431103018f,
         type: 3}
@@ -5918,6 +6508,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: dbf93cc8bc529b149b8c37431103018f,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: dbf93cc8bc529b149b8c37431103018f,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbf93cc8bc529b149b8c37431103018f, type: 3}
 --- !u!1001 &1801771955
@@ -5931,6 +6531,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (33)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -5997,6 +6602,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &1808709673
@@ -6010,6 +6625,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (46)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -6091,6 +6711,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1 &1898300529 stripped
@@ -6110,6 +6740,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -6149,7 +6784,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 41
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -6176,6 +6811,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &1904109320
@@ -6189,6 +6834,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -6228,7 +6878,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 37
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -6255,6 +6905,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &1921200659
@@ -6307,7 +6967,7 @@ PrefabInstance:
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
@@ -6353,6 +7013,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: S_Tree_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: f0e45e406cfafc74a94d3b9859cd1e9b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: f0e45e406cfafc74a94d3b9859cd1e9b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6391,7 +7056,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: f0e45e406cfafc74a94d3b9859cd1e9b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 47
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: f0e45e406cfafc74a94d3b9859cd1e9b,
         type: 3}
@@ -6408,6 +7073,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 86.100006
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: f0e45e406cfafc74a94d3b9859cd1e9b,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: f0e45e406cfafc74a94d3b9859cd1e9b,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0e45e406cfafc74a94d3b9859cd1e9b, type: 3}
 --- !u!1001 &1950433256
@@ -6421,6 +7096,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (48)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -6502,6 +7182,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &1987287651
@@ -6515,6 +7205,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (47)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -6581,6 +7276,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1 &2008283841
@@ -6673,7 +7378,7 @@ Transform:
   m_LocalScale: {x: 56.62123, y: 1.1466044, z: 54.643803}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 30
+  m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 1.416, y: 2.8750002, z: -1.9520001}
 --- !u!1001 &2019826188
 PrefabInstance:
@@ -6686,6 +7391,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -6725,7 +7435,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 42
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -6767,6 +7477,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1 &2021674552
@@ -6859,7 +7579,7 @@ Transform:
   m_LocalScale: {x: 2.4125473, y: 6.0031643, z: 25.523619}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 28
+  m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: -0.27, y: 21.880001, z: 0.314}
 --- !u!1 &2025846642
 GameObject:
@@ -6951,7 +7671,7 @@ Transform:
   m_LocalScale: {x: 2.4125473, y: 6.0031643, z: 12.587883}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 29
+  m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0.062000003, y: -27.386002, z: 0.41000003}
 --- !u!1 &2034102042
 GameObject:
@@ -7043,7 +7763,7 @@ Transform:
   m_LocalScale: {x: 3.232, y: 7.996266, z: 14.477156}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: -9.916, y: -0.16600001, z: 8.301001}
 --- !u!1001 &2057380339
 PrefabInstance:
@@ -7056,6 +7776,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (29)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -7137,6 +7862,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &2103367921
@@ -7150,6 +7885,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shane Leaf Blob Radial Test 05 (50)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -7231,6 +7971,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &2142658711
@@ -7248,7 +7998,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -7288,7 +8038,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 44
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3f96d6caeb1fa044e806343c578be526,
         type: 3}
@@ -7330,6 +8080,16 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3f96d6caeb1fa044e806343c578be526,
+        type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f96d6caeb1fa044e806343c578be526, type: 3}
 --- !u!1001 &450209061902201210
@@ -7382,7 +8142,7 @@ PrefabInstance:
     - target: {fileID: 450209062551449945, guid: 652faa420eadd4f4d9130211e8b0264c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 450209062551449945, guid: 652faa420eadd4f4d9130211e8b0264c,
         type: 3}
@@ -7506,7 +8266,7 @@ PrefabInstance:
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
@@ -7789,7 +8549,7 @@ PrefabInstance:
     - target: {fileID: 5411000736441797892, guid: 39a44ab0d0ce7420fb35392a8c447526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 5411000736441797892, guid: 39a44ab0d0ce7420fb35392a8c447526,
         type: 3}
@@ -8117,7 +8877,7 @@ PrefabInstance:
     - target: {fileID: 8763471623879234702, guid: 3766e41c4beea4658967bbb8126c38b6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8763471623879234702, guid: 3766e41c4beea4658967bbb8126c38b6,
         type: 3}
