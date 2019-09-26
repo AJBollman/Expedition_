@@ -58,7 +58,6 @@ public class CameraOperator : MonoBehaviour
 
         //******* PIVOT and CONTAINER POSITION
         _pivotPoint = followPoint.transform.position;
-        _heightChangeBelowThreshold = (Mathf.Abs(_pivotPoint.y - _lastHeight) < 0.02f);
         _lastHeight = _pivotPoint.y;
 
         _pivotPoint.x = transform.position.x - followPoint.transform.position.x;
@@ -72,7 +71,7 @@ public class CameraOperator : MonoBehaviour
 
         transform.position = new Vector3(
             followPoint.transform.position.x + _truePivot.x,
-            (_heightChangeBelowThreshold) ? transform.position.y : followPoint.transform.position.y + _truePivot.y,
+            followPoint.transform.position.y + _truePivot.y,
             followPoint.transform.position.z + _truePivot.z
         );
 
