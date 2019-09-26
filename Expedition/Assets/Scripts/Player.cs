@@ -21,9 +21,12 @@ public class Player : MonoBehaviour
     public Vector3 fullMapPos = new Vector3(    0,     0, 0.12f);
     public Vector3 miniMapPos = new Vector3(0.26f, -0.1f, 0.23f);
     public string toggleMapRotKey = "l";
+    public bool redLineAllowed = true;
+    public string redLinekey = "r";
 
     public static bool mapIsFull;
     public static bool mapSpins;
+    public static bool isRedLineMode;
 
     // https://gamedev.stackexchange.com/a/116010 singleton pattern.
     private static Player _instance;
@@ -40,6 +43,7 @@ public class Player : MonoBehaviour
     public Vector3 lastRaycastHit;
     private GameObject crosshair;
     private GameObject vignette;
+    private GameObject redvignette;
     private GameObject handMap;
     private CameraOperator cam;
     private Movement mv;
@@ -51,6 +55,7 @@ public class Player : MonoBehaviour
     {
         crosshair = GameObject.Find("Crosshair"); if (!crosshair) throw new System.Exception("Crosshair not found. Make sure there is a gameObject named 'Crosshair'");
         vignette = GameObject.Find("Vignette"); if (!vignette) throw new System.Exception("Vignette not found. Make sure there is a gameObject named 'Vignette'");
+        redvignette = GameObject.Find("Redline Vignette"); if (!redvignette) throw new System.Exception("Redline Vignette not found. Make sure there is a gameObject named 'Redline Vignette'");
         cam = GameObject.Find("CameraContainer").GetComponent<CameraOperator>(); if (!cam) throw new System.Exception("Camera Container not found. Make sure there is a Camera Container");
         handMap = GameObject.Find("HandMap Offset"); if (!handMap) throw new System.Exception("Hand Map Offset not found. Make sure there is a Hand Map Offset");
         preFOV = cam.defaultFOV;
@@ -67,37 +72,61 @@ public class Player : MonoBehaviour
     void Update()
     {
         /////////////////////   Do raycast drawing stuff.
-        // Start a new line in the active Region while the button is down.
+        // Start a new line/redline in the active Region while the button is down.
         if (Input.GetButtonDown(cameraDrawButton))
         {
-            isCameraDrawing = true;
-            startCameraLine();
-            cam.defaultFOV = preFOV - 5f; // narrow FOV a bit while drawing.
-            cam.maxFOVTweak = 0;
-            undoRedoPre = undoRedoAllowed;
+            if(isRedLineMode)
+            {
+                startRedLine();
+            }
+            else
+            {
+                isCameraDrawing = true;
+                startCameraLine();
+                cam.defaultFOV = preFOV - 5f; // narrow FOV a bit while drawing.
+                cam.maxFOVTweak = 0;
+                undoRedoPre = undoRedoAllowed;
+            }
             undoRedoAllowed = false; // Disable undo/redo while drawing.
         }
 
         // While the button is down, add new points to the line that was just made.
-        if (Input.GetButton(cameraDrawButton)) addToCameraLine();
+        if (Input.GetButton(cameraDrawButton))
+        {
+            if(isRedLineMode)
+            {
+                addToRedLine();
+            }
+            else addToCameraLine();
+        }
 
         // When the button is released, "end" the line.
         // For now, that just means sink the line below the ground.
         if (Input.GetButtonUp(cameraDrawButton))
         {
-            isCameraDrawing = false;
-            endCameraLine();
-            crosshair.SetActive(false); // Hide crosshair.
-            cam.defaultFOV = preFOV; // Reset FOV.
-            cam.maxFOVTweak = 5f;
+            if(isRedLineMode)
+            {
+                endRedLine();
+            }
+            else
+            {
+                isCameraDrawing = false;
+                endCameraLine();
+                crosshair.SetActive(false); // Hide crosshair.
+                cam.defaultFOV = preFOV; // Reset FOV.
+                cam.maxFOVTweak = 5f;
+            }
             undoRedoAllowed = undoRedoPre; // Set the undo/redo allowed back to what it was.
         }
         vignette.SetActive(Input.GetButton(cameraDrawButton)); // Camera vignette is visible as long as the mouse is down.
+        redvignette.SetActive(isRedLineMode); // Camera vignette is visible as long as the mouse is down.
 
         /////////////////////   Do undo/redo stuff.
         if (Input.GetKeyDown(undoKey)) undoLastLine();
         if (Input.GetKeyDown(redoKey)) redoLastLine();
         if (Input.GetKeyDown(fullKey)) toggleFullMap();
+        if (Input.GetKeyDown(redLinekey) && mapIsFull) isRedLineMode = !isRedLineMode;
+        if (!mapIsFull) isRedLineMode = false;
 
         ////////////////////   Fullscreen map.
         Vector3 targetPos = (mapIsFull) ? fullMapPos : miniMapPos;
@@ -209,14 +238,70 @@ public class Player : MonoBehaviour
 
 
     /////////////////////////////////////////////////////////   DRAWING ON MAP
+    private void screenRaycastOntoMap()
+    {
+        Vector2 mouse = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        Ray ray;
+        ray = Camera.main.ScreenPointToRay(mouse);
+        RaycastHit hit;
 
+        if (Physics.Raycast(ray, out hit, 10))
+        {
+
+            if(hit.collider.gameObject.name == "HandMap")
+            {
+                var dist = Vector3.Distance(handMap.transform.position, hit.point);
+                Debug.Log(mouse +" "+ handMap.transform.position +" "+ hit.point +" "+ dist);
+                Debug.DrawRay(transform.position, ray.direction);
+            }
+        }
+    }
 
 
 
 
 
     /////////////////////////////////////////////////////////   DRAWING RED LINE
+    // Instantiate a new Map Line prefab under active Region.
+    private void startRedLine()
+    {
+        screenRaycastOntoMap();
+        //Debug.Log(StateController.activeRegion);
+        /*if (!cameraDrawAllowed || !StateController.activeRegion) return;
 
+        var r = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        RaycastHit hit;
+        if (Physics.Raycast(r, out hit, cameraDrawMaxDistance, layerMask: raycastIgnoreLayers))
+        {
+            Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
+            Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+            lastRaycastHit = newHit;
+            StateController.activeRegion.addLineToRegion(newHit);
+        }*/
+    }
+    // Add a point to the active Map Line under the Active Region.
+    private void addToRedLine()
+    {
+        screenRaycastOntoMap();
+        /*if (!cameraDrawAllowed || !StateController.activeRegion) return;
+
+        var r = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        RaycastHit hit;
+        if (Physics.Raycast(r, out hit, cameraDrawMaxDistance, layerMask: raycastIgnoreLayers))
+        {
+            Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
+            crosshair.SetActive(true);
+            Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+            lastRaycastHit = newHit;
+            StateController.activeRegion.addLinePointToRegion(newHit);
+        }
+        else crosshair.SetActive(false);*/
+    }
+    // Tell the active Region to 'sink' the latest Line under the ground.
+    private void endRedLine()
+    {
+        //StateController.activeRegion.sinkLatestLine();
+    }
 
 
 
