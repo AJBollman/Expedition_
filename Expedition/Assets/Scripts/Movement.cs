@@ -121,7 +121,7 @@ public class Movement : MonoBehaviour
         //=============jumping on slope===============
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, controller.height / 2 * 1.5f))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, controller.height / 2 * 2f))
         {
             if (isjumping == true)
             {
