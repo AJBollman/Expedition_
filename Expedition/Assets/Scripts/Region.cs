@@ -72,7 +72,7 @@ public class Region : MonoBehaviour
     void OnTriggerExit(Collider other) {
         if (other.tag == "Player") {
             activateCamera(false);
-            //StartCoroutine(checkIfEmptyRegion(1f));
+            StateController.activeRegion = null;
             foreach (GameObject l in lines) {l.SetActive(false);} // Hide lines.
         }
     }
@@ -107,7 +107,7 @@ public class Region : MonoBehaviour
     // Add a new point to this region's latest Line.
     public void addLinePointToRegion(Vector3 pos)
     {
-        if (!lines[lines.Count - 1]) {
+        if (lines.Count < 1) {
             Debug.LogWarning("Cannot add points; this region has no active line!");
             return;
         }
@@ -123,7 +123,11 @@ public class Region : MonoBehaviour
     // Sink the latest Line.
     public void sinkLatestLine()
     {
-        lines[lines.Count - 1].GetComponent<Line>().sinkLine(true);
+        if(lines.Count > 0)
+        {
+            lines[lines.Count - 1].GetComponent<Line>().sinkLine(true);
+        }
+        else Debug.Log("Cannot sink latest line, no lines to sink");
     }
 
     // Removes a Line and adds it to the redo list.
