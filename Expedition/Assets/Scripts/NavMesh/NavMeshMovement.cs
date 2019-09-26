@@ -27,7 +27,7 @@ public class NavMeshMovement : MonoBehaviour
     }
     void navMove()
     {
-        foreach()
-        agent.SetDestination(hit.point);
+        
+        
     }
 }
