@@ -184,7 +184,8 @@ public class Player : MonoBehaviour
     // Tell the active Region to 'sink' the latest Line under the ground.
     private void endCameraLine()
     {
-       StateController.activeRegion.sinkLatestLine();
+        if (!cameraDrawAllowed || !StateController.activeRegion) return;
+        StateController.activeRegion.sinkLatestLine();
     }
 
 
