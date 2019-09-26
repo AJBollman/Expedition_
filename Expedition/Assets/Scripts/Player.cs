@@ -218,7 +218,7 @@ public class Player : MonoBehaviour
         cam.enableControls = !mapIsFull;
         mv.moveAllowed = !mapIsFull;
         if (mapIsFull) StateController.setState(gameStates.fullmap);
-        else StateController.setState(gameStates.normal);      // todo
+        else StateController.setState(gameStates.normal);    // todo
     }
 
 

@@ -31,10 +31,12 @@ public class ErrorReporter : MonoBehaviour
         stack = stackTrace;
         if (type == LogType.Error || type == LogType.Exception && p != null)
         {
+            var regName = (StateController.activeRegion) ? StateController.activeRegion.name : "empty";
             lastLog = logString;
+
             string text = "------ BIG OOF ------\n" +
                 logString + "\n\n" +
-                "Region: " + StateController.activeRegion.name + "\n" +
+                "Region: " + regName + "\n" +
                 "Player pos: " + p.transform.position + "\n" +
                 "GameState: " + StateController.getState() + "\n" +
                 "Was drawing line:" + p.GetComponent<Player>().isCameraDrawing + "\n" +
