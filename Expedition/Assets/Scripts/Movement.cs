@@ -9,13 +9,15 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    public float speed = 0f;
     public float movementSpeed = 6f;
     public float sprintSpeed = 15f;
     public float jumpForce = 7f;
     public float gravity = 14f;
-    public string sprintKey = "left shift";
     public string jumpKey = "space";
     public bool canMove = true;
+    private bool isSprinting;
+    private bool jumpSprintSpeed;
 
     private float verticalVelocity;
     private CharacterController controller;
@@ -26,12 +28,6 @@ public class Movement : MonoBehaviour
     public bool isjumping;
 
     public bool moveAllowed = true;
-
-
-    private Vector2 playerPOS;
-
-    private Vector3 orgin;
-    private Vector3 direction;
 
     private Vector3 jumpPoint;
     private Vector3 slopeHit;
@@ -66,12 +62,32 @@ public class Movement : MonoBehaviour
         //slopeCheck();
 
         // ********************************* POSITION
-        float deltaX = 0f, deltaZ = 0f, speed = 0f;
+        float deltaX = 0f, deltaZ = 0f;
         if (moveAllowed)
         {
             // Sprint boost.
-            if (Input.GetKeyDown(KeyCode.LeftShift)) { speed = sprintSpeed; }
-            else speed = movementSpeed;
+
+            if (Input.GetKey(KeyCode.LeftShift) && isjumping == false)
+            {
+                isSprinting = true;
+                speed = sprintSpeed;
+
+            }
+            else
+            {
+                isSprinting = false;
+                speed = movementSpeed;
+            }
+
+            if(jumpSprintSpeed == true)
+            {
+                speed = sprintSpeed;
+                if(isjumping == false)
+                {
+                    jumpSprintSpeed = false;
+                    speed = movementSpeed;
+                }
+            }
 
             // Get forward/backward and side-to-side control inputs.
             deltaX = Input.GetAxis("Horizontal") * speed;
@@ -90,6 +106,11 @@ public class Movement : MonoBehaviour
             // Apply jump force on [jumpKey].
             if (Input.GetKeyDown(jumpKey))
             {
+                
+                if (isSprinting == true)
+                {
+                    jumpSprintSpeed = true;
+                }
                 verticalVelocity = jumpForce;
                 isjumping = true;
             }
@@ -112,7 +133,6 @@ public class Movement : MonoBehaviour
                 if (Input.GetKeyDown(jumpKey))
                 {
                     verticalVelocity = jumpForce;
-                    isjumping = true;
                 }
                 else verticalVelocity -= gravity * Time.deltaTime;
             }
