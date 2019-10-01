@@ -46,6 +46,9 @@ public class Player : MonoBehaviour
     private GameObject redvignette;
     private GameObject handMap;
     private CameraOperator cam;
+    private GameObject coordOrigin0;
+    private GameObject coordOrigin1;
+
     private Movement mv;
     private float preFOV;
     private float preFOVT;
@@ -57,7 +60,10 @@ public class Player : MonoBehaviour
         vignette = GameObject.Find("Vignette"); if (!vignette) throw new System.Exception("Vignette not found. Make sure there is a gameObject named 'Vignette'");
         redvignette = GameObject.Find("Redline Vignette"); if (!redvignette) throw new System.Exception("Redline Vignette not found. Make sure there is a gameObject named 'Redline Vignette'");
         cam = GameObject.Find("CameraContainer").GetComponent<CameraOperator>(); if (!cam) throw new System.Exception("Camera Container not found. Make sure there is a Camera Container");
-        handMap = GameObject.Find("HandMap Offset"); if (!handMap) throw new System.Exception("Hand Map Offset not found. Make sure there is a Hand Map Offset");
+        handMap = GameObject.Find("HandMap Offset"); if (!handMap) throw new System.Exception("Hand Map Offset not found. Make sure there is a 'Hand Map Offset'");
+        coordOrigin0 = GameObject.Find("coordOrigin0"); if (!coordOrigin0) throw new System.Exception("Hand Map UpperLeft Coordinate origin not found. Make sure there is a 'coordOrigin0'");
+        coordOrigin1 = GameObject.Find("coordOrigin1"); if (!coordOrigin1) throw new System.Exception("Hand Map BottomRight Coordinate origin not found. Make sure there is a 'coordOrigin1'");
+
         preFOV = cam.defaultFOV;
         preFOVT = cam.maxFOVTweak;
         mv = GetComponent<Movement>();
@@ -241,19 +247,23 @@ public class Player : MonoBehaviour
     /////////////////////////////////////////////////////////   DRAWING ON MAP
     private void screenRaycastOntoMap()
     {
-        Vector2 mouse = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         Ray ray;
-        ray = Camera.main.ScreenPointToRay(mouse);
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, 10))
         {
-
-            if(hit.collider.gameObject.name == "HandMap")
+            if (hit.collider.gameObject.name == "HandMap")
             {
-                var dist = Vector3.Distance(handMap.transform.position, hit.point);
-                Debug.Log(mouse +" "+ handMap.transform.position +" "+ hit.point +" "+ dist);
-                Debug.DrawRay(transform.position, ray.direction);
+                //Debug.Log(hit.point);
+                //Debug.Log(hit.point);
+                Vector3 pos = new Vector3(
+                        Mathf.Abs((hit.point.x - coordOrigin0.transform.position.x) / (hit.point.x - coordOrigin1.transform.position.x)),
+                        Mathf.Abs((hit.point.y - coordOrigin0.transform.position.y) / (hit.point.y - coordOrigin1.transform.position.y)),
+                        Mathf.Abs((hit.point.z - coordOrigin0.transform.position.z) / (hit.point.z - coordOrigin1.transform.position.z))
+                );
+                Debug.Log(pos);
+                Debug.DrawLine(transform.position, hit.point);
             }
         }
     }
