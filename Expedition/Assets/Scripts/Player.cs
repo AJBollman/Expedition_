@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     public string toggleMapRotKey = "l";
     public bool redLineAllowed = true;
     public string redLinekey = "r";
+    public bool fullscreenLineDrawAllowed = false;
 
     public static bool mapIsFull;
     public static bool mapSpins;
@@ -47,6 +48,7 @@ public class Player : MonoBehaviour
     private CameraOperator cam;
     private GameObject coordOrigin0;
     private GameObject coordOrigin1;
+    private Vector3 coordPlaneBounds;
 
     private Movement mv;
     private float preFOV;
@@ -66,6 +68,11 @@ public class Player : MonoBehaviour
         preFOV = cam.defaultFOV;
         preFOVT = cam.maxFOVTweak;
         mv = GetComponent<Movement>();
+        coordPlaneBounds = new Vector3(
+            Mathf.Abs(coordOrigin0.transform.position.x - coordOrigin1.transform.position.x),
+            Mathf.Abs(coordOrigin0.transform.position.y - coordOrigin1.transform.position.y),
+            Mathf.Abs(coordOrigin0.transform.position.z - coordOrigin1.transform.position.z)
+        );
     }
 
 
@@ -156,7 +163,6 @@ public class Player : MonoBehaviour
     // Instantiate a new Map Line prefab under active Region.
     private void startCameraLine()
     {
-        //Debug.Log(StateController.activeRegion);
         if (!cameraDrawAllowed || !StateController.activeRegion) return;
 
         var r = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
@@ -244,7 +250,7 @@ public class Player : MonoBehaviour
 
 
     /////////////////////////////////////////////////////////   DRAWING ON MAP
-    private void screenRaycastOntoMap()
+    private Vector3 screenRaycastOntoMap()
     {
         Ray ray;
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -254,17 +260,23 @@ public class Player : MonoBehaviour
         {
             if (hit.collider.gameObject.name == "HandMap")
             {
-                //Debug.Log(hit.point);
-                //Debug.Log(hit.point);
-                Vector3 pos = new Vector3(
-                        Mathf.Abs((hit.point.x - coordOrigin0.transform.position.x) / (hit.point.x - coordOrigin1.transform.position.x)),
-                        Mathf.Abs((hit.point.y - coordOrigin0.transform.position.y) / (hit.point.y - coordOrigin1.transform.position.y)),
-                        Mathf.Abs((hit.point.z - coordOrigin0.transform.position.z) / (hit.point.z - coordOrigin1.transform.position.z))
+                Vector2 pos = new Vector2(
+                    Mathf.Abs(coordOrigin0.transform.position.y - hit.point.y) / coordPlaneBounds.y,
+                    Mathf.Abs(coordOrigin1.transform.position.z - hit.point.z) / coordPlaneBounds.z
                 );
-                Debug.Log(pos);
+
+                if(StateController.activeRegionCamera == null) throw new System.Exception("No region cam to raycast from!");
+                var camRay = StateController.activeRegionCamera.ViewportPointToRay(pos);
+                RaycastHit camHit;
+                if (Physics.Raycast(camRay, out camHit, Mathf.Infinity, layerMask: raycastIgnoreLayers))
+                {
+                    Debug.DrawLine(StateController.activeRegionCamera.transform.position, camHit.point);
+                    return camHit.point;
+                    //StateController.activeRegion.addLinePointToRegion(newHit);
+                }
             }
-            Debug.DrawLine(transform.position, hit.point);
         }
+        return Vector3.zero;
     }
 
 
@@ -275,7 +287,7 @@ public class Player : MonoBehaviour
     // Instantiate a new Map Line prefab under active Region.
     private void startRedLine()
     {
-        screenRaycastOntoMap();
+        Debug.Log(screenRaycastOntoMap());
         //Debug.Log(StateController.activeRegion);
         /*if (!cameraDrawAllowed || !StateController.activeRegion) return;
         var r = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));

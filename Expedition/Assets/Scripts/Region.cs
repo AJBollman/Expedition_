@@ -62,6 +62,7 @@ public class Region : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if (other.tag == "Player") {
             StateController.activeRegion = this;
+            StateController.activeRegionCamera = GetComponentInChildren<Camera>();
             activateCamera(true);
             //Debug.Log("Active region: " + StateController.activeRegion.name);
             foreach (GameObject l in lines) {l.SetActive(true);} // Show lines.
@@ -73,6 +74,7 @@ public class Region : MonoBehaviour
         if (other.tag == "Player") {
             activateCamera(false);
             StateController.activeRegion = null;
+            StateController.activeRegionCamera = null;
             foreach (GameObject l in lines) {l.SetActive(false);} // Hide lines.
         }
     }

@@ -20,9 +20,9 @@ public class RotateMapWithCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Player.mapSpins) return;
+        //if (!Player.mapSpins) return;
         cameraRot = Camera.main.transform.rotation.eulerAngles.y;
-        increment = (Player.mapIsFull) ? 90 : rotIncrement;
+        increment = (Player.mapIsFull || !Player.mapSpins) ? 90 : rotIncrement;
 
         snapGoal = (Mathf.Round(cameraRot / increment) * increment);
 
