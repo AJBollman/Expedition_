@@ -10529,26 +10529,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4035439266716946748, guid: b357270562bb84843b9af19d90464c2e,
-        type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
-      value: 0.63657737
-      objectReference: {fileID: 0}
-    - target: {fileID: 4035439266716946748, guid: b357270562bb84843b9af19d90464c2e,
-        type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].value
-      value: 0.6487248
-      objectReference: {fileID: 0}
-    - target: {fileID: 4035439266716946748, guid: b357270562bb84843b9af19d90464c2e,
-        type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
-      value: 0.002569735
-      objectReference: {fileID: 0}
-    - target: {fileID: 4035439266716946748, guid: b357270562bb84843b9af19d90464c2e,
-        type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].time
-      value: 0.86201894
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b357270562bb84843b9af19d90464c2e, type: 3}
 --- !u!1001 &1651526733
@@ -11897,16 +11877,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8754469251116282581, guid: c0aa726d742e74c0ea46d4070518d3fe,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.4886
-      objectReference: {fileID: 0}
-    - target: {fileID: 8754469251116282584, guid: c0aa726d742e74c0ea46d4070518d3fe,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0aa726d742e74c0ea46d4070518d3fe, type: 3}
 --- !u!1001 &1845443900
@@ -12569,6 +12539,21 @@ PrefabInstance:
         type: 3}
       propertyPath: orthographic size
       value: 75.99595
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491537230380524119, guid: 903c50f722fb940ff946c62ea4f15afe,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491537230380524118, guid: 903c50f722fb940ff946c62ea4f15afe,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491537230697270693, guid: 903c50f722fb940ff946c62ea4f15afe,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 903c50f722fb940ff946c62ea4f15afe, type: 3}

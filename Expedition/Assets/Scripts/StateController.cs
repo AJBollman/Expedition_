@@ -11,6 +11,7 @@ public class StateController : MonoBehaviour
 {
     private static gameStates state = gameStates.normal;
     public static Region activeRegion;
+    public static Camera activeRegionCamera;
 
     // https://gamedev.stackexchange.com/a/116010 singleton pattern.
     private static StateController _instance;
