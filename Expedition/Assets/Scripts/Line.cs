@@ -11,6 +11,7 @@ public class Line : MonoBehaviour
     private LineRenderer linerender;
     public List<Vector3> lineData;
     private Vector3 lastPoint = Vector3.zero;
+    public List<Vector3> rawLineData;
     public bool sunken = false;
 
     void Awake()
@@ -32,17 +33,20 @@ public class Line : MonoBehaviour
     // Will check to make sure it's not too close.
     public void addPoint(Vector3 pos)
     {
-        pos = transform.InverseTransformPoint(pos);
-        if (Vector3.Distance(lastPoint, pos) < 0.010f) { return; }
+        var cpos = transform.InverseTransformPoint(pos);
+        if (Vector3.Distance(lastPoint, cpos) < 0.010f) { return; }
         {
-            Debug.DrawLine(transform.position, pos, Color.green, 0.5f);
+
+            //Debug.DrawLine(transform.position, pos, Color.green, 0.5f);
             if (lineData.Count > maxLinePoints)
             {
                 lineData.RemoveAt(lineData.Count - 1);
+                rawLineData.RemoveAt(lineData.Count - 1);
             }
-            lineData.Insert(0, pos);
+            lineData.Insert(0, cpos);
+            rawLineData.Insert(0, pos);
             linerender.SetPositions(lineData.ToArray());
-            lastPoint = pos;
+            lastPoint = cpos;
         }
     }
 
@@ -58,5 +62,10 @@ public class Line : MonoBehaviour
             prePos.z
         );
         sunken = tf;
+    }
+
+    public List<Vector3> getPoints()
+    {
+        return rawLineData;
     }
 }

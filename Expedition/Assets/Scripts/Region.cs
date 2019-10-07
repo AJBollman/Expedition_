@@ -20,8 +20,11 @@ public class Region : MonoBehaviour
     private GameObject background;
     private Camera cam;
     private static GameObject templateLine;
+    private static GameObject templateRedLine;
     private List<GameObject> lines =  new List<GameObject>();
+    private List<GameObject> redLines = new List<GameObject>();
     private List<GameObject> redoLines = new List<GameObject>();
+    private List<Portal> portals = new List<Portal>();
 
     void Awake()
     {
@@ -31,10 +34,12 @@ public class Region : MonoBehaviour
         cam = GetComponentInChildren<Camera>();
         if (!cam) throw new System.Exception("Region '" + name + "' does not have a camera!");
         templateLine = GameObject.Find("Line");
-        if (!templateLine) throw new System.Exception("Region could not find line prefab. Make sure '_Template Map Line' is in the scene!");
+        templateRedLine = GameObject.Find("RedLine");
+        if (!templateLine) throw new System.Exception("Region could not find line prefab. Make sure a 'Line' prefab is in the scene!");
+        if (!templateRedLine) throw new System.Exception("Region could not find red line prefab. Make sure a 'RedLine' prefab is in the scene!");
 
         // Check for overlapping map regions.
-        if(Application.isEditor)
+        if (Application.isEditor)
         {
             // https://docs.unity3d.com/ScriptReference/Physics.OverlapBox.html
             //Use the OverlapBox to detect if there are any other colliders within this box area.
@@ -52,6 +57,13 @@ public class Region : MonoBehaviour
                     GetComponent<Renderer>().SetPropertyBlock(block);
                     hitColliders[i].gameObject.GetComponent<Renderer>().SetPropertyBlock(block);
                     throw new System.Exception("Intersecting regions!");
+                }
+                if(hitColliders[i].tag == "Portal" && hitColliders[i].gameObject != gameObject)
+                {
+                    Debug.Log("region '"+name+"' found an intersecting portal");
+                    var p = hitColliders[i].transform.gameObject.GetComponent<Portal>();
+                    p.addOwnerRegion(this);
+                    portals.Add(p);
                 }
                 i++;
             }
@@ -116,6 +128,38 @@ public class Region : MonoBehaviour
         lines[lines.Count - 1].GetComponent<Line>().addPoint(pos);
     }
 
+
+
+
+    //////////////////////////////////////////////////////////////////////////
+    // Instantiate a new Line using the template red Line.
+    public void addRedLineToRegion(Vector3 pos)
+    {
+        if (transform.childCount - 2 >= lineLimit)
+        {
+            Debug.LogWarning("Cannot add line to region '" + name + "', limit reached!");
+            return;
+        }
+        GameObject createdLine = Instantiate(templateRedLine, pos, Quaternion.identity, transform);
+        redLines.Add(createdLine);
+
+    }
+
+    // Add a new point to this region's latest red Line.
+    public void addRedLinePointToRegion(Vector3 pos)
+    {
+        if (redLines.Count < 1)
+        {
+            Debug.LogWarning("Cannot add redline points; this region has no active line!");
+            return;
+        }
+        redLines[redLines.Count - 1].GetComponent<Line>().addPoint(pos);
+    }
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////
     // Set this Region's camera to use the renderTexture used by the handheld map material.
     private void activateCamera(bool tf)
     {
@@ -132,6 +176,10 @@ public class Region : MonoBehaviour
         else Debug.Log("Cannot sink latest line, no lines to sink");
     }
 
+
+
+
+    //////////////////////////////////////////////////////////////////////////
     // Removes a Line and adds it to the redo list.
     public void undoLine()
     {
@@ -156,5 +204,29 @@ public class Region : MonoBehaviour
         redoLines[redoLines.Count - 1].SetActive(true);
         lines.Add(redoLines[redoLines.Count - 1]);
         redoLines.RemoveAt(redoLines.Count - 1);
+    }
+
+    // Check if all this region's portals are finished.
+    public bool checkForCompletion()
+    {
+        foreach(Portal x in portals)
+        {
+            if (!x.isComplete())
+            {
+                completed = false;
+                return false;
+            }
+        }
+        Debug.Log("REGION COMPLETE!");
+        completed = true;
+        return true;
+    }
+
+    public List<Vector3> getLatestRedLine()
+    {
+        if (redLines.Count == 0) Debug.LogWarning("Can't get redline, region has no redlines.");
+        var r = redLines[redLines.Count - 1].GetComponent<Line>().getPoints();
+        
+        return r;
     }
 }

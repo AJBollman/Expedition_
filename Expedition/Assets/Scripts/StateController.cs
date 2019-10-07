@@ -12,6 +12,7 @@ public class StateController : MonoBehaviour
     private static gameStates state = gameStates.normal;
     public static Region activeRegion;
     public static Camera activeRegionCamera;
+    public static Portal activePortal;
 
     // https://gamedev.stackexchange.com/a/116010 singleton pattern.
     private static StateController _instance;
@@ -56,6 +57,21 @@ public class StateController : MonoBehaviour
     public static gameStates getState()
     {
         return StateController.state;
+    }
+
+
+
+    public static GameObject getTraveller()
+    {
+        return GameObject.Find("Traveller");
+    }
+
+    public static void startTraveller()
+    {
+        var trav = StateController.getTraveller().GetComponent<NavMeshMovement>();
+        trav.spawn(activePortal.transform.position);
+        trav.givePath(activeRegion.getLatestRedLine());
+        trav.navMove();
     }
 }
 

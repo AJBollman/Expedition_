@@ -20,7 +20,7 @@ public class Movement : MonoBehaviour
     private bool jumpSprintSpeed;
 
     private float verticalVelocity;
-    private CharacterController controller;
+    public CharacterController controller;
     private Rigidbody controllerRigidbody;
     private GameObject cam;
 
@@ -41,6 +41,10 @@ public class Movement : MonoBehaviour
         controllerRigidbody = GetComponent<Rigidbody>();
         cam = GameObject.Find("CameraContainer");
         if (!cam) throw new System.Exception("Movement could not find a 'CameraContainer'. Make sure one is placed.");
+        if (Application.isEditor)
+        {
+            sprintSpeed = 25f;
+        }
     }
 
     void Update()

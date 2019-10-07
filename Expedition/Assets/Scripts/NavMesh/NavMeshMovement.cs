@@ -14,14 +14,18 @@ public class NavMeshMovement : MonoBehaviour
     public bool failedPath;
     public bool canMove;
 
-    public int pointHolder = 0;
     public List<Vector3> pointList;
 
-    // Update is called once per frame
+    //detrian's code crossover
+    private void Awake()
+    {
+        //despawn();
+    }
+
+
     void Update()
     {
-        Pos = agent.transform.position;
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -35,32 +39,50 @@ public class NavMeshMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             canMove = true;
-        }
+        }*/
 
-        if(canMove == true)
+        agent.speed = (canMove) ? 3.5f : 0f;
+
+        if(pointList.Count > 0)
         {
-            if (pointHolder < pointList.Count)
+            agent.SetDestination(pointList[0]);
+            if (Vector3.Distance(agent.transform.position, pointList[0]) < 2f)
             {
-                agent.SetDestination(pointList[pointHolder]);
-                if (Vector3.Distance(Pos, pointList[pointHolder]) < 2f)
-                {
-                    pointHolder++;
-                }
+                pointList.RemoveAt(0);
             }
-            else canMove = false;
         }
 
-        if(failedPath == true)
+        /*if(failedPath == true)
         {
             pointList.Clear();
             pointHolder = 0;
             canMove = false;
             agent.SetDestination(home.transform.position);
-        }
+        }*/
     }
-    void navMove()
+    public void navMove()
     {
-        
-        
+        canMove = true;
+    }
+
+    public void spawn(Vector3 pos)
+    {
+        pointList.Clear();
+        transform.position = new Vector3(pos.x, pos.y + 2f, pos.z);
+        GetComponent<Rigidbody>().useGravity = true;
+    }
+
+    public void despawn()
+    {
+        pointList.Clear();
+        transform.position = Vector3.zero;
+        GetComponent<Rigidbody>().useGravity = false;
+    }
+
+    public void givePath(List<Vector3> points)
+    {
+        points.Reverse();
+        pointList = points;
+        agent.SetDestination(pointList[0]);
     }
 }

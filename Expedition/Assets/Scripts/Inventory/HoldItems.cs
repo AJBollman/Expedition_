@@ -33,7 +33,12 @@ public class HoldItems : MonoBehaviour
                     if (hit.transform.gameObject.tag == "Moveable")
                     {
                         ball = hit.transform.gameObject;
+                        canHold = false;
                         Pickup();
+                    }
+                    if(hit.transform.gameObject.tag == "Event")
+                    {
+                        canHold = true;
                     }
                 }
             }
@@ -60,9 +65,6 @@ public class HoldItems : MonoBehaviour
         ball.transform.rotation = guide.rotation;
         ball.transform.localScale = smallScale;
         ball.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-
-
-        canHold = false;
     }
 
     void throw_drop()
@@ -77,10 +79,13 @@ public class HoldItems : MonoBehaviour
         // we don't have anything to do with our ball field anymore
         ball = null;
         //Apply velocity on throwing
-        guide.GetChild(0).gameObject.GetComponent<Rigidbody>().velocity = transform.forward * speed;
+        //guide.GetChild(0).gameObject.GetComponent<Rigidbody>().velocity = transform.forward * speed;
 
         //Unparent our ball
-        guide.GetChild(0).parent = null;
+        if(guide.GetChild(0) != null)
+        {
+            guide.GetChild(0).parent = null;
+        }
         canHold = true;
     }
 }

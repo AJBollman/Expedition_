@@ -284,43 +284,32 @@ public class Player : MonoBehaviour
 
 
     /////////////////////////////////////////////////////////   DRAWING RED LINE
-    // Instantiate a new Map Line prefab under active Region.
+    // Instantiate a new Red Line prefab under active Region.
     private void startRedLine()
     {
-        Debug.Log(screenRaycastOntoMap());
-        //Debug.Log(StateController.activeRegion);
-        /*if (!cameraDrawAllowed || !StateController.activeRegion) return;
-        var r = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-        RaycastHit hit;
-        if (Physics.Raycast(r, out hit, cameraDrawMaxDistance, layerMask: raycastIgnoreLayers))
+        if (StateController.activePortal != null)
         {
-            Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
-            Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-            lastRaycastHit = newHit;
-            StateController.activeRegion.addLineToRegion(newHit);
-        }*/
+            StateController.activeRegion.addRedLineToRegion(screenRaycastOntoMap());
+        }
+        else Debug.LogWarning("Can't start redline, not in a portal!");
     }
-    // Add a point to the active Map Line under the Active Region.
+    // Add a point to the active Red Line under the Active Region.
     private void addToRedLine()
     {
-        screenRaycastOntoMap();
-        /*if (!cameraDrawAllowed || !StateController.activeRegion) return;
-        var r = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-        RaycastHit hit;
-        if (Physics.Raycast(r, out hit, cameraDrawMaxDistance, layerMask: raycastIgnoreLayers))
+        if (StateController.activePortal != null)
         {
-            Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
-            crosshair.SetActive(true);
-            Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-            lastRaycastHit = newHit;
-            StateController.activeRegion.addLinePointToRegion(newHit);
+            StateController.activeRegion.addRedLinePointToRegion(screenRaycastOntoMap());
         }
-        else crosshair.SetActive(false);*/
+        else Debug.LogWarning("Can't add to redline, not in a portal!");
     }
-    // Tell the active Region to 'sink' the latest Line under the ground.
     private void endRedLine()
     {
-        //StateController.activeRegion.sinkLatestLine();
+        if (StateController.activePortal != null)
+        {
+            StateController.startTraveller();
+            toggleFullMap();
+        }
+        else Debug.LogWarning("Can't end redline, not in a portal!");
     }
 
 
