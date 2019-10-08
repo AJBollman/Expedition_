@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 8754469251116282578}
   - component: {fileID: 8754469251116282579}
   - component: {fileID: 8754469251116282585}
-  - component: {fileID: -1996030903256651836}
   m_Layer: 12
   m_Name: The Explorer
   m_TagString: Player
@@ -151,7 +150,6 @@ MonoBehaviour:
   gravity: 12
   jumpKey: space
   canMove: 1
-  controller: {fileID: 0}
   slopeAngle: 0
   isjumping: 0
   moveAllowed: 1
@@ -188,15 +186,3 @@ MonoBehaviour:
   fullscreenLineDrawAllowed: 0
   isCameraDrawing: 0
   lastRaycastHit: {x: 0, y: 0, z: 0}
---- !u!114 &-1996030903256651836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8754469251116282577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f5cd6468057c43fc91280516729c99b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
