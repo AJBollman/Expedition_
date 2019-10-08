@@ -20,10 +20,8 @@ public class StateController : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
-        {Destroy(this.gameObject);}
-        else
-        {_instance = this;}
+        if (_instance != null && _instance != this) {Destroy(this.gameObject);}
+        else {_instance = this;}
 
         Object.DontDestroyOnLoad(gameObject);
         setState(gameStates.normal);

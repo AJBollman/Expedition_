@@ -19,8 +19,8 @@ public class Region : MonoBehaviour
     //private List<Vector3> redLine = new List<Vector3>();
     private GameObject background;
     private Camera cam;
-    private static GameObject templateLine;
-    private static GameObject templateRedLine;
+    public GameObject templateLine;
+    public GameObject templateRedLine;
     private List<GameObject> lines =  new List<GameObject>();
     private List<GameObject> redLines = new List<GameObject>();
     private List<GameObject> redoLines = new List<GameObject>();
@@ -33,10 +33,10 @@ public class Region : MonoBehaviour
         if(!background) throw new System.Exception("Region '" + name + "' does not have a background!");
         cam = GetComponentInChildren<Camera>();
         if (!cam) throw new System.Exception("Region '" + name + "' does not have a camera!");
-        templateLine = GameObject.Find("Line");
-        templateRedLine = GameObject.Find("RedLine");
-        if (!templateLine) throw new System.Exception("Region could not find line prefab. Make sure a 'Line' prefab is in the scene!");
-        if (!templateRedLine) throw new System.Exception("Region could not find red line prefab. Make sure a 'RedLine' prefab is in the scene!");
+        //templateLine = GameObject.Find("Line");
+        //templateRedLine = GameObject.Find("RedLine");
+        //if (!templateLine) throw new System.Exception("Region could not find line prefab. Make sure a 'Line' prefab is in the scene!");
+        //if (!templateRedLine) throw new System.Exception("Region could not find red line prefab. Make sure a 'RedLine' prefab is in the scene!");
 
         // Check for overlapping map regions.
         if (Application.isEditor)
