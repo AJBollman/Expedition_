@@ -13,6 +13,7 @@ public class Line : MonoBehaviour
     private Vector3 lastPoint = Vector3.zero;
     public List<Vector3> rawLineData;
     public bool sunken = false;
+    public float sinkAmount = 0.05f;
 
     void Awake()
     {
@@ -58,7 +59,7 @@ public class Line : MonoBehaviour
         var prePos = transform.localPosition;
         transform.localPosition = new Vector3(
             prePos.x,
-            prePos.y + (tf ? -0.25f : 0.25f),
+            prePos.y + (tf ? -sinkAmount : sinkAmount),
             prePos.z
         );
         sunken = tf;
