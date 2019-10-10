@@ -14,17 +14,16 @@ public class StateController : MonoBehaviour
     public static Camera activeRegionCamera;
     public static Portal activePortal;
 
-    // https://gamedev.stackexchange.com/a/116010 singleton pattern.
-    private static StateController _instance;
-    private static StateController Instance { get { return _instance; } }
-
     private void Awake()
     {
-        if (_instance != null && _instance != this)
-        {Destroy(this.gameObject);}
-        else
-        {_instance = this;}
+        if (FindObjectsOfType(GetType()).Length > 1)
+        {
+            Destroy(gameObject);
+        }
+    }
 
+    private void Start()
+    {
         Object.DontDestroyOnLoad(gameObject);
         setState(gameStates.normal);
     }

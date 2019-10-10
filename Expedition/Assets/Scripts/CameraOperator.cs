@@ -37,11 +37,20 @@ public class CameraOperator : MonoBehaviour
     private Vector2 _input = Vector2.zero;
 
 
-	//********************************************************************************************************
+    //********************************************************************************************************
+    private void Awake()
+    {
+        if (FindObjectsOfType(GetType()).Length > 1)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
-		_goalFOV = defaultFOV;
+        _goalFOV = defaultFOV;
 		_camCamera = GetComponentInChildren<Camera>();
+        followPoint = GameObject.Find("The Explorer");
     }
 
     public float smoothTime = 8f;
