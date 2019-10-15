@@ -4,13 +4,22 @@ public class ChildCollider : MonoBehaviour
 {
     public bool isA;
     public bool isMid;
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        transform.parent.GetComponent<Transition>().OnDetect(isA);
+        Debug.Log("asdasda");
+        if (other.gameObject.tag == "Player")
+        {
+            if (isMid) transform.parent.GetComponent<Transition>().OnMid(true);
+            else transform.parent.GetComponent<Transition>().OnDetect(isA);
+        }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        transform.parent.GetComponent<Transition>().OnExit(isA);
+        if (other.gameObject.tag == "Player")
+        {
+            if (isMid) transform.parent.GetComponent<Transition>().OnMid(false);
+            else transform.parent.GetComponent<Transition>().OnExit(isA);
+        }
     }
 }

@@ -19,18 +19,41 @@ public class Transition : MonoBehaviour
 
     public void OnDetect(bool isA)
     {
-        if (isA) insideA = true;
-        else insideB = true;
-        Debug.Log(isA);
+        if (isA)
+        {
 
-        //if(insideA)
+        }
     }
 
     public void OnExit(bool isA)
     {
-        if (isA) insideA = false;
-        else insideB = false;
-        Debug.Log(isA);
+        if (isA)
+        {
+            if(isInside) // entered from A
+            {
+                Debug.Log("entered from A");
+            }
+            else
+            {
+                Debug.Log("exited from A");
+            }
+        }
+        else
+        {
+            if (isInside) // entered from B
+            {
+                Debug.Log("entered from B");
+            }
+            else
+            {
+                Debug.Log("exited from B");
+            }
+        }
+    }
+
+    public void OnMid(bool isIn)
+    {
+        isInside = isIn;
     }
 
 }

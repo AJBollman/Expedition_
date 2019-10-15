@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: -2220789089199184355}
   m_Layer: 0
   m_Name: Transition
-  m_TagString: Untagged
+  m_TagString: Map Region
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 2011165377600420336}
   - component: {fileID: 4221545329417456600}
   - component: {fileID: 8201806146221044415}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SCENE A TRANSIT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -758,7 +758,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3c4c3d803dd0456287ba97e24aaf492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  first: 0
+  isA: 0
+  isMid: 0
 --- !u!1 &6986414104766288173
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,7 +771,7 @@ GameObject:
   - component: {fileID: 5083661293055718689}
   - component: {fileID: 4546472575503071375}
   - component: {fileID: 4259970026248411732}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: MID TRANSIT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -816,7 +817,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3c4c3d803dd0456287ba97e24aaf492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  first: 0
+  isA: 0
+  isMid: 1
 --- !u!1 &8681008718717692383
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,7 +830,7 @@ GameObject:
   - component: {fileID: 8747010340227583430}
   - component: {fileID: 4484500076653183302}
   - component: {fileID: 1167438410629623929}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SCENE B TRANSIT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -874,4 +876,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3c4c3d803dd0456287ba97e24aaf492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  first: 1
+  isA: 1
+  isMid: 0
