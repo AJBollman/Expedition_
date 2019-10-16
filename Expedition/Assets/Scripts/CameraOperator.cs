@@ -44,6 +44,7 @@ public class CameraOperator : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else DontDestroyOnLoad(gameObject);
     }
 
     private void Start()

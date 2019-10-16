@@ -1,28 +1,35 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Transition : MonoBehaviour
 {
-    public Scene AScene;
-    public Scene BScene;
+    public string AScene;
+    public string BScene;
+    public string name;
     private bool isInside;
     private bool insideA;
     private bool insideB;
+    private bool loaderIsRunning;
+    private static List<string> names = new List<string>();
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        Application.backgroundLoadingPriority = ThreadPriority.BelowNormal;
+        if (names.Contains(name))
+        {
+            Debug.Log("Removing duplicate scene trasition");
+            Destroy(gameObject);
+        }
+        else DontDestroyOnLoad(gameObject);
+        names.Add(name);
     }
 
     public void OnDetect(bool isA)
     {
-        if (isA)
-        {
-
-        }
+       
     }
 
     public void OnExit(bool isA)
@@ -31,29 +38,83 @@ public class Transition : MonoBehaviour
         {
             if(isInside) // entered from A
             {
-                Debug.Log("entered from A");
+                Debug.Log("entered from B");
+                startSceneLoad(AScene, false);
             }
-            else
+            else // exited from A
             {
-                Debug.Log("exited from A");
+                Debug.Log("exited from B");
+                startSceneLoad(AScene, true);
             }
         }
         else
         {
             if (isInside) // entered from B
             {
-                Debug.Log("entered from B");
+                Debug.Log("entered from A");
+                startSceneLoad(BScene, false);
             }
-            else
+            else // exited from B
             {
-                Debug.Log("exited from B");
+                Debug.Log("exited from A");
+                startSceneLoad(BScene, true);
             }
         }
     }
 
+    // Entered middle collider.
     public void OnMid(bool isIn)
     {
         isInside = isIn;
     }
 
+    IEnumerator LoadYourAsyncScene(string scene)
+    {
+        if (Application.CanStreamedLevelBeLoaded(scene))
+        {
+            if(!SceneManager.GetSceneByName(scene).isLoaded)
+            {
+                loaderIsRunning = true;
+                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+                while (!asyncLoad.isDone)
+                {
+                    loaderIsRunning = false;
+                    yield return null;
+                }
+            }
+            else Debug.Log("Scene '" + scene + "' is already loaded!");
+        }
+        else throw new Exception("Scene '" + scene + "' doesn't exist!");
+    }
+
+    IEnumerator UnloadAsyncScene(string scene)
+    {
+        if (Application.CanStreamedLevelBeLoaded(scene))
+        {
+            if (SceneManager.GetSceneByName(scene).isLoaded)
+            {
+                Debug.Log("HHERE");
+                AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(scene);
+                while (!asyncUnload.isDone)
+                {
+                    yield return null;
+                }
+            }
+            else Debug.Log("Scene '" + scene + "' isn't loaded!");
+        }
+        else throw new Exception("Scene '" + scene + "' doesn't exist!");
+    }
+
+    // Load scene in background.
+    public void startSceneLoad(string scene, bool unload)
+    {
+        //Debug.Log(scene);
+        if (loaderIsRunning)
+        {
+            Debug.LogWarning("Can't start loader, already loading!");
+        }
+        // NOT WORKING RIGHT NOW... /////////////////////////////////////////////////////////////////////////
+        else if(unload) StartCoroutine(UnloadAsyncScene(scene));
+        else StartCoroutine(LoadYourAsyncScene(scene));
+    }
 }

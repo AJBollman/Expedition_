@@ -6,7 +6,6 @@ public class ChildCollider : MonoBehaviour
     public bool isMid;
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("asdasda");
         if (other.gameObject.tag == "Player")
         {
             if (isMid) transform.parent.GetComponent<Transition>().OnMid(true);

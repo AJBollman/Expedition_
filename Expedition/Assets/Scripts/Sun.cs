@@ -10,5 +10,6 @@ public class Sun : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else DontDestroyOnLoad(gameObject);
     }
 }

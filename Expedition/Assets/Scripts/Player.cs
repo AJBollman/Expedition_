@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else DontDestroyOnLoad(gameObject);
     }
 
     void Start()

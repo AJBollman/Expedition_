@@ -10,5 +10,6 @@ public class UserInterface : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else DontDestroyOnLoad(gameObject);
     }
 }
