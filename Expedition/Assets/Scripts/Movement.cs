@@ -35,8 +35,20 @@ public class Movement : MonoBehaviour
     private Vector3 slopeSlide;
     private Vector3 lerpVector;
 
+    public static bool _created;
+
+    private void Awake()
+    {
+        if(_created) Destroy(gameObject);
+    }
+
     void Start()
     {
+        if (name.Contains(" ("))
+        {
+            Debug.LogWarning("Duplicate gameplay thingy, destroying...");
+            Destroy(gameObject);
+        }
         controller = GetComponent<CharacterController>();
         controllerRigidbody = GetComponent<Rigidbody>();
         cam = GameObject.Find("CameraContainer");

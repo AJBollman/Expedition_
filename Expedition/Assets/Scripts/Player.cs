@@ -28,17 +28,6 @@ public class Player : MonoBehaviour
     public static bool mapSpins;
     public static bool isRedLineMode;
 
-    // https://gamedev.stackexchange.com/a/116010 singleton pattern.
-    private static Player _instance;
-    private static Player Instance { get { return _instance; } }
-    private void Awake()
-    {
-        if (_instance != null && _instance != this)
-        { Destroy(this.gameObject); }
-        else
-        { _instance = this; }
-    }
-
     public bool isCameraDrawing;
     public Vector3 lastRaycastHit;
     private GameObject crosshair;
@@ -54,6 +43,15 @@ public class Player : MonoBehaviour
     private float preFOV;
     private float preFOVT;
     private bool undoRedoPre;
+
+    private void Awake()
+    {
+        if (FindObjectsOfType(GetType()).Length > 1)
+        {
+            Destroy(gameObject);
+        }
+        else DontDestroyOnLoad(gameObject);
+    }
 
     void Start()
     {
@@ -74,10 +72,6 @@ public class Player : MonoBehaviour
             Mathf.Abs(coordOrigin0.transform.position.z - coordOrigin1.transform.position.z)
         );
     }
-
-
-
-
 
 
     // Called every frame.
