@@ -35,10 +35,12 @@ public class HoldItems : MonoBehaviour
                         ball = hit.transform.gameObject;
                         canHold = false;
                         Pickup();
+                        GetComponent<SoundPlayer>().Play("GrabPlank");
                     }
                     if(hit.transform.gameObject.tag == "Event")
                     {
                         canHold = true;
+                        GetComponent<SoundPlayer>().Play("GrabPlank");
                     }
                 }
             }
@@ -65,6 +67,7 @@ public class HoldItems : MonoBehaviour
         ball.transform.rotation = guide.rotation;
         ball.transform.localScale = smallScale;
         ball.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        //GetComponent<SoundPlayer>().Play("GrabPlank", true);
     }
 
     void throw_drop()

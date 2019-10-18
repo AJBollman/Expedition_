@@ -38,11 +38,17 @@ public class Player : MonoBehaviour
     private GameObject coordOrigin0;
     private GameObject coordOrigin1;
     private Vector3 coordPlaneBounds;
+    private CharacterController ccon;
 
     private Movement mv;
     private float preFOV;
     private float preFOVT;
     private bool undoRedoPre;
+
+    private AudioSource jumpLoopSrc;
+    public AudioClip jumpLoop;
+    private AudioSource drawLoopSrc;
+    public AudioClip drawLoop;
 
     private void Awake()
     {
@@ -55,6 +61,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        ccon = GetComponent<CharacterController>();
         crosshair = GameObject.Find("Crosshair"); if (!crosshair) throw new System.Exception("Crosshair not found. Make sure there is a gameObject named 'Crosshair'");
         vignette = GameObject.Find("Vignette"); if (!vignette) throw new System.Exception("Vignette not found. Make sure there is a gameObject named 'Vignette'");
         redvignette = GameObject.Find("Redline Vignette"); if (!redvignette) throw new System.Exception("Redline Vignette not found. Make sure there is a gameObject named 'Redline Vignette'");
@@ -71,6 +78,13 @@ public class Player : MonoBehaviour
             Mathf.Abs(coordOrigin0.transform.position.y - coordOrigin1.transform.position.y),
             Mathf.Abs(coordOrigin0.transform.position.z - coordOrigin1.transform.position.z)
         );
+
+        jumpLoopSrc = gameObject.AddComponent<AudioSource>();
+        jumpLoopSrc.clip = jumpLoop;
+        jumpLoopSrc.loop = true;
+        drawLoopSrc = gameObject.AddComponent<AudioSource>();
+        drawLoopSrc.clip = drawLoop;
+        drawLoopSrc.loop = true;
     }
 
 
@@ -123,6 +137,7 @@ public class Player : MonoBehaviour
                 cam.maxFOVTweak = 5f;
             }
             undoRedoAllowed = undoRedoPre; // Set the undo/redo allowed back to what it was.
+            drawLoopSrc.Stop();
         }
         vignette.SetActive(Input.GetButton(cameraDrawButton)); // Camera vignette is visible as long as the mouse is down.
         redvignette.SetActive(isRedLineMode); // Camera vignette is visible as long as the mouse is down.
@@ -167,6 +182,7 @@ public class Player : MonoBehaviour
             Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
             lastRaycastHit = newHit;
             StateController.activeRegion.addLineToRegion(newHit);
+            GetComponent<SoundPlayer>().Play("DrawStart");
         }
     }
     // Add a point to the active Map Line under the Active Region.
@@ -183,6 +199,8 @@ public class Player : MonoBehaviour
             Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
             lastRaycastHit = newHit;
             StateController.activeRegion.addLinePointToRegion(newHit);
+
+            if (!drawLoopSrc.isPlaying) drawLoopSrc.Play();
         }
         else crosshair.SetActive(false);
     }
@@ -191,6 +209,12 @@ public class Player : MonoBehaviour
     {
         if (!cameraDrawAllowed || !StateController.activeRegion) return;
         StateController.activeRegion.sinkLatestLine();
+        GetComponent<SoundPlayer>().Play("DrawStop");
+    }
+    private void FixedUpdate()
+    {
+        var mag = Mathf.Abs(Mathf.Max(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"))) * 0.75f + (ccon.velocity.magnitude * 0.1f);
+        drawLoopSrc.volume = mag;
     }
 
 
@@ -223,8 +247,17 @@ public class Player : MonoBehaviour
         undoRedoAllowed = !mapIsFull;
         cam.enableControls = !mapIsFull;
         mv.moveAllowed = !mapIsFull;
-        if (mapIsFull) StateController.setState(gameStates.fullmap);
-        else StateController.setState(gameStates.normal);    // todo
+        if (mapIsFull)
+        {
+            StateController.setState(gameStates.fullmap);
+            GetComponent<SoundPlayer>().Play("MapFull");
+        }
+        else
+        {
+            StateController.setState(gameStates.normal);
+            GetComponent<SoundPlayer>().Play("MapMinimize");
+        }
+        // todo
     }
 
 
