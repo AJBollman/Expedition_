@@ -9,17 +9,23 @@ public class RiverEvent : MonoBehaviour
     public Transform guide;
     public GameObject fakePlank;
     Vector3 startpos;
+    Quaternion startrot;
 
     private void Awake()
     {
         guide = fakePlank.transform;
         startpos = plank.transform.position;
+        startrot = plank.transform.rotation;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (plank.transform.position.y < startpos.y - 100f) plank.transform.position = startpos;
+        if (plank.transform.position.y < startpos.y - 100f)
+        {
+            plank.transform.position = startpos += new Vector3(0, 1f, 0);
+            plank.transform.rotation = startrot;
+        }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;

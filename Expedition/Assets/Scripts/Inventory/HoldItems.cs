@@ -6,83 +6,90 @@ public class HoldItems : MonoBehaviour
 {
 
 
-    public float speed = 2;
+    public float speed = 5;
     public bool canHold = true;
     private Vector3 smallScale;
     private Vector3 currentScale;
-    public GameObject ball;
+    public GameObject obj;
     public Transform guide;
+    public GameObject startWithObj;
 
     private void Awake()
     {
-        ball = null;
+        obj = null;
     }
+
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
+      
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (!canHold)
-                throw_drop();
-            else
-            {
-                if (Physics.Raycast(ray, out hit, 3f))
-                {
-                    if (hit.transform.gameObject.tag == "Moveable")
-                    {
-                        ball = hit.transform.gameObject;
-                        canHold = false;
-                        Pickup();
-                        GetComponent<SoundPlayer>().Play("GrabPlank");
-                    }
-                    if(hit.transform.gameObject.tag == "Event")
-                    {
-                        canHold = true;
-                        GetComponent<SoundPlayer>().Play("GrabPlank");
-                    }
-                }
-            }
+            interact();
         }
     }//update
 
 
+    private void interact()
+    {
+        if (!canHold)
+            Throw();
+        else
+        {
+            Ray ray = GetComponent<Camera>().ScreenPointToRay(new Vector2(0.5f, 0.5f));
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 3f))
+            {
+                if (hit.transform.gameObject.tag == "Moveable")
+                {
+                    obj = hit.transform.gameObject;
+                    canHold = false;
+                    Pickup();
+                    GetComponent<SoundPlayer>().Play("GrabPlank");
+                }
+                if (hit.transform.gameObject.tag == "Event")
+                {
+                    canHold = true;
+                    GetComponent<SoundPlayer>().Play("GrabPlank");
+                }
+            }
+        }
+    }
+
     void Pickup()
     {
         //scales down the object when you pick it up and grabs the current size
-        currentScale = ball.transform.localScale;
+        currentScale = obj.transform.localScale;
         smallScale = currentScale * 0.2f;
 
         //We set the object parent to our guide empty object.
-        ball.transform.SetParent(guide);
+        obj.transform.SetParent(guide);
 
         //Set gravity to false while holding it
-        ball.GetComponent<Rigidbody>().useGravity = false;
+        obj.GetComponent<Rigidbody>().useGravity = false;
 
         //we apply the same rotation our main object (Camera) has.
-        ball.transform.localRotation = transform.rotation;
+        obj.transform.localRotation = transform.rotation;
         //We re-position the ball on our guide object 
-        ball.transform.position = guide.position;
-        ball.transform.rotation = guide.rotation;
-        ball.transform.localScale = smallScale;
-        ball.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        obj.transform.position = guide.position;
+        obj.transform.rotation = guide.rotation;
+        obj.transform.localScale = smallScale;
+        obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         //GetComponent<SoundPlayer>().Play("GrabPlank", true);
     }
 
-    void throw_drop()
+    void Throw()
     {
-        if (!ball)
+        if (!obj)
             return;
 
-        ball.transform.localScale = currentScale;
+        obj.transform.localScale = currentScale;
         //Set our Gravity to true again.
-        ball.GetComponent<Rigidbody>().useGravity = true;
-        ball.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        obj.GetComponent<Rigidbody>().useGravity = true;
+        obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         // we don't have anything to do with our ball field anymore
-        ball = null;
+        obj = null;
         //Apply velocity on throwing
-        //guide.GetChild(0).gameObject.GetComponent<Rigidbody>().velocity = transform.forward * speed;
+        guide.GetChild(0).gameObject.GetComponent<Rigidbody>().velocity = transform.forward * speed;
 
         //Unparent our ball
         if(guide.GetChild(0) != null)

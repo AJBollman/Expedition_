@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 8754469251116282585}
   - component: {fileID: 1376070341406052198}
   - component: {fileID: 4081490390107586918}
+  - component: {fileID: 6843702237901218247}
   m_Layer: 12
   m_Name: The Explorer
   m_TagString: Player
@@ -323,3 +324,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6843702237901218247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8754469251116282577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ec1a6061f8af04b959358678a87b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  canHold: 1
+  obj: {fileID: 0}
+  guide: {fileID: 0}
+  startWithObj: {fileID: 0}
