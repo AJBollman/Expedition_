@@ -34,6 +34,7 @@ public class Line : MonoBehaviour
     // Will check to make sure it's not too close.
     public void addPoint(Vector3 pos)
     {
+        pos.y += 0.05f;
         var cpos = transform.InverseTransformPoint(pos);
         if (Vector3.Distance(lastPoint, cpos) < 0.010f) { return; }
         {

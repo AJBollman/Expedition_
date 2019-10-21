@@ -45,7 +45,7 @@ public class HoldItems : MonoBehaviour
 
     public void Pickup(GameObject pickingUpObject)
     {
-        if (pickingUpObject.tag != "Moveable" || isPlacing) return;
+        if (pickingUpObject.tag != "Moveable" || isPlacing || heldObject != null) return;
 
         if(pickingUpObject.transform.parent != null && pickingUpObject.transform.parent.tag == "Event")
         {

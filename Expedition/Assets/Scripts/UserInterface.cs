@@ -33,7 +33,7 @@ public class UserInterface : MonoBehaviour
                 }
             case crosshairTypes.yeet:
                 {
-                    crosshair.GetComponent<Text>().text = "Y";
+                    crosshair.GetComponent<Text>().text = "^";
                     break;
                 }
             case crosshairTypes.drop:

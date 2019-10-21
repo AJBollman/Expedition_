@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
             {
                 isCameraDrawing = true;
                 startCameraLine();
-                cam.defaultFOV = preFOV - 5f; // narrow FOV a bit while drawing.
+                cam.defaultFOV = preFOV + 5f; // narrow FOV a bit while drawing.
                 cam.maxFOVTweak = 0;
                 undoRedoPre = undoRedoAllowed;
             }
@@ -154,7 +154,12 @@ public class Player : MonoBehaviour
         if (!mapIsFull) isRedLineMode = false;
 
         ////////////////////   Fullscreen map.
-        Vector3 targetPos = (mapIsFull) ? fullMapPos : miniMapPos;
+        Vector3 targetPos;
+        if (StateController.activeRegion == null)
+        {
+            targetPos = new Vector3(0, -0.25f, -0.25f);
+        }
+        else targetPos = (mapIsFull) ? fullMapPos : miniMapPos;
         handMap.transform.localPosition = Vector3.Lerp(
             handMap.transform.localPosition,
             targetPos,
@@ -247,7 +252,9 @@ public class Player : MonoBehaviour
     /////////////////////////////////////////////////////////   FULLSCREEN MAP
     public void toggleFullMap()
     {
+        if (StateController.activeRegion == null) return;
         mapIsFull = !mapIsFull;
+        isRedLineMode = mapIsFull; /////////////////////////////////////////////////// TEMPORARY
         cam.maxFOVTweak = (mapIsFull) ? 0f : preFOVT;
         cameraDrawAllowed = !mapIsFull;
         undoRedoAllowed = !mapIsFull;
@@ -352,9 +359,10 @@ public class Player : MonoBehaviour
     // Set crosshair to indicate how you can interact with things.
     private void checkInteract()
     {
+        if (StateController.getState() != gameStates.normal) return;
         if (isCameraDrawing)
         {
-            if (inDrawingRange)
+            if (inDrawingRange && StateController.activeRegion != null)
             { // can draw a line.
                 UserInterface.SetCursor(crosshairTypes.draw);
             }
@@ -374,7 +382,14 @@ public class Player : MonoBehaviour
                 if (hit.transform.gameObject.tag == "Moveable") // moveable object, can grab it.
                 {
                     UserInterface.SetCursor(crosshairTypes.grab);
-                    if (Input.GetKeyDown(KeyCode.E)) holdItems.Pickup(hit.transform.gameObject);
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        if (holdItems.getHeldObject() != null)
+                        {
+                            holdItems.Drop(false);
+                        }
+                        holdItems.Pickup(hit.transform.gameObject);
+                    }
                 }
                 else if(holdItems.getHeldObject() != null)
                 {
