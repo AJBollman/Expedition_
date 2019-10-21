@@ -30,7 +30,6 @@ public class Player : MonoBehaviour
 
     public bool isCameraDrawing;
     public Vector3 lastRaycastHit;
-    private GameObject crosshair;
     private GameObject vignette;
     private GameObject redvignette;
     private GameObject handMap;
@@ -39,11 +38,13 @@ public class Player : MonoBehaviour
     private GameObject coordOrigin1;
     private Vector3 coordPlaneBounds;
     private CharacterController ccon;
+    private HoldItems holdItems;
 
     private Movement mv;
     private float preFOV;
     private float preFOVT;
     private bool undoRedoPre;
+    private bool inDrawingRange;
 
     private AudioSource jumpLoopSrc;
     public AudioClip jumpLoop;
@@ -62,13 +63,15 @@ public class Player : MonoBehaviour
     void Start()
     {
         ccon = GetComponent<CharacterController>();
-        crosshair = GameObject.Find("Crosshair"); if (!crosshair) throw new System.Exception("Crosshair not found. Make sure there is a gameObject named 'Crosshair'");
         vignette = GameObject.Find("Vignette"); if (!vignette) throw new System.Exception("Vignette not found. Make sure there is a gameObject named 'Vignette'");
         redvignette = GameObject.Find("Redline Vignette"); if (!redvignette) throw new System.Exception("Redline Vignette not found. Make sure there is a gameObject named 'Redline Vignette'");
         cam = GameObject.Find("CameraContainer").GetComponent<CameraOperator>(); if (!cam) throw new System.Exception("Camera Container not found. Make sure there is a Camera Container");
         handMap = GameObject.Find("HandMap Offset"); if (!handMap) throw new System.Exception("Hand Map Offset not found. Make sure there is a 'Hand Map Offset'");
         coordOrigin0 = GameObject.Find("CoordOrigin0"); if (!coordOrigin0) throw new System.Exception("Hand Map UpperLeft Coordinate origin not found. Make sure there is a 'coordOrigin0'");
         coordOrigin1 = GameObject.Find("CoordOrigin1"); if (!coordOrigin1) throw new System.Exception("Hand Map BottomRight Coordinate origin not found. Make sure there is a 'coordOrigin1'");
+        holdItems = GetComponent<HoldItems>();
+        holdItems.guide = Camera.main.gameObject.transform.GetChild(1).gameObject.transform;
+
 
         preFOV = cam.defaultFOV;
         preFOVT = cam.maxFOVTweak;
@@ -91,6 +94,8 @@ public class Player : MonoBehaviour
     // Called every frame.
     void Update()
     {
+        checkInteract();
+
         /////////////////////   Do raycast drawing stuff.
         // Start a new line/redline in the active Region while the button is down.
         if (Input.GetButtonDown(cameraDrawButton))
@@ -132,7 +137,6 @@ public class Player : MonoBehaviour
             {
                 isCameraDrawing = false;
                 endCameraLine();
-                crosshair.SetActive(false); // Hide crosshair.
                 cam.defaultFOV = preFOV; // Reset FOV.
                 cam.maxFOVTweak = 5f;
             }
@@ -178,12 +182,14 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(r, out hit, cameraDrawMaxDistance, layerMask: raycastIgnoreLayers))
         {
+            inDrawingRange = true;
             Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
             Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
             lastRaycastHit = newHit;
             StateController.activeRegion.addLineToRegion(newHit);
             GetComponent<SoundPlayer>().Play("DrawStart");
         }
+        else inDrawingRange = false;
     }
     // Add a point to the active Map Line under the Active Region.
     private void addToCameraLine()
@@ -194,15 +200,15 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(r, out hit, cameraDrawMaxDistance, layerMask: raycastIgnoreLayers))
         {
+            inDrawingRange = true;
             Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
-            crosshair.SetActive(true);
             Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
             lastRaycastHit = newHit;
             StateController.activeRegion.addLinePointToRegion(newHit);
 
             if (!drawLoopSrc.isPlaying) drawLoopSrc.Play();
         }
-        else crosshair.SetActive(false);
+        else inDrawingRange = false;
     }
     // Tell the active Region to 'sink' the latest Line under the ground.
     private void endCameraLine()
@@ -342,4 +348,109 @@ public class Player : MonoBehaviour
 
 
 
+    /////////////////////////////////////////////////////////   OTHER STUFF
+    // Set crosshair to indicate how you can interact with things.
+    private void checkInteract()
+    {
+        if (isCameraDrawing)
+        {
+            if (inDrawingRange)
+            { // can draw a line.
+                UserInterface.SetCursor(crosshairTypes.draw);
+            }
+            else // trying to draw a line but cant.
+            {
+                UserInterface.SetCursor(crosshairTypes.none);
+            }
+            return;
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f)));
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 4f))
+        {
+            if (hit.transform.gameObject != null)
+            {
+                if (hit.transform.gameObject.tag == "Moveable") // moveable object, can grab it.
+                {
+                    UserInterface.SetCursor(crosshairTypes.grab);
+                    if (Input.GetKeyDown(KeyCode.E)) holdItems.Pickup(hit.transform.gameObject);
+                }
+                else if(holdItems.getHeldObject() != null)
+                {
+                    if (hit.transform.gameObject.tag == "Event")
+                    // Looking at an event.
+                    {
+                        if(hit.transform.gameObject.name.Contains(holdItems.getHeldObject().name))
+                        // looking at an event while holding the proper item.
+                        {
+                            UserInterface.SetCursor(crosshairTypes.place);
+                            if (Input.GetKeyDown(KeyCode.E)) holdItems.Place(hit.transform.gameObject.transform);
+                        }
+                        else
+                        { // looking at an event while holding the wrong item.
+                            UserInterface.SetCursor(crosshairTypes.nope);
+                        }
+                    }
+                    else // cant place our item, but we are still holding an item, so it can be dropped.
+                    {
+                        UserInterface.SetCursor(crosshairTypes.drop);
+                        if (Input.GetKeyDown(KeyCode.E)) holdItems.Drop(false);
+                    }
+                }
+                else // looking at the ground, but nothing to do.
+                {
+                    UserInterface.SetCursor(crosshairTypes.none);
+                }
+            }
+
+            /*if(holdItems.getHeldObject() != null)
+            {
+                if (hit.transform.gameObject != null) // surface to land on,
+                {
+                    if (hit.transform.gameObject.tag == "Event" && hit.transform.gameObject.name.Contains(holdItems.getHeldObject().name))
+                    { // can place held item into event.
+                        UserInterface.SetCursor(crosshairTypes.place);
+                    } // or just drop it on the ground surface.
+                    else UserInterface.SetCursor(crosshairTypes.drop);
+                }
+                else // no surface, yeet it.
+                {
+                    UserInterface.SetCursor(crosshairTypes.yeet);
+                }
+            }
+            else {
+                if (hit.transform.gameObject != null)
+                {
+                    if(hit.transform.gameObject.tag == "Moveable")
+                    { // moveable object, grab it.
+                        UserInterface.SetCursor(crosshairTypes.grab);
+                    }
+                }
+            }*/
+            /*if (hit.transform.gameObject.tag == "Event" && heldObject != null && hit.transform.gameObject.name.Contains(heldObject.name))
+            {
+                Debug.Log("placeable");
+            }
+            else if (heldObject != null)
+            {
+                Throw();
+            }
+            //Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
+            //Debug.Log(hit.transform.gameObject.name);
+            else Pickup(hit.transform.gameObject);*/
+        }
+        else // not in interact range.
+        {
+            if(holdItems.getHeldObject() != null) // if holding something, can yeet it.
+            {
+                UserInterface.SetCursor(crosshairTypes.yeet);
+                if (Input.GetKeyDown(KeyCode.E)) holdItems.Drop(true);
+            }
+            else // else, no crosshair
+            {
+                UserInterface.SetCursor(crosshairTypes.none);
+            }
+        }
+    }
 }

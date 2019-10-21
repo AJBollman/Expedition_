@@ -7,95 +7,152 @@ public class HoldItems : MonoBehaviour
 
 
     public float speed = 5;
-    public bool canHold = true;
-    private Vector3 smallScale;
-    private Vector3 currentScale;
-    public GameObject obj;
     public Transform guide;
-    public GameObject startWithObj;
+    public GameObject startWithObject;
+    public Camera cameraOverride;
+
+    private Camera raycastCamera;
+    private GameObject heldObject;
+
+    private Transform goal;
+    private Vector3 initialScale;
+    private Vector3 goalScale;
+    private bool isPlacing;
 
     private void Awake()
     {
-        obj = null;
+        if (startWithObject != null) Pickup(startWithObject);
+        if (raycastCamera == null) raycastCamera = Camera.main;
     }
 
-    void Update()
+    public GameObject getHeldObject()
     {
-      
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            interact();
-        }
-    }//update
+        return heldObject;
+    }
 
-
-    private void interact()
+    private void Update()
     {
-        if (!canHold)
-            Throw();
-        else
+        if(heldObject != null)
         {
-            Ray ray = GetComponent<Camera>().ScreenPointToRay(new Vector2(0.5f, 0.5f));
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 3f))
-            {
-                if (hit.transform.gameObject.tag == "Moveable")
-                {
-                    obj = hit.transform.gameObject;
-                    canHold = false;
-                    Pickup();
-                    GetComponent<SoundPlayer>().Play("GrabPlank");
-                }
-                if (hit.transform.gameObject.tag == "Event")
-                {
-                    canHold = true;
-                    GetComponent<SoundPlayer>().Play("GrabPlank");
-                }
-            }
+            heldObject.transform.position = Vector3.Lerp(heldObject.transform.position, goal.position, Time.deltaTime * 15f);
+            heldObject.transform.rotation = Quaternion.Lerp(heldObject.transform.rotation, goal.rotation, Time.deltaTime * 15f);
+            heldObject.transform.localScale = Vector3.Lerp(heldObject.transform.localScale, goalScale, Time.deltaTime * 15f);
         }
     }
 
-    void Pickup()
+
+
+
+    public void Pickup(GameObject pickingUpObject)
     {
+        if (pickingUpObject.tag != "Moveable" || isPlacing) return;
+
+        if(pickingUpObject.transform.parent != null && pickingUpObject.transform.parent.tag == "Event")
+        {
+            pickingUpObject.transform.parent.GetComponent<MeshRenderer>().enabled = true;
+        }
+        heldObject = pickingUpObject;
         //scales down the object when you pick it up and grabs the current size
-        currentScale = obj.transform.localScale;
-        smallScale = currentScale * 0.2f;
+        //currentScale = heldObject.transform.localScale;
+        //smallScale = currentScale * 0.2f;
 
         //We set the object parent to our guide empty object.
-        obj.transform.SetParent(guide);
+        initialScale = pickingUpObject.transform.localScale;
+        heldObject.transform.SetParent(guide);
+        goalScale = initialScale * 0.1f;
+        goal = guide.transform;
 
         //Set gravity to false while holding it
-        obj.GetComponent<Rigidbody>().useGravity = false;
+        heldObject.GetComponent<Rigidbody>().useGravity = false;
 
         //we apply the same rotation our main object (Camera) has.
-        obj.transform.localRotation = transform.rotation;
+        /*heldObject.transform.localRotation = transform.rotation;
         //We re-position the ball on our guide object 
-        obj.transform.position = guide.position;
-        obj.transform.rotation = guide.rotation;
-        obj.transform.localScale = smallScale;
-        obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        //GetComponent<SoundPlayer>().Play("GrabPlank", true);
+        heldObject.transform.position = guide.position;
+        heldObject.transform.rotation = guide.rotation;
+        heldObject.transform.localScale = smallScale;*/
+        heldObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        heldObject.GetComponent<Collider>().enabled = false;
+        SoundPlayer sound = pickingUpObject.GetComponent<SoundPlayer>();
+        if(sound != null)
+        {
+            sound.Play("Grab");
+        }
     }
 
-    void Throw()
+
+
+
+    public void Drop(bool yeet)
     {
-        if (!obj)
-            return;
+        if (heldObject == null || isPlacing) return;
 
-        obj.transform.localScale = currentScale;
-        //Set our Gravity to true again.
-        obj.GetComponent<Rigidbody>().useGravity = true;
-        obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        // we don't have anything to do with our ball field anymore
-        obj = null;
-        //Apply velocity on throwing
-        guide.GetChild(0).gameObject.GetComponent<Rigidbody>().velocity = transform.forward * speed;
+        heldObject.transform.localScale = initialScale;
+        heldObject.GetComponent<Rigidbody>().useGravity = true;
+        heldObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
-        //Unparent our ball
-        if(guide.GetChild(0) != null)
+        if(yeet)
+        {
+            heldObject.GetComponent<Rigidbody>().velocity = Camera.main.transform.forward * speed;
+        }
+
+        if (guide.GetChild(0) != null)
         {
             guide.GetChild(0).parent = null;
         }
-        canHold = true;
+        StartCoroutine(yeetEnableCollider(0.25f, heldObject.transform));
+        heldObject = null;
+    }
+
+
+
+
+    public void Place(Transform at)
+    {
+        if (heldObject == null || isPlacing) return;
+
+        SoundPlayer sound = heldObject.GetComponent<SoundPlayer>();
+        if (sound != null)
+        {
+            sound.Play("Grab");
+        }
+
+        isPlacing = true;
+
+        /*goal.localPosition = at.localPosition;
+        goal.rotation = at.rotation;
+        goal.localScale = at.localScale;*/
+        goal = at;
+        goal.localPosition += new Vector3(0, 1f, 0);
+        goalScale = initialScale;
+
+        StartCoroutine(unparentAndReenable(0.5f, at));
+    }
+
+
+    private IEnumerator yeetEnableCollider(float delay, Transform obj)
+    {
+        yield return new WaitForSeconds(delay);
+        obj.gameObject.GetComponent<Collider>().enabled = true;
+    }
+
+
+    private IEnumerator unparentAndReenable(float delay, Transform srslyunity)
+    {
+        yield return new WaitForSeconds(delay);
+        heldObject.GetComponent<Collider>().enabled = true;
+        heldObject.GetComponent<Rigidbody>().useGravity = true;
+        heldObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+
+        //heldObject.transform.SetParent(srslyunity);
+        heldObject = null;
+
+        if (guide.GetChild(0) != null)
+        {
+            guide.GetChild(0).parent = null;
+        }
+        srslyunity.localPosition += new Vector3(0, -1f, 0);
+        srslyunity.GetComponent<MeshRenderer>().enabled = false;
+        isPlacing = false;
     }
 }

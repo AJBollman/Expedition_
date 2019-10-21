@@ -9,7 +9,7 @@ public class SoundOnHit : MonoBehaviour
     public float maxVol;
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.impulse.magnitude);
+        //Debug.Log(collision.impulse.magnitude);
         GetComponent<SoundPlayer>().Play(hitSound, Mathf.Clamp(collision.impulse.magnitude, 0f, maxVol));
     }
 }
