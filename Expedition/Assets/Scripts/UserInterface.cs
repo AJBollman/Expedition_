@@ -28,7 +28,7 @@ public class UserInterface : MonoBehaviour
         {
             case crosshairTypes.draw:
                 {
-                    crosshair.GetComponent<Text>().text = "○";
+                    crosshair.GetComponent<Text>().text = "O";
                     break;
                 }
             case crosshairTypes.yeet:
@@ -38,7 +38,7 @@ public class UserInterface : MonoBehaviour
                 }
             case crosshairTypes.drop:
                 {
-                    crosshair.GetComponent<Text>().text = "˅";
+                    crosshair.GetComponent<Text>().text = "v";
                     break;
                 }
             case crosshairTypes.grab:
@@ -48,7 +48,7 @@ public class UserInterface : MonoBehaviour
                 }
             case crosshairTypes.place:
                 {
-                    crosshair.GetComponent<Text>().text = "✓";
+                    crosshair.GetComponent<Text>().text = "v";
                     break;
                 }
             case crosshairTypes.nope:
