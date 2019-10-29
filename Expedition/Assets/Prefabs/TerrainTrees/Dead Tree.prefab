@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4976671276706895072}
   m_Layer: 0
-  m_Name: Pink TerrainTree
+  m_Name: Dead Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 6732478894554908206}
   - component: {fileID: 2320927610563836952}
   - component: {fileID: 8289189807465578721}
-  - component: {fileID: 8516684065152635588}
+  - component: {fileID: 8576513401641156519}
   m_Layer: 0
   m_Name: Tree_07
   m_TagString: Untagged
@@ -57,13 +57,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7725300889544848445}
-  m_LocalRotation: {x: 0.00000008146034, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.9766, y: -14.98, z: 7.4082}
+  m_LocalRotation: {x: 0.000000081458964, y: -4.8150284e-10, z: -0.005910905, w: 0.9999826}
+  m_LocalPosition: {x: -3.046692, y: -14.961945, z: 7.408203}
   m_LocalScale: {x: 0.046033893, y: 0.046033893, z: 0.046033893}
   m_Children: []
   m_Father: {fileID: 4976671276706895072}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.67700005}
 --- !u!33 &2320927610563836952
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -110,8 +110,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &8516684065152635588
-MeshCollider:
+--- !u!65 &8576513401641156519
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -120,7 +120,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: -6610372209951864464, guid: 570e8eb24d605b84a8eac35a667a740a, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 28.608694, y: 177.25198, z: 29.532536}
+  m_Center: {x: 2.7944307, y: 88.59527, z: 3.5966208}
