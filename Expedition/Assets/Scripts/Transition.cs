@@ -9,6 +9,7 @@ public class Transition : MonoBehaviour
     public string AScene;
     public string BScene;
     public string name;
+    public GameObject associatedStuffToRemove;
     private bool isInside;
     private bool insideA;
     private bool insideB;
@@ -17,10 +18,14 @@ public class Transition : MonoBehaviour
 
     void Awake()
     {
-        Application.backgroundLoadingPriority = ThreadPriority.BelowNormal;
+        Application.backgroundLoadingPriority = ThreadPriority.Low;
         if (names.Contains(name))
         {
             Debug.Log("Removing duplicate scene trasition");
+            if(associatedStuffToRemove != null && GameObject.Find(associatedStuffToRemove.name))
+            {
+                //Destroy(associatedStuffToRemove);
+            }
             Destroy(gameObject);
         }
         else DontDestroyOnLoad(gameObject);
