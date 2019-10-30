@@ -400,7 +400,16 @@ public class Player : MonoBehaviour
                         // looking at an event while holding the proper item.
                         {
                             UserInterface.SetCursor(crosshairTypes.place);
-                            if (Input.GetKeyDown(KeyCode.E)) holdItems.Place(hit.transform.gameObject.transform);
+                            if (Input.GetKeyDown(KeyCode.E))
+                            {
+                                var test = hit.transform.gameObject.GetComponent<BasicEvent>();
+                                if (test != null)
+                                {
+                                    test.completeEvent(holdItems.getHeldObject());
+                                    holdItems.Place(hit.transform.gameObject.transform);
+                                }
+                                else throw new System.Exception("This event object has no BasicEvent script!");
+                            }
                         }
                         else
                         { // looking at an event while holding the wrong item.
@@ -418,42 +427,6 @@ public class Player : MonoBehaviour
                     UserInterface.SetCursor(crosshairTypes.none);
                 }
             }
-
-            /*if(holdItems.getHeldObject() != null)
-            {
-                if (hit.transform.gameObject != null) // surface to land on,
-                {
-                    if (hit.transform.gameObject.tag == "Event" && hit.transform.gameObject.name.Contains(holdItems.getHeldObject().name))
-                    { // can place held item into event.
-                        UserInterface.SetCursor(crosshairTypes.place);
-                    } // or just drop it on the ground surface.
-                    else UserInterface.SetCursor(crosshairTypes.drop);
-                }
-                else // no surface, yeet it.
-                {
-                    UserInterface.SetCursor(crosshairTypes.yeet);
-                }
-            }
-            else {
-                if (hit.transform.gameObject != null)
-                {
-                    if(hit.transform.gameObject.tag == "Moveable")
-                    { // moveable object, grab it.
-                        UserInterface.SetCursor(crosshairTypes.grab);
-                    }
-                }
-            }*/
-            /*if (hit.transform.gameObject.tag == "Event" && heldObject != null && hit.transform.gameObject.name.Contains(heldObject.name))
-            {
-                Debug.Log("placeable");
-            }
-            else if (heldObject != null)
-            {
-                Throw();
-            }
-            //Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
-            //Debug.Log(hit.transform.gameObject.name);
-            else Pickup(hit.transform.gameObject);*/
         }
         else // not in interact range.
         {

@@ -79,11 +79,13 @@ public class Transition : MonoBehaviour
         {
             if(!SceneManager.GetSceneByName(scene).isLoaded)
             {
+                //Debug.Log(scene += "akhbsd");
                 loaderIsRunning = true;
                 AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
                 while (!asyncLoad.isDone)
                 {
                     loaderIsRunning = false;
+                    //SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene));
                     yield return null;
                 }
             }
@@ -100,14 +102,14 @@ public class Transition : MonoBehaviour
             {
                 Debug.Log("HHERE");
                 AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(scene);
-                while (!asyncUnload.isDone)
+                while (asyncUnload != null && !asyncUnload.isDone)
                 {
                     yield return null;
                 }
             }
-            else Debug.Log("Scene '" + scene + "' isn't loaded!");
+            else Debug.Log("Tried to unload, but scene '" + scene + "' isn't loaded!");
         }
-        else throw new Exception("Scene '" + scene + "' doesn't exist!");
+        else throw new Exception("Tried to unload, but scene '" + scene + "' doesn't exist!");
     }
 
     // Load scene in background.

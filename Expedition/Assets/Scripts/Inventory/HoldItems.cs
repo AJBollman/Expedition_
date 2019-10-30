@@ -143,6 +143,7 @@ public class HoldItems : MonoBehaviour
         heldObject.GetComponent<Collider>().enabled = true;
         heldObject.GetComponent<Rigidbody>().useGravity = true;
         heldObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        heldObject.tag = "Event";
 
         //heldObject.transform.SetParent(srslyunity);
         heldObject = null;
@@ -152,7 +153,6 @@ public class HoldItems : MonoBehaviour
             guide.GetChild(0).parent = null;
         }
         srslyunity.localPosition += new Vector3(0, -1f, 0);
-        srslyunity.GetComponent<MeshRenderer>().enabled = false;
         isPlacing = false;
     }
 }
