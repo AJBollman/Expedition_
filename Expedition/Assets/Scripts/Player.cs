@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
     private Vector3 coordPlaneBounds;
     private CharacterController ccon;
     private HoldItems holdItems;
+    private GameObject PauseMenu;
 
     private Movement mv;
     private float preFOV;
@@ -71,7 +73,7 @@ public class Player : MonoBehaviour
         coordOrigin1 = GameObject.Find("CoordOrigin1"); if (!coordOrigin1) throw new System.Exception("Hand Map BottomRight Coordinate origin not found. Make sure there is a 'coordOrigin1'");
         holdItems = GetComponent<HoldItems>();
         holdItems.guide = Camera.main.gameObject.transform.GetChild(1).gameObject.transform;
-
+        PauseMenu = GameObject.Find("PauseMenu");
 
         preFOV = cam.defaultFOV;
         preFOVT = cam.maxFOVTweak;
@@ -88,6 +90,7 @@ public class Player : MonoBehaviour
         drawLoopSrc = gameObject.AddComponent<AudioSource>();
         drawLoopSrc.clip = drawLoop;
         drawLoopSrc.loop = true;
+        PauseMenu.SetActive(false);
     }
 
 
@@ -168,6 +171,14 @@ public class Player : MonoBehaviour
 
         ////////////////////   Toggle map rotation.
         if (Input.GetKeyDown(toggleMapRotKey)) toggleMapRot();
+
+        ////////////////////    opening the pause menu
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseMenu.SetActive(!PauseMenu.active);
+            StateController.setState((PauseMenu.active) ? gameStates.paused : gameStates.normal);
+            cam.enableControls = !PauseMenu.active;
+        }
     }
 
 
@@ -440,5 +451,12 @@ public class Player : MonoBehaviour
                 UserInterface.SetCursor(crosshairTypes.none);
             }
         }
+    }
+
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("Menu");
+        Time.timeScale = 0f;
     }
 }
