@@ -12,6 +12,7 @@ public class TravellerDropThePlank : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+		Debug.Log("jg");
         if(other.gameObject.tag == "Traveler")
         {
             var hold = other.gameObject.GetComponent<HoldItems>();
