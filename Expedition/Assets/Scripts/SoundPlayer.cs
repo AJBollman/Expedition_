@@ -17,7 +17,7 @@ public class SoundPlayer : MonoBehaviour
 
 
 
-    void Start()
+    void Awake()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
         if (audioSource == null) throw new System.Exception("SoundPlayer needs an audio source!");
@@ -38,9 +38,12 @@ public class SoundPlayer : MonoBehaviour
         }
         var soundList = sownd.soundsList;
         int index = Random.Range(0, soundList.Length);
+        if (soundList[index] == null) throw new System.Exception("Sound" + index + " not found");
         audioSource.clip = soundList[index];
         audioSource.PlayOneShot(soundList[index], sownd.volume);
     }
+
+
     public void Play(string name, float vol)
     {
         AudThingy sownd = new AudThingy();

@@ -9,7 +9,6 @@ public class HoldItems : MonoBehaviour
     public float speed = 5;
     public Transform guide;
     public GameObject startWithObject;
-    public Camera cameraOverride;
 
     private Camera raycastCamera;
     private GameObject heldObject;
@@ -21,7 +20,6 @@ public class HoldItems : MonoBehaviour
 
     private void Awake()
     {
-        if (startWithObject != null) Pickup(startWithObject);
         if (raycastCamera == null) raycastCamera = Camera.main;
     }
 
@@ -38,6 +36,11 @@ public class HoldItems : MonoBehaviour
             heldObject.transform.rotation = Quaternion.Lerp(heldObject.transform.rotation, goal.rotation, Time.deltaTime * 15f);
             heldObject.transform.localScale = Vector3.Lerp(heldObject.transform.localScale, goalScale, Time.deltaTime * 15f);
         }
+    }
+
+    public void Start()
+    {
+        if (startWithObject != null) Pickup(startWithObject.gameObject);
     }
 
 
@@ -85,6 +88,7 @@ public class HoldItems : MonoBehaviour
 
     public void Drop(bool yeet)
     {
+        Debug.Log("akhsvd");
         if (heldObject == null || isPlacing) return;
 
         heldObject.transform.localScale = initialScale;
