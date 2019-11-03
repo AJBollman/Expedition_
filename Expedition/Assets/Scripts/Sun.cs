@@ -10,6 +10,10 @@ public class Sun : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else DontDestroyOnLoad(gameObject);
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+            StaticsList.add(gameObject);
+        }
     }
 }

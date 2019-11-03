@@ -14,7 +14,7 @@ public class Transition : MonoBehaviour
     private bool insideA;
     private bool insideB;
     private bool loaderIsRunning;
-    private static List<string> names = new List<string>();
+    public static List<string> names = new List<string>();
 
     void Awake()
     {
@@ -28,7 +28,11 @@ public class Transition : MonoBehaviour
             }
             Destroy(gameObject);
         }
-        else DontDestroyOnLoad(gameObject);
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+            StaticsList.add(gameObject);
+        }
         names.Add(name);
     }
 

@@ -13,6 +13,11 @@ public class StateController : MonoBehaviour
     public static Region activeRegion;
     public static Camera activeRegionCamera;
     public static Portal activePortal;
+    public static CameraOperator cam;
+
+    private static GameObject camInitialLookAt;
+    private static GameObject camInitialFollowPoint;
+    private static StateController inst;
 
     private void Awake()
     {
@@ -20,12 +25,20 @@ public class StateController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+		else
+		{
+			DontDestroyOnLoad(gameObject);
+			StaticsList.add(gameObject);
+		}
+		inst = this;
     }
 
     private void Start()
     {
-        Object.DontDestroyOnLoad(gameObject);
-        setState(gameStates.normal);
+        cam = GameObject.Find("CameraContainer").GetComponent<CameraOperator>(); if (!cam) throw new System.Exception("Camera Container not found. Make sure there is a Camera Container");
+        camInitialLookAt = cam.lookAt;
+        camInitialFollowPoint = cam.followPoint;
+        setState(gameStates.menu);
     }
 
 
@@ -38,17 +51,68 @@ public class StateController : MonoBehaviour
         switch(StateController.state)
         {
             case gameStates.normal: {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                break;
+                    cam.defaultFOV = 90f;
+                    cam.enableControls = true;
+                    cam.enableLookAt = false;
+                    cam.followPoint = GameObject.Find("The Explorer");
+                    Camera.main.GetComponent<Animator>().enabled = false;
+                    Camera.main.nearClipPlane = 0.01f;
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                    cam.smoothTime = 64;
+                    Time.timeScale = 1f;
+                    //cam.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 85f, 0));
+                    break;
             }
-            default:
+            case gameStates.menu:
             {
-               Cursor.visible = true;
-               Cursor.lockState = CursorLockMode.None;
-               break;
+                    cam.defaultFOV = 30f;
+                    cam.enableControls = false;
+                    cam.enableLookAt = true;
+                    cam.lookAt = camInitialLookAt;
+                    cam.followPoint = camInitialFollowPoint;
+                    Camera.main.GetComponent<Animator>().enabled = true;
+                    Camera.main.nearClipPlane = 1;
+                    cam.smoothTime = 500;
+                    UserInterface.SetCursor(crosshairTypes.none);
+                    break;
+            }
+            case gameStates.paused:
+            {
+                    Time.timeScale = 0f;
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    break;
             }
         }
+    }
+
+
+    private static IEnumerator flyToStart(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        setState(gameStates.normal);
+        inst.StartCoroutine(camr(0.1f));
+    }
+    private static IEnumerator camr(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        cam.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 85f, 0));
+    }
+
+
+
+    public static void StartGame()
+    {
+		GameObject bo = GameObject.Find("S_Boat");
+        GameObject ex = GameObject.Find("The Explorer");
+        GameObject.Find("Logo").SetActive(false);
+        cam.followPoint = ex;
+        cam.defaultFOV = 90f;
+        cam.lookAt = bo;
+        cam.smoothTime = 0.75f;
+		ex.transform.LookAt(bo.transform);
+		inst.StartCoroutine(flyToStart(5f));
     }
 
 
@@ -79,4 +143,4 @@ public class StateController : MonoBehaviour
 // Normal: Explorer can move around and do stuff.
 // Fullmap: We are in fullscreen map mode; no movement allowed.
 // Guiding: TODO not sure about this one.
-public enum gameStates { menu, paused, normal, fullmap, guiding };
+public enum gameStates { menu, paused, normal };

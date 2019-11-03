@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     private float preFOVT;
     private bool undoRedoPre;
     private bool inDrawingRange;
+    private gameStates cachedGS;
 
     private AudioSource jumpLoopSrc;
     public AudioClip jumpLoop;
@@ -59,7 +60,11 @@ public class Player : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else DontDestroyOnLoad(gameObject);
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+            StaticsList.add(gameObject);
+        }
     }
 
     void Start()
@@ -75,7 +80,7 @@ public class Player : MonoBehaviour
         holdItems.guide = Camera.main.gameObject.transform.GetChild(1).gameObject.transform;
         PauseMenu = GameObject.Find("PauseMenu");
 
-        preFOV = cam.defaultFOV;
+        preFOV = 90f;
         preFOVT = cam.maxFOVTweak;
         mv = GetComponent<Movement>();
         coordPlaneBounds = new Vector3(
@@ -91,22 +96,68 @@ public class Player : MonoBehaviour
         drawLoopSrc.clip = drawLoop;
         drawLoopSrc.loop = true;
         PauseMenu.SetActive(false);
+        redvignette.SetActive(false);
+        vignette.SetActive(false);
     }
 
 
     // Called every frame.
     void Update()
     {
+        ////////////////////   Fullscreen map lerping.
+        if (!mapIsFull) isRedLineMode = false;
+        Vector3 targetPos;
+        if (StateController.activeRegion == null)
+        {
+            targetPos = new Vector3(0, -0.25f, -0.25f);
+        }
+        else targetPos = (mapIsFull) ? fullMapPos : miniMapPos;
+        handMap.transform.localPosition = Vector3.Lerp(
+            handMap.transform.localPosition,
+            targetPos,
+            Time.deltaTime * mapFullscreenTransitionTime
+        );
+
+
+
+        // Player script does *nothing* in main menu.
+        if (cachedGS == gameStates.menu) return;
+
+
+
+        ////////////////////    opening the pause menu
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            var isPaused = !PauseMenu.activeSelf;
+            StateController.setState(isPaused ? gameStates.paused : gameStates.normal);
+
+            PauseMenu.SetActive(isPaused);
+            cam.enableControls = !isPaused;
+            if(isPaused)
+            {
+                if (isRedLineMode) endRedLine();
+                if(isCameraDrawing) endCameraLine();
+                cam.defaultFOV = preFOV; // Reset FOV.
+                cam.maxFOVTweak = 5f;
+                drawLoopSrc.Stop();
+                redvignette.SetActive(false);
+                vignette.SetActive(false);
+            }
+        }
+
+
+
+        if (cachedGS != gameStates.normal) return;
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         checkInteract();
 
         /////////////////////   Do raycast drawing stuff.
         // Start a new line/redline in the active Region while the button is down.
         if (Input.GetButtonDown(cameraDrawButton))
         {
-            if (isRedLineMode)
-            {
-                startRedLine();
-            }
+            if (isRedLineMode) startRedLine();
             else
             {
                 isCameraDrawing = true;
@@ -121,10 +172,7 @@ public class Player : MonoBehaviour
         // While the button is down, add new points to the line that was just made.
         if (Input.GetButton(cameraDrawButton))
         {
-            if (isRedLineMode)
-            {
-                addToRedLine();
-            }
+            if (isRedLineMode) addToRedLine();
             else addToCameraLine();
         }
 
@@ -132,10 +180,7 @@ public class Player : MonoBehaviour
         // For now, that just means sink the line below the ground.
         if (Input.GetButtonUp(cameraDrawButton))
         {
-            if (isRedLineMode)
-            {
-                endRedLine();
-            }
+            if (isRedLineMode) endRedLine();
             else
             {
                 isCameraDrawing = false;
@@ -154,31 +199,9 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(redoKey)) redoLastLine();
         if (Input.GetKeyDown(fullKey)) toggleFullMap();
         if (Input.GetKeyDown(redLinekey) && mapIsFull) isRedLineMode = !isRedLineMode;
-        if (!mapIsFull) isRedLineMode = false;
-
-        ////////////////////   Fullscreen map.
-        Vector3 targetPos;
-        if (StateController.activeRegion == null)
-        {
-            targetPos = new Vector3(0, -0.25f, -0.25f);
-        }
-        else targetPos = (mapIsFull) ? fullMapPos : miniMapPos;
-        handMap.transform.localPosition = Vector3.Lerp(
-            handMap.transform.localPosition,
-            targetPos,
-            Time.deltaTime * mapFullscreenTransitionTime
-        );
 
         ////////////////////   Toggle map rotation.
         if (Input.GetKeyDown(toggleMapRotKey)) toggleMapRot();
-
-        ////////////////////    opening the pause menu
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            PauseMenu.SetActive(!PauseMenu.active);
-            StateController.setState((PauseMenu.active) ? gameStates.paused : gameStates.normal);
-            cam.enableControls = !PauseMenu.active;
-        }
     }
 
 
@@ -237,6 +260,7 @@ public class Player : MonoBehaviour
     {
         var mag = Mathf.Abs(Mathf.Max(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"))) * 0.75f + (ccon.velocity.magnitude * 0.1f);
         drawLoopSrc.volume = mag;
+        cachedGS = StateController.getState();
     }
 
 
@@ -273,12 +297,10 @@ public class Player : MonoBehaviour
         mv.moveAllowed = !mapIsFull;
         if (mapIsFull)
         {
-            StateController.setState(gameStates.fullmap);
             GetComponent<SoundPlayer>().Play("MapFull");
         }
         else
         {
-            StateController.setState(gameStates.normal);
             GetComponent<SoundPlayer>().Play("MapMinimize");
         }
         // todo
@@ -456,7 +478,6 @@ public class Player : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene("Menu");
-        Time.timeScale = 0f;
+        StaticsList.destroyAll();
     }
 }

@@ -7,7 +7,7 @@ public class CameraOperator : MonoBehaviour
     // IMPORTANT STUFF
     public bool enableControls = true;
     public GameObject followPoint;
-    public float defaultFOV = 80f;
+    public float defaultFOV = 90f;
     public Vector3 sensitivity = new Vector3(1f, 0.65f, 1f);
     public float sensMultiplier = 1f;
 
@@ -35,6 +35,7 @@ public class CameraOperator : MonoBehaviour
 	private Vector2 _axisDamper = new Vector2(3f, 3f);
     private float _distToTLookTarget = 0f;
     private Vector2 _input = Vector2.zero;
+    private Quaternion _initAim = Quaternion.Euler(new Vector3(0, 85, 0));
 
 
     //********************************************************************************************************
@@ -44,14 +45,19 @@ public class CameraOperator : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else DontDestroyOnLoad(gameObject);
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+            StaticsList.add(gameObject);
+        }
     }
 
     private void Start()
     {
         _goalFOV = defaultFOV;
 		_camCamera = GetComponentInChildren<Camera>();
-        followPoint = GameObject.Find("The Explorer");
+        transform.rotation = _aim;
+        //followPoint = GameObject.Find("The Explorer");
     }
 
     public float smoothTime = 8f;
@@ -85,36 +91,34 @@ public class CameraOperator : MonoBehaviour
             followPoint.transform.position.z + _truePivot.z
         );
 
-        // ************** ROTATION
-        if (enableControls)
+        if (enableLookAt)
         {
-            if (enableLookAt)
+            transform.LookAt(lookAt.transform.position);
+        }
+
+        // ************** ROTATION
+        if (enableControls && !enableLookAt)
+        {
+            // Set inputs.
+            _input.x = Input.GetAxis("Mouse X");
+            _input.y = Input.GetAxis("Mouse Y");
+
+            /*if (doHorizontalBias)
             {
-                transform.LookAt(lookAt.transform.position);
-            }
-            else
-            {
-                // Set inputs.
-                _input.x = Input.GetAxis("Mouse X");
-                _input.y = Input.GetAxis("Mouse Y");
+                if (Mathf.Abs(Input.GetAxis("Mouse X")) > Mathf.Abs(Input.GetAxis("Mouse Y"))) _axisDamper.y = 0f;
+                else _axisDamper.y = 3f;
+            }*/
 
-                if (doHorizontalBias)
-                {
-                    if (Mathf.Abs(Input.GetAxis("Mouse X")) > Mathf.Abs(Input.GetAxis("Mouse Y"))) _axisDamper.y = 0f;
-                    else _axisDamper.y = 3f;
-                }
+            // Set rotation deltas.
+            _rotDelta.x += Mathf.Clamp(_input.x / 10, -1, 1) * sensitivity.x * sensMultiplier * _axisDamper.x * 2;
+            _rotDelta.y += Mathf.Clamp(_input.y / 10, -1, 1) * sensitivity.y * sensMultiplier * _axisDamper.y * 2;
 
-                // Set rotation deltas.
-                _rotDelta.x += Mathf.Clamp(_input.x / 10, -1, 1) * sensitivity.x * sensMultiplier * _axisDamper.x * 2;
-                _rotDelta.y += Mathf.Clamp(_input.y / 10, -1, 1) * sensitivity.y * sensMultiplier * _axisDamper.y * 2;
+            // Limit vertical angle.
+            _rotDelta.y = Mathf.Clamp(_rotDelta.y, maxLookDownAngle, maxLookUpAngle);
 
-                // Limit vertical angle.
-                _rotDelta.y = Mathf.Clamp(_rotDelta.y, maxLookDownAngle, maxLookUpAngle);
-
-                // Set camera angle. DO THE THING!
-                _aim = Quaternion.Euler(-_rotDelta.y, _rotDelta.x, 0);
-                transform.rotation = _aim;
-            }
+            // Set camera angle. DO THE THING!
+            _aim = Quaternion.Euler(-_rotDelta.y, _rotDelta.x, 0);
+            transform.rotation = _aim;
         }
 
 

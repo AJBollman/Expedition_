@@ -14,7 +14,11 @@ public class UserInterface : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else DontDestroyOnLoad(gameObject);
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+            StaticsList.add(gameObject);
+        }
 
         crosshair = GameObject.Find("Crosshair");
     }
