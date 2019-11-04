@@ -76,7 +76,7 @@ public class StateController : MonoBehaviour
                     cam.followPoint = camInitialFollowPoint;
                     Camera.main.GetComponent<Animator>().enabled = true;
                     Camera.main.nearClipPlane = 1;
-                    cam.smoothTime = 500;
+                    cam.smoothTime = 2;
                     UserInterface.SetCursor(crosshairTypes.none);
                     break;
             }
