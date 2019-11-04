@@ -18,6 +18,7 @@ public class StateController : MonoBehaviour
     private static GameObject camInitialLookAt;
     private static GameObject camInitialFollowPoint;
     private static StateController inst;
+    private static GameObject transitionDinghy;
 
     private void Awake()
     {
@@ -39,6 +40,8 @@ public class StateController : MonoBehaviour
         camInitialLookAt = cam.lookAt;
         camInitialFollowPoint = cam.followPoint;
         setState(gameStates.menu);
+        transitionDinghy = GameObject.Find("dinghy");
+        transitionDinghy.SetActive(false);
     }
 
 
@@ -92,6 +95,8 @@ public class StateController : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         setState(gameStates.normal);
+        Destroy(GameObject.Find("HideAfterTransition"));
+        transitionDinghy.SetActive(true);
         inst.StartCoroutine(camr(0.1f));
     }
     private static IEnumerator camr(float delay)

@@ -8158,7 +8158,6 @@ Transform:
   - {fileID: 1415506182}
   - {fileID: 1321864034}
   - {fileID: 821422497}
-  - {fileID: 720767350}
   m_Father: {fileID: 0}
   m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -25002,7 +25001,7 @@ GameObject:
   - component: {fileID: 720767352}
   - component: {fileID: 720767351}
   m_Layer: 0
-  m_Name: S_Boat (1)
+  m_Name: dinghy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25016,11 +25015,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 720767349}
   m_LocalRotation: {x: -0.17790592, y: -0.62192535, z: -0.7391108, w: 0.18781275}
-  m_LocalPosition: {x: -46.56, y: 48.78, z: 129.46}
-  m_LocalScale: {x: 0.28692794, y: 0.28692788, z: 0.28692788}
+  m_LocalPosition: {x: 522.22656, y: 203.62482, z: 1013.3353}
+  m_LocalScale: {x: 0.28692806, y: 0.28692806, z: 0.286928}
   m_Children: []
-  m_Father: {fileID: 228483014}
-  m_RootOrder: 63
+  m_Father: {fileID: 0}
+  m_RootOrder: 62
   m_LocalEulerAnglesHint: {x: -80.46001, y: 10.208, z: -160.12701}
 --- !u!64 &720767351
 MeshCollider:
@@ -37928,7 +37927,7 @@ GameObject:
   - component: {fileID: 1058561731}
   m_Layer: 0
   m_Name: flag
-  m_TagString: Moveable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54076,7 +54075,7 @@ PrefabInstance:
     - target: {fileID: 5861749304442242121, guid: 652faa420eadd4f4d9130211e8b0264c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1.6820068
+      value: 1.6821289
       objectReference: {fileID: 0}
     - target: {fileID: 5861749304442242121, guid: 652faa420eadd4f4d9130211e8b0264c,
         type: 3}
@@ -54086,7 +54085,7 @@ PrefabInstance:
     - target: {fileID: 5861749304442242121, guid: 652faa420eadd4f4d9130211e8b0264c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 91.29999
+      value: 91.299805
       objectReference: {fileID: 0}
     - target: {fileID: 961362697, guid: 652faa420eadd4f4d9130211e8b0264c, type: 3}
       propertyPath: m_SizeDelta.x
@@ -57597,7 +57596,7 @@ GameObject:
   - component: {fileID: 1552166059}
   - component: {fileID: 1552166058}
   - component: {fileID: 1552166057}
-  - component: {fileID: 1552166056}
+  - component: {fileID: 1552166054}
   m_Layer: 0
   m_Name: Logo
   m_TagString: Untagged
@@ -57605,20 +57604,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &1552166056
-MeshCollider:
+--- !u!95 &1552166054
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1552166053}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 411abd7e09fc242ffb910248e32ff04e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!23 &1552166057
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -83993,26 +83997,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9019563650437336553, guid: fb3bfc1ea13047745bc59a13101db78e,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: d541b17c55358714db11d433c924222c, type: 2}
-    - target: {fileID: 951042882471652175, guid: fb3bfc1ea13047745bc59a13101db78e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2732125432641718476, guid: fb3bfc1ea13047745bc59a13101db78e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192454857952205895, guid: fb3bfc1ea13047745bc59a13101db78e,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.666
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3bfc1ea13047745bc59a13101db78e, type: 3}
 --- !u!1 &6269624601102990670
@@ -84191,7 +84175,7 @@ GameObject:
   - component: {fileID: 4300596321844991719}
   m_Layer: 0
   m_Name: landmark
-  m_TagString: Moveable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
