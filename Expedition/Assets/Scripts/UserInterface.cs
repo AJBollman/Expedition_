@@ -37,7 +37,7 @@ public class UserInterface : MonoBehaviour
                 }
             case crosshairTypes.yeet:
                 {
-                    crosshair.GetComponent<Text>().text = "^";
+                    crosshair.GetComponent<Text>().text = "v";
                     break;
                 }
             case crosshairTypes.drop:
@@ -52,7 +52,7 @@ public class UserInterface : MonoBehaviour
                 }
             case crosshairTypes.place:
                 {
-                    crosshair.GetComponent<Text>().text = "v";
+                    crosshair.GetComponent<Text>().text = "V";
                     break;
                 }
             case crosshairTypes.nope:

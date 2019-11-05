@@ -97,20 +97,21 @@ public class HoldItems : MonoBehaviour
         Debug.Log("akhsvd");
         if (heldObject == null || isPlacing) return;
 
-        heldObject.transform.localScale = initialScale;
-        heldObject.GetComponent<Rigidbody>().useGravity = true;
-        heldObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-
-        if(yeet)
-        {
-            heldObject.GetComponent<Rigidbody>().velocity = Camera.main.transform.forward * speed;
-        }
-
+        //goal.localPosition += new Vector3(0, 1f, 0);
         if (guide.GetChild(0) != null)
         {
             guide.GetChild(0).parent = null;
         }
-        StartCoroutine(yeetEnableCollider(0.25f, heldObject.transform));
+
+        heldObject.transform.localPosition = goal.position + new Vector3(0, 1f, 0);
+        heldObject.transform.localScale = initialScale;
+        heldObject.transform.localRotation = Quaternion.Euler(0, guide.transform.rotation.eulerAngles.y, 0);
+        heldObject.GetComponent<Rigidbody>().useGravity = true;
+        heldObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+
+        heldObject.GetComponent<Rigidbody>().velocity = Camera.main.transform.forward * speed;//((yeet) ? speed : speed * 0.1f);
+
+        StartCoroutine(yeetEnableCollider(0.15f, heldObject.transform));
         heldObject = null;
 
         PlankImg.active = false;
