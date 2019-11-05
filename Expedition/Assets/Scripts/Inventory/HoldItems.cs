@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class HoldItems : MonoBehaviour
 {
-
+    //inventory sprites and inventory
+    private Inventory inventory;
+    public GameObject PlankImg;
 
     public float speed = 5;
     public Transform guide;
@@ -41,6 +43,8 @@ public class HoldItems : MonoBehaviour
     public void Start()
     {
         if (startWithObject != null) Pickup(startWithObject.gameObject);
+        inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        PlankImg.active = false;
     }
 
 
@@ -81,6 +85,8 @@ public class HoldItems : MonoBehaviour
         {
             sound.Play("Grab");
         }
+
+        PlankImg.active = true;
     }
 
 
@@ -106,6 +112,8 @@ public class HoldItems : MonoBehaviour
         }
         StartCoroutine(yeetEnableCollider(0.25f, heldObject.transform));
         heldObject = null;
+
+        PlankImg.active = false;
     }
 
 
@@ -131,6 +139,8 @@ public class HoldItems : MonoBehaviour
         goalScale = initialScale;
 
         StartCoroutine(unparentAndReenable(0.5f, at));
+
+        PlankImg.active = false;
     }
 
 
