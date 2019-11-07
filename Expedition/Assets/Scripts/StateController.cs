@@ -91,6 +91,7 @@ public class StateController : MonoBehaviour
                     Time.timeScale = 0f;
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
+                    cam.enableControls = false;
                     break;
             }
             case gameStates.redline:
@@ -98,6 +99,7 @@ public class StateController : MonoBehaviour
                     Time.timeScale = 0.5f;
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
+                    cam.enableControls = false;
                     break;
             }
         }

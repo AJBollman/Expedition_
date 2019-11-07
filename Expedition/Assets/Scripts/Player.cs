@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public string cameraDrawButton = "Fire1";
     public float cameraDrawMaxDistance = 15;
     public LayerMask raycastIgnoreLayers;
+    public float coordPlaneSizeFudgeFactor = 1f;
 
     public bool undoRedoAllowed = true;
     public string undoKey = "z";
@@ -35,9 +36,9 @@ public class Player : MonoBehaviour
     private GameObject redvignette;
     private GameObject handMap;
     private CameraOperator cam;
-    private GameObject coordOrigin0;
-    private GameObject coordOrigin1;
-    private Vector3 coordPlaneBounds;
+    private GameObject coordOrigin;
+    private GameObject measure;
+    private Vector2 coordPlaneBounds;
     private CharacterController ccon;
     private HoldItems holdItems;
     private GameObject PauseMenu;
@@ -74,8 +75,8 @@ public class Player : MonoBehaviour
         redvignette = GameObject.Find("Redline Vignette"); if (!redvignette) throw new System.Exception("Redline Vignette not found. Make sure there is a gameObject named 'Redline Vignette'");
         cam = GameObject.Find("CameraContainer").GetComponent<CameraOperator>(); if (!cam) throw new System.Exception("Camera Container not found. Make sure there is a Camera Container");
         handMap = GameObject.Find("HandMap Offset"); if (!handMap) throw new System.Exception("Hand Map Offset not found. Make sure there is a 'Hand Map Offset'");
-        coordOrigin0 = GameObject.Find("CoordOrigin0"); if (!coordOrigin0) throw new System.Exception("Hand Map UpperLeft Coordinate origin not found. Make sure there is a 'coordOrigin0'");
-        coordOrigin1 = GameObject.Find("CoordOrigin1"); if (!coordOrigin1) throw new System.Exception("Hand Map BottomRight Coordinate origin not found. Make sure there is a 'coordOrigin1'");
+        coordOrigin = GameObject.Find("CoordOrigin"); if (!coordOrigin) throw new System.Exception("Hand Map coordinate origin not found. Make sure there is a 'coordOrigin'");
+        measure = GameObject.Find("Measure"); if (!measure) throw new System.Exception("Measure not found. Make sure there is a 'Measure'");
         holdItems = GetComponent<HoldItems>();
         holdItems.guide = Camera.main.gameObject.transform.GetChild(1).gameObject.transform;
         PauseMenu = GameObject.Find("PauseMenu");
@@ -83,11 +84,17 @@ public class Player : MonoBehaviour
         preFOV = 90f;
         preFOVT = cam.maxFOVTweak;
         mv = GetComponent<Movement>();
-        coordPlaneBounds = new Vector3(
-            Mathf.Abs(coordOrigin0.transform.position.x - coordOrigin1.transform.position.x),
-            Mathf.Abs(coordOrigin0.transform.position.y - coordOrigin1.transform.position.y),
-            Mathf.Abs(coordOrigin0.transform.position.z - coordOrigin1.transform.position.z)
+        /*coordPlaneBounds = new Vector3(
+             Mathf.Abs(coordOrigin0.transform.position.x - coordOrigin1.transform.position.x),
+             Mathf.Abs(coordOrigin0.transform.position.y - coordOrigin1.transform.position.y),
+             Mathf.Abs(coordOrigin0.transform.position.z - coordOrigin1.transform.position.z)
+         );*/
+         // COULD SUPPORT NONSQUARE MAP IN THE FUTURE BUT NOT NOW V  V  V
+        coordPlaneBounds = new Vector2(
+            Vector3.Distance(coordOrigin.transform.position, measure.transform.position),
+            Vector3.Distance(coordOrigin.transform.position, measure.transform.position)
         );
+        Debug.Log("CoordPlaneBounds is " + coordPlaneBounds.x + ". Sound right?");
 
         jumpLoopSrc = gameObject.AddComponent<AudioSource>();
         jumpLoopSrc.clip = jumpLoop;
@@ -143,6 +150,7 @@ public class Player : MonoBehaviour
                 redvignette.SetActive(false);
                 vignette.SetActive(false);
             }
+            cachedGS = StateController.getState();
         }
 
 
@@ -254,7 +262,7 @@ public class Player : MonoBehaviour
     // Tell the active Region to 'sink' the latest Line under the ground.
     private void endCameraLine()
     {
-        if (!cameraDrawAllowed || !StateController.activeRegion) return;
+        if (!cameraDrawAllowed || !StateController.activeRegion || isRedLineMode) return;
         StateController.activeRegion.sinkLatestLine();
         GetComponent<SoundPlayer>().Play("DrawStop");
     }
@@ -295,7 +303,6 @@ public class Player : MonoBehaviour
         cam.maxFOVTweak = (mapIsFull) ? 0f : preFOVT;
         cameraDrawAllowed = !mapIsFull;
         undoRedoAllowed = !mapIsFull;
-        cam.enableControls = !mapIsFull;
         mv.moveAllowed = !mapIsFull;
         if (mapIsFull)
         {
@@ -335,12 +342,14 @@ public class Player : MonoBehaviour
         {
             if (hit.collider.gameObject.name == "HandMap")
             {
+                var correctedBounds = coordPlaneBounds.y * coordPlaneSizeFudgeFactor;
                 Vector2 pos = new Vector2(
-                    Mathf.Abs(coordOrigin0.transform.position.y - hit.point.y) / coordPlaneBounds.y,
-                    Mathf.Abs(coordOrigin1.transform.position.z - hit.point.z) / coordPlaneBounds.z
+                    (Mathf.Abs(coordOrigin.transform.InverseTransformPoint(hit.point).x - coordOrigin.transform.localPosition.x) / correctedBounds) / 100f,
+                    (Mathf.Abs(coordOrigin.transform.localPosition.y - coordOrigin.transform.InverseTransformPoint(hit.point).y) / correctedBounds) / 100f
                 );
 
                 if(StateController.activeRegionCamera == null) throw new System.Exception("No region cam to raycast from!");
+                Debug.Log(pos);
                 var camRay = StateController.activeRegionCamera.ViewportPointToRay(pos);
                 RaycastHit camHit;
                 if (Physics.Raycast(camRay, out camHit, Mathf.Infinity, layerMask: raycastIgnoreLayers))

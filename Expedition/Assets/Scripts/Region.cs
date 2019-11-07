@@ -135,9 +135,14 @@ public class Region : MonoBehaviour
     // Instantiate a new Line using the template red Line.
     public void addRedLineToRegion(Vector3 pos)
     {
+        if (pos == Vector3.zero)
+        {
+            Debug.LogWarning("Cannot add RED line, vector zero recieved!");
+            return;
+        }
         if (transform.childCount - 2 >= lineLimit)
         {
-            Debug.LogWarning("Cannot add line to region '" + name + "', limit reached!");
+            Debug.LogWarning("Cannot add RED line to region '" + name + "', limit reached!");
             return;
         }
         GameObject createdLine = Instantiate(templateRedLine, pos, Quaternion.identity, transform);
@@ -148,9 +153,14 @@ public class Region : MonoBehaviour
     // Add a new point to this region's latest red Line.
     public void addRedLinePointToRegion(Vector3 pos)
     {
+        if (pos == Vector3.zero)
+        {
+            Debug.LogWarning("Cannot add RED line, vector zero recieved!");
+            return;
+        }
         if (redLines.Count < 1)
         {
-            Debug.LogWarning("Cannot add redline points; this region has no active line!");
+            Debug.LogWarning("Cannot add RED line points; this region has no active line!");
             return;
         }
         redLines[redLines.Count - 1].GetComponent<Line>().addPoint(pos);

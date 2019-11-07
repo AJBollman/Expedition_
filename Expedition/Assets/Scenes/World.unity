@@ -20304,16 +20304,6 @@ PrefabInstance:
       propertyPath: orthographic size
       value: 15.2709675
       objectReference: {fileID: 0}
-    - target: {fileID: 2491537230380524119, guid: 903c50f722fb940ff946c62ea4f15afe,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 1024
-      objectReference: {fileID: 0}
-    - target: {fileID: 2491537230380524118, guid: 903c50f722fb940ff946c62ea4f15afe,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 2491537230697270693, guid: 903c50f722fb940ff946c62ea4f15afe,
         type: 3}
       propertyPath: m_Layer
@@ -68335,6 +68325,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: The Explorer
       objectReference: {fileID: 0}
+    - target: {fileID: 8754469251116282585, guid: c0aa726d742e74c0ea46d4070518d3fe,
+        type: 3}
+      propertyPath: coordPlaneSizeFudgeFactor
+      value: 0.825
+      objectReference: {fileID: 0}
     - target: {fileID: 8754469251116282581, guid: c0aa726d742e74c0ea46d4070518d3fe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -68373,7 +68368,7 @@ PrefabInstance:
     - target: {fileID: 8754469251116282581, guid: c0aa726d742e74c0ea46d4070518d3fe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8754469251116282581, guid: c0aa726d742e74c0ea46d4070518d3fe,
         type: 3}
@@ -70926,7 +70921,7 @@ PrefabInstance:
     - target: {fileID: 2491537231845367927, guid: 903c50f722fb940ff946c62ea4f15afe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2491537231845367927, guid: 903c50f722fb940ff946c62ea4f15afe,
         type: 3}
@@ -70963,20 +70958,10 @@ PrefabInstance:
       propertyPath: orthographic size
       value: 60.62168
       objectReference: {fileID: 0}
-    - target: {fileID: 2491537230380524119, guid: 903c50f722fb940ff946c62ea4f15afe,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 1024
-      objectReference: {fileID: 0}
     - target: {fileID: 2491537230380524118, guid: 903c50f722fb940ff946c62ea4f15afe,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2491537230697270693, guid: 903c50f722fb940ff946c62ea4f15afe,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 903c50f722fb940ff946c62ea4f15afe, type: 3}
@@ -81455,7 +81440,7 @@ PrefabInstance:
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7209527533247631354, guid: 9eb1d577243c743a6babb59d2d3e1987,
         type: 3}
