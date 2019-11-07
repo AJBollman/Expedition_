@@ -147,7 +147,7 @@ public class Player : MonoBehaviour
 
 
 
-        if (cachedGS != gameStates.normal) return;
+        if (cachedGS != gameStates.normal && cachedGS != gameStates.redline) return;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -199,6 +199,8 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(redoKey)) redoLastLine();
         if (Input.GetKeyDown(fullKey)) toggleFullMap();
         if (Input.GetKeyDown(redLinekey) && mapIsFull) isRedLineMode = !isRedLineMode;
+        if (isRedLineMode) StateController.setState(gameStates.redline);
+        else StateController.setState(gameStates.normal);
 
         ////////////////////   Toggle map rotation.
         if (Input.GetKeyDown(toggleMapRotKey)) toggleMapRot();

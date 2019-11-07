@@ -6,6 +6,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StateController : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class StateController : MonoBehaviour
     private static GameObject camInitialFollowPoint;
     private static StateController inst;
     private static GameObject transitionDinghy;
+    private static bool canStartup;
 
     private void Awake()
     {
@@ -37,11 +39,16 @@ public class StateController : MonoBehaviour
     private void Start()
     {
         cam = GameObject.Find("CameraContainer").GetComponent<CameraOperator>(); if (!cam) throw new System.Exception("Camera Container not found. Make sure there is a Camera Container");
-        camInitialLookAt = cam.lookAt;
-        camInitialFollowPoint = cam.followPoint;
-        setState(gameStates.menu);
-        transitionDinghy = GameObject.Find("dinghy");
-        transitionDinghy.SetActive(false);
+        if (SceneManager.GetActiveScene().name == "World")
+        {
+            canStartup = true;
+            camInitialLookAt = cam.lookAt;
+            camInitialFollowPoint = cam.followPoint;
+            setState(gameStates.menu);
+            transitionDinghy = GameObject.Find("dinghy");
+            transitionDinghy.SetActive(false);
+        }
+        else canStartup = false;
     }
 
 
@@ -58,7 +65,6 @@ public class StateController : MonoBehaviour
                     cam.enableControls = true;
                     cam.enableLookAt = false;
                     cam.followPoint = GameObject.Find("The Explorer");
-                    Camera.main.GetComponent<Animator>().enabled = false;
                     Camera.main.nearClipPlane = 0.01f;
                     Cursor.visible = false;
                     Cursor.lockState = CursorLockMode.Locked;
@@ -87,6 +93,13 @@ public class StateController : MonoBehaviour
                     Cursor.lockState = CursorLockMode.None;
                     break;
             }
+            case gameStates.redline:
+            {
+                    Time.timeScale = 0.5f;
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    break;
+            }
         }
     }
 
@@ -97,6 +110,7 @@ public class StateController : MonoBehaviour
         setState(gameStates.normal);
         Destroy(GameObject.Find("HideAfterTransition"));
         transitionDinghy.SetActive(true);
+        Camera.main.GetComponent<Animator>().enabled = false;
         inst.StartCoroutine(camr(0.1f));
     }
     private static IEnumerator camr(float delay)
@@ -109,6 +123,7 @@ public class StateController : MonoBehaviour
 
     public static void StartGame()
     {
+        if (!canStartup) return;
 		GameObject bo = GameObject.Find("S_Boat");
         GameObject ex = GameObject.Find("The Explorer");
         GameObject.Find("Logo").SetActive(false);
@@ -117,7 +132,7 @@ public class StateController : MonoBehaviour
         cam.lookAt = bo;
         cam.smoothTime = 0.75f;
 		ex.transform.LookAt(bo.transform);
-		inst.StartCoroutine(flyToStart(5f));
+		inst.StartCoroutine(flyToStart(Application.isEditor ? 0.1f : 5f));
     }
 
 
@@ -148,4 +163,4 @@ public class StateController : MonoBehaviour
 // Normal: Explorer can move around and do stuff.
 // Fullmap: We are in fullscreen map mode; no movement allowed.
 // Guiding: TODO not sure about this one.
-public enum gameStates { menu, paused, normal };
+public enum gameStates { menu, paused, normal, redline };
