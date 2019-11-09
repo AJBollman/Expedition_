@@ -52,7 +52,7 @@ public class UserInterface : MonoBehaviour
                 }
             case crosshairTypes.place:
                 {
-                    crosshair.GetComponent<Text>().text = "V";
+                    crosshair.GetComponent<Text>().text = "> <";
                     break;
                 }
             case crosshairTypes.nope:
