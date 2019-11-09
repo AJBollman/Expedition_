@@ -78,6 +78,7 @@ public class Region : MonoBehaviour
             activateCamera(true);
             //Debug.Log("Active region: " + StateController.activeRegion.name);
             foreach (GameObject l in lines) {l.SetActive(true);} // Show lines.
+            GetComponent<SoundPlayer>().Play("Enter");
         }
     }
 
@@ -135,6 +136,10 @@ public class Region : MonoBehaviour
     // Instantiate a new Line using the template red Line.
     public void addRedLineToRegion(Vector3 pos)
     {
+        foreach (GameObject x in redLines) {
+            Destroy(x);
+        }
+        redLines = new List<GameObject>();
         if (pos == Vector3.zero)
         {
             Debug.LogWarning("Cannot add RED line, vector zero recieved!");

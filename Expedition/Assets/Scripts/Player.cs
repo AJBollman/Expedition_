@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public float cameraDrawMaxDistance = 15;
     public LayerMask raycastIgnoreLayers;
     public float coordPlaneSizeFudgeFactor = 1f;
+    //public Vector3 correctCursorPos;
 
     public bool undoRedoAllowed = true;
     public string undoKey = "z";
@@ -144,8 +145,6 @@ public class Player : MonoBehaviour
             {
                 if (isRedLineMode) endRedLine();
                 if(isCameraDrawing) endCameraLine();
-                cam.defaultFOV = preFOV; // Reset FOV.
-                cam.maxFOVTweak = 5f;
                 drawLoopSrc.Stop();
                 redvignette.SetActive(false);
                 vignette.SetActive(false);
@@ -170,7 +169,7 @@ public class Player : MonoBehaviour
             {
                 isCameraDrawing = true;
                 startCameraLine();
-                cam.defaultFOV = preFOV + 5f; // narrow FOV a bit while drawing.
+                cam.defaultFOV = preFOV + 5f; // widen FOV a bit while drawing.
                 cam.maxFOVTweak = 0;
                 undoRedoPre = undoRedoAllowed;
             }
@@ -206,7 +205,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(undoKey)) undoLastLine();
         if (Input.GetKeyDown(redoKey)) redoLastLine();
         if (Input.GetKeyDown(fullKey)) toggleFullMap();
-        if (Input.GetKeyDown(redLinekey) && mapIsFull) isRedLineMode = !isRedLineMode;
+        if (Input.GetKeyDown(redLinekey) && mapIsFull && StateController.activePortal != null) isRedLineMode = !isRedLineMode;
         if (isRedLineMode) StateController.setState(gameStates.redline);
         else StateController.setState(gameStates.normal);
 
@@ -232,7 +231,7 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(r, out hit, cameraDrawMaxDistance, layerMask: raycastIgnoreLayers))
         {
             inDrawingRange = true;
-            Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
+            //Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
             Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
             lastRaycastHit = newHit;
             StateController.activeRegion.addLineToRegion(newHit);
@@ -250,7 +249,7 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(r, out hit, cameraDrawMaxDistance, layerMask: raycastIgnoreLayers))
         {
             inDrawingRange = true;
-            Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
+            //Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
             Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
             lastRaycastHit = newHit;
             StateController.activeRegion.addLinePointToRegion(newHit);
@@ -299,7 +298,7 @@ public class Player : MonoBehaviour
     {
         if (StateController.activeRegion == null) return;
         mapIsFull = !mapIsFull;
-        isRedLineMode = mapIsFull; /////////////////////////////////////////////////// TEMPORARY
+        if (mapIsFull && StateController.activePortal != null) isRedLineMode = true;
         cam.maxFOVTweak = (mapIsFull) ? 0f : preFOVT;
         cameraDrawAllowed = !mapIsFull;
         undoRedoAllowed = !mapIsFull;
@@ -312,7 +311,6 @@ public class Player : MonoBehaviour
         {
             GetComponent<SoundPlayer>().Play("MapMinimize");
         }
-        // todo
     }
 
 
@@ -343,18 +341,19 @@ public class Player : MonoBehaviour
             if (hit.collider.gameObject.name == "HandMap")
             {
                 var correctedBounds = coordPlaneBounds.y * coordPlaneSizeFudgeFactor;
+                //hit.point += correctCursorPos;
                 Vector2 pos = new Vector2(
                     (Mathf.Abs(coordOrigin.transform.InverseTransformPoint(hit.point).x - coordOrigin.transform.localPosition.x) / correctedBounds) / 100f,
                     (Mathf.Abs(coordOrigin.transform.localPosition.y - coordOrigin.transform.InverseTransformPoint(hit.point).y) / correctedBounds) / 100f
                 );
 
                 if(StateController.activeRegionCamera == null) throw new System.Exception("No region cam to raycast from!");
-                Debug.Log(pos);
+                //Debug.Log(pos);
                 var camRay = StateController.activeRegionCamera.ViewportPointToRay(pos);
                 RaycastHit camHit;
                 if (Physics.Raycast(camRay, out camHit, Mathf.Infinity, layerMask: raycastIgnoreLayers))
                 {
-                    Debug.DrawLine(StateController.activeRegionCamera.transform.position, camHit.point);
+                    //Debug.DrawLine(StateController.activeRegionCamera.transform.position, camHit.point);
                     return camHit.point;
                     //StateController.activeRegion.addLinePointToRegion(newHit);
                 }
