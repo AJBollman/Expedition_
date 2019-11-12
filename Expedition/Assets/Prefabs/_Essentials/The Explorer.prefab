@@ -176,6 +176,8 @@ MonoBehaviour:
   raycastIgnoreLayers:
     serializedVersion: 2
     m_Bits: 2867
+  coordPlaneSizeFudgeFactor: 0.825
+  correctCursorPos: {x: 0, y: 0, z: 0}
   undoRedoAllowed: 1
   undoKey: z
   redoKey: x
@@ -336,8 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ec1a6061f8af04b959358678a87b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlankImg: {fileID: 0}
   speed: 2
-  canHold: 1
-  obj: {fileID: 0}
   guide: {fileID: 0}
-  startWithObj: {fileID: 0}
+  startWithObject: {fileID: 0}

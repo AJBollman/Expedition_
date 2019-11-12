@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-
+    public bool winnableByTraveller = true;
     private List<GameObject> regions = new List<GameObject>();
     private GameObject cross;
 	private GameObject check;
@@ -46,8 +46,9 @@ public class Portal : MonoBehaviour
             discoverSequence();
         }
         // Traveller enters and this portal is not the active portal.
-        else if(other.gameObject.tag == "Traveler" && StateController.activePortal != this)
+        else if(other.gameObject.tag == "Traveler" && StateController.activePortal != this && winnableByTraveller)
 		{
+            //Debug.Log("traveler is in");
             discoverSequence();
 			completeSequence();
 		}
@@ -65,6 +66,7 @@ public class Portal : MonoBehaviour
     {
         if (discovered) return;
         discovered = true;
+        GetComponent<SoundPlayer>().Play("Discover");
         GetComponents<ParticleSystem>()[0].Play();
         crossGoalPos = Vector3.zero;
         cross.SetActive(true);
@@ -74,6 +76,7 @@ public class Portal : MonoBehaviour
 	{
         if (complete) return;
         complete = true;
+        GetComponent<SoundPlayer>().Play("Victory");
         check.SetActive(true);
 		cross.SetActive(false);
 		//GetComponents<ParticleSystem>()[1].Play();
