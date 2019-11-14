@@ -94,7 +94,7 @@ public class HoldItems : MonoBehaviour
 
     public void Drop(bool yeet)
     {
-        Debug.Log("akhsvd");
+        //Debug.Log("akhsvd");
         if (heldObject == null || isPlacing) return;
 
         //goal.localPosition += new Vector3(0, 1f, 0);
