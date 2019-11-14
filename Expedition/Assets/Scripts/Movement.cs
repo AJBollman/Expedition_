@@ -1,6 +1,4 @@
-﻿
-
-// This class controls WASD movement and jumping.
+﻿// This class controls WASD movement and jumping.
 // Put it on the player prefab.
 
 using System.Collections;
@@ -35,6 +33,10 @@ public class Movement : MonoBehaviour
     private Vector3 slopeSlide;
     private Vector3 lerpVector;
 
+    //timer
+    private float timer;
+    private bool stuck;
+
     public static bool _created;
 
     private void Awake()
@@ -57,6 +59,7 @@ public class Movement : MonoBehaviour
         {
             sprintSpeed = 25f;
         }
+        stuck = false;
     }
 
     void Update()
@@ -153,24 +156,35 @@ public class Movement : MonoBehaviour
                 else verticalVelocity -= gravity * Time.deltaTime;
             }
         }
-        /*slopeSlide = Vector3.ProjectOnPlane(Vector3.down, slopeHit);
-       // movement.y = verticalVelocity;
-        movement = transform.TransformDirection(movement);
-        lerpVector = Vector3.Lerp(movement, slopeSlide, Mathf.Clamp(slopeAngle / 45f, 0, 1));
-        lerpVector.y = verticalVelocity;
-        controller.Move(lerpVector * Time.deltaTime);*/
-        if (slopeAngle >= controller.slopeLimit && controller.isGrounded)
+
+        if (slopeAngle >= controller.slopeLimit && controller.isGrounded && stuck == false)
         {
             //slides the character
             slopeSlide = Vector3.ProjectOnPlane(Vector3.down, slopeHit);
             controller.Move(slopeSlide * (10 * Time.deltaTime));
 
+            timer += Time.deltaTime;
+            Debug.Log(timer);
+            if(timer >= 5){ stuck = true;}
         }
         else
         {
             // Apply movement vectors.
             movement.y = verticalVelocity;
             controller.Move(transform.TransformDirection(movement) * Time.deltaTime);
+
+            if(stuck == true)
+            {
+                timer -= Time.deltaTime;
+                if(timer <= 0)
+                {
+                    stuck = false;
+                }
+            }
+            else
+            {
+                timer = 0;
+            }
         }
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)

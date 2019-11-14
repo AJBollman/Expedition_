@@ -32,7 +32,7 @@ public class HoldItems : MonoBehaviour
 
     private void Update()
     {
-        if(heldObject != null)
+        if (heldObject != null)
         {
             heldObject.transform.position = Vector3.Lerp(heldObject.transform.position, goal.position, Time.deltaTime * 15f);
             heldObject.transform.rotation = Quaternion.Lerp(heldObject.transform.rotation, goal.rotation, Time.deltaTime * 15f);
@@ -158,6 +158,8 @@ public class HoldItems : MonoBehaviour
         heldObject.GetComponent<Collider>().enabled = true;
         heldObject.GetComponent<Rigidbody>().useGravity = true;
         heldObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        heldObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+
         heldObject.tag = "Event";
 
         //heldObject.transform.SetParent(srslyunity);
