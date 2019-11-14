@@ -81,6 +81,11 @@ public class NavMeshMovement : MonoBehaviour
 
     public void givePath(List<Vector3> points)
     {
+        if(points.Count < 1)
+        {
+            Debug.LogWarning("Tried to give explorer an empty list!");
+            return;
+        }
         points.Reverse();
         pointList = points;
         agent.SetDestination(pointList[0]);
