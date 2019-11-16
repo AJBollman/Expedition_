@@ -164,7 +164,7 @@ public class Movement : MonoBehaviour
             controller.Move(slopeSlide * (10 * Time.deltaTime));
 
             timer += Time.deltaTime;
-            Debug.Log(timer);
+            //Debug.Log(timer);
             if(timer >= 5){ stuck = true;}
         }
         else
