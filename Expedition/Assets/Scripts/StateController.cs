@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 
 public class StateController : MonoBehaviour
 {
+    public bool autoStartGameInEditor;
     private static gameStates state = gameStates.normal;
     public static Region activeRegion;
     public static Camera activeRegionCamera;
@@ -49,6 +50,7 @@ public class StateController : MonoBehaviour
             transitionDinghy.SetActive(false);
         }
         else canStartup = false;
+        if (Application.isEditor && autoStartGameInEditor) StartGame();
     }
 
 
@@ -68,7 +70,7 @@ public class StateController : MonoBehaviour
                     Camera.main.nearClipPlane = 0.01f;
                     Cursor.visible = false;
                     Cursor.lockState = CursorLockMode.Locked;
-                    cam.smoothTime = 64;
+                    cam.smoothTime = 32;
                     Time.timeScale = 1f;
                     //cam.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 85f, 0));
                     break;
@@ -126,6 +128,8 @@ public class StateController : MonoBehaviour
     public static void StartGame()
     {
         if (!canStartup) return;
+        GameObject mm = GameObject.Find("MainMenu");
+        if (mm != null) mm.SetActive(false);
 		GameObject bo = GameObject.Find("S_Boat");
         GameObject ex = GameObject.Find("The Explorer");
         GameObject.Find("Logo").SetActive(false);

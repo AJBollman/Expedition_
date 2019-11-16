@@ -15,6 +15,7 @@ public class Region : MonoBehaviour
     public bool completed;
     public int lineLimit = 25;
     public RenderTexture textureTarget;
+    public bool isStartingRegion;
 
     //private List<Vector3> redLine = new List<Vector3>();
     private GameObject background;
@@ -70,6 +71,11 @@ public class Region : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (isStartingRegion) activateCamera(true);
+    }
+
     // Set the active region upon entering.
     void OnTriggerEnter(Collider other) {
         if (other.tag == "Player") {
@@ -85,6 +91,7 @@ public class Region : MonoBehaviour
     // Set active region to null on exit. If the player just walked into a new region, it'll become active a moment after this.
     void OnTriggerExit(Collider other) {
         if (other.tag == "Player") {
+            other.GetComponent<Player>().endCameraLine(false);
             activateCamera(false);
             StateController.activeRegion = null;
             StateController.activeRegionCamera = null;

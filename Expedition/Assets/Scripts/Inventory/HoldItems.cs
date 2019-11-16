@@ -19,6 +19,7 @@ public class HoldItems : MonoBehaviour
     private Vector3 initialScale;
     private Vector3 goalScale;
     private bool isPlacing;
+    private GameObject checkOnDropped;
 
     private void Awake()
     {
@@ -30,6 +31,11 @@ public class HoldItems : MonoBehaviour
         return heldObject;
     }
 
+    public GameObject getCheckOnDropped()
+    {
+        return checkOnDropped;
+    }
+
     private void Update()
     {
         if (heldObject != null)
@@ -39,6 +45,18 @@ public class HoldItems : MonoBehaviour
             heldObject.transform.localScale = Vector3.Lerp(heldObject.transform.localScale, goalScale, Time.deltaTime * 15f);
         }
     }
+
+    /*private void FixedUpdate()
+    {
+        if(checkOnDropped != null &&
+            heldObject == null &&
+            transform.position.y - checkOnDropped.transform.position.y > 3f &&
+            Vector3.Distance(gameObject.transform.position, checkOnDropped.transform.position) > 3f
+        )
+        {
+            Pickup(checkOnDropped);
+        }
+    }*/
 
     public void Start()
     {
@@ -87,6 +105,8 @@ public class HoldItems : MonoBehaviour
         }
 
         PlankImg.active = true;
+        checkOnDropped = null;
+        heldObject.GetComponent<Renderer>().material.renderQueue = 0;
     }
 
 
@@ -112,6 +132,7 @@ public class HoldItems : MonoBehaviour
         heldObject.GetComponent<Rigidbody>().velocity = Camera.main.transform.forward * speed;//((yeet) ? speed : speed * 0.1f);
 
         StartCoroutine(yeetEnableCollider(0.15f, heldObject.transform));
+        checkOnDropped = heldObject;
         heldObject = null;
 
         PlankImg.active = false;
@@ -142,6 +163,7 @@ public class HoldItems : MonoBehaviour
         StartCoroutine(unparentAndReenable(0.5f, at));
 
         PlankImg.active = false;
+        checkOnDropped = null;
     }
 
 
@@ -149,6 +171,12 @@ public class HoldItems : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         obj.gameObject.GetComponent<Collider>().enabled = true;
+    }
+
+    private IEnumerator disableGravAfterPlace(float delay, Transform obj)
+    {
+        yield return new WaitForSeconds(delay);
+        obj.gameObject.GetComponent<Rigidbody>().useGravity = false;
     }
 
 
@@ -163,12 +191,16 @@ public class HoldItems : MonoBehaviour
         heldObject.tag = "Event";
 
         //heldObject.transform.SetParent(srslyunity);
-        heldObject = null;
 
         if (guide.GetChild(0) != null)
         {
             guide.GetChild(0).parent = null;
         }
+
+        DontDestroyOnLoad(heldObject);
+        StartCoroutine(disableGravAfterPlace(2f, heldObject.transform));
+        heldObject = null;
+
         srslyunity.localPosition += new Vector3(0, -1f, 0);
         isPlacing = false;
     }

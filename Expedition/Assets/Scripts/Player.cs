@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     public bool redLineAllowed = true;
     public string redLinekey = "r";
     public bool fullscreenLineDrawAllowed = false;
+    //public LayerMask droppedItemCheck;
+    public float recallPlankIfLowerThan = 12f;
 
     public static bool mapIsFull;
     public static bool mapSpins;
@@ -125,7 +127,7 @@ public class Player : MonoBehaviour
             targetPos,
             Time.deltaTime * mapFullscreenTransitionTime
         );
-
+        if(!StateController.activeRegion || !isCameraDrawing) drawLoopSrc.Stop();
 
 
         // Player script does *nothing* in main menu.
@@ -144,8 +146,7 @@ public class Player : MonoBehaviour
             if(isPaused)
             {
                 if (isRedLineMode) endRedLine();
-                if(isCameraDrawing) endCameraLine();
-                drawLoopSrc.Stop();
+                if(isCameraDrawing) endCameraLine(false);
                 redvignette.SetActive(false);
                 vignette.SetActive(false);
             }
@@ -155,7 +156,7 @@ public class Player : MonoBehaviour
 
 
         if (cachedGS != gameStates.normal && cachedGS != gameStates.redline) return;
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         checkInteract();
@@ -191,12 +192,11 @@ public class Player : MonoBehaviour
             else
             {
                 isCameraDrawing = false;
-                endCameraLine();
+                endCameraLine(true);
                 cam.defaultFOV = preFOV; // Reset FOV.
                 cam.maxFOVTweak = 5f;
             }
             undoRedoAllowed = undoRedoPre; // Set the undo/redo allowed back to what it was.
-            drawLoopSrc.Stop();
         }
         vignette.SetActive(Input.GetButton(cameraDrawButton)); // Camera vignette is visible as long as the mouse is down.
         redvignette.SetActive(isRedLineMode); // Camera vignette is visible as long as the mouse is down.
@@ -242,7 +242,7 @@ public class Player : MonoBehaviour
     // Add a point to the active Map Line under the Active Region.
     private void addToCameraLine()
     {
-        if (!cameraDrawAllowed || !StateController.activeRegion) return;
+        if (!cameraDrawAllowed || !StateController.activeRegion || !isCameraDrawing) return;
 
         var r = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         RaycastHit hit;
@@ -253,17 +253,16 @@ public class Player : MonoBehaviour
             Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
             lastRaycastHit = newHit;
             StateController.activeRegion.addLinePointToRegion(newHit);
-
             if (!drawLoopSrc.isPlaying) drawLoopSrc.Play();
         }
         else inDrawingRange = false;
     }
     // Tell the active Region to 'sink' the latest Line under the ground.
-    private void endCameraLine()
+    public void endCameraLine(bool playSound)
     {
         if (!cameraDrawAllowed || !StateController.activeRegion || isRedLineMode) return;
         StateController.activeRegion.sinkLatestLine();
-        GetComponent<SoundPlayer>().Play("DrawStop");
+        if(playSound) GetComponent<SoundPlayer>().Play("DrawStop");
     }
     private void FixedUpdate()
     {
@@ -418,6 +417,21 @@ public class Player : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f)));
         RaycastHit hit;
+        var hol = holdItems.getCheckOnDropped();
+        /*if (hol != null && Physics.Raycast(ray, out hit, 100f, layerMask: droppedItemCheck) && hit.transform.gameObject != null && hit.transform.gameObject == hol)
+        {
+                UserInterface.SetCursor(crosshairTypes.grab);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    holdItems.Pickup(hit.transform.gameObject);
+                }
+            return;
+        }*/
+        if(hol != null && transform.position.y - hol.transform.position.y > recallPlankIfLowerThan)
+        {
+            holdItems.Pickup(hol);
+        }
+
         if (Physics.Raycast(ray, out hit, 4f))
         {
             if (hit.transform.gameObject != null)
@@ -431,7 +445,10 @@ public class Player : MonoBehaviour
                         {
                             holdItems.Drop(false);
                         }
-                        holdItems.Pickup(hit.transform.gameObject);
+                        else
+                        {
+                            holdItems.Pickup(hit.transform.gameObject);
+                        }
                     }
                 }
                 else if(holdItems.getHeldObject() != null)

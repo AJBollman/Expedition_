@@ -18,7 +18,12 @@ public class ChildCollider : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             if (isMid) transform.parent.GetComponent<Transition>().OnMid(false);
-            else transform.parent.GetComponent<Transition>().OnExit(isA);
+            else
+            {
+                var a = other.gameObject.GetComponent<HoldItems>();
+                if (a != null) a.Drop(false);
+                transform.parent.GetComponent<Transition>().OnExit(isA);
+            }
         }
     }
 }

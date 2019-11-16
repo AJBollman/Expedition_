@@ -7,14 +7,14 @@ public class NavMeshMovement : MonoBehaviour
 {
     public Camera cam;
     public NavMeshAgent agent;
-    private Vector3 Pos;
     public GameObject home;
     public GameObject destination;
-
+    public float moveSpeed = 4f;
     public bool failedPath;
     public bool canMove;
-
     public List<Vector3> pointList;
+
+    private Vector3 Pos;
 
     //detrian's code crossover
     private void Awake()
@@ -41,7 +41,7 @@ public class NavMeshMovement : MonoBehaviour
             canMove = true;
         }*/
 
-        agent.speed = (canMove) ? 3.5f : 0f;
+        agent.speed = (canMove) ? moveSpeed : 0f;
 
         if(pointList.Count > 0)
         {
