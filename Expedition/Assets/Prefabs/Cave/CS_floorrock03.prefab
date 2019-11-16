@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2336963906901804120}
   - component: {fileID: 6716440401341169262}
   - component: {fileID: 1011374358977725079}
+  - component: {fileID: 7941949670657287390}
   m_Layer: 0
   m_Name: CS_floorrock03
   m_TagString: Untagged
@@ -25,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1600406872783615563}
-  m_LocalRotation: {x: 0.024297427, y: 0.70668924, z: -0.7066892, w: -0.024298038}
+  m_LocalRotation: {x: -0.024295362, y: -0.7066893, z: 0.7066893, w: 0.024295332}
   m_LocalPosition: {x: 313.94, y: 200.1, z: 879.53}
-  m_LocalScale: {x: 1.9326528, y: 3.5834844, z: 0.3240754}
+  m_LocalScale: {x: 4.378425, y: 8.118384, z: 0.73419285}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 86.062004, y: -90.00001, z: 90.00001}
 --- !u!33 &6716440401341169262
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -78,3 +79,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &7941949670657287390
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600406872783615563}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -5495902117074765545, guid: ff834a07fab709d4bb1d022a4f852bfc, type: 3}
