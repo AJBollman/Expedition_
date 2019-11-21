@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2746222158776663152}
   - component: {fileID: 6577379986481563206}
   - component: {fileID: 611088034958719679}
+  - component: {fileID: 8118380887969639847}
   m_Layer: 0
   m_Name: CS_rockpillar3
   m_TagString: Untagged
@@ -25,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173138603797548643}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: 320.73, y: 202.9, z: 865.58}
-  m_LocalScale: {x: 0.421171, y: 0.421171, z: 0.421171}
+  m_LocalScale: {x: 0.76678395, y: 0.76678395, z: 0.76678395}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &6577379986481563206
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -78,3 +79,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &8118380887969639847
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173138603797548643}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 289301614986012343, guid: b52a7e55c5506f3419f3750ee04a3689, type: 3}
