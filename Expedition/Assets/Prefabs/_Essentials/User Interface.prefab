@@ -217,14 +217,14 @@ RectTransform:
   m_GameObject: {fileID: 446556931}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 124}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1445, y: 1.1445, z: 1.1445}
   m_Children: []
   m_Father: {fileID: 1609166510}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.3220556, y: 4.230039}
+  m_AnchoredPosition: {x: 23, y: -8}
   m_SizeDelta: {x: 1917.4, y: 1041.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &446556934
@@ -299,7 +299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 262}
+  m_AnchoredPosition: {x: 0, y: 424}
   m_SizeDelta: {x: 306.8, y: 129.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &550388611
@@ -323,7 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4669811, g: 1, b: 0.7554416, a: 0.53333336}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.91764706}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1291,7 +1291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4669811, g: 1, b: 0.7554416, a: 1}
+  m_Color: {r: 1, g: 0.2783019, b: 0.32719624, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1860,7 +1860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.56078434}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2330,8 +2330,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 7, y: 0}
-  m_SizeDelta: {x: 591.3, y: 0}
+  m_AnchoredPosition: {x: -105.4, y: 0}
+  m_SizeDelta: {x: 1840.1, y: 0}
   m_Pivot: {x: -0.1, y: 0.5}
 --- !u!222 &4602069148815266868
 CanvasRenderer:
@@ -2354,7 +2354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5235849, g: 1, b: 0.78584796, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2362,7 +2362,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 7e49dd37ec9844a14a2b1631ad1cb596, type: 3}
     m_FontSize: 40
     m_FontStyle: 1
     m_BestFit: 0
@@ -2374,39 +2374,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'CONTROLS:
-
-
-    Basics:
-
-
-    * Move - WASD
-
-    * Jump - Space
-
-    * Sprint - Left shift
-
-    * Pick up - E
-
-
-    Mapping:
-
-
-    * Draw normal line - Mouse1
-
-    * Full size map - F
-
-    * Undo/Redo line - Z/X
-
-    * Enter/Exit Red Line mode - R (red border = red mode)
-
-
-    Options:
-
-
-    * Camera sensitivity - R/L bracket
-
-    * Toggle smooth map rotation - L'
+  m_Text: "CONTROLS:\n\nBasics:                                                              Mapping:\n\n*
+    Move - WASD                                             * Draw normal line - Mouse1\t\n*
+    Jump - Space                                             * Full size map - F\n*
+    Sprint - Left shift                                    * Undo/Redo line - Z/X\n*
+    Pick up - E                                                  * Enter/Exit Red
+    Line mode - R (red border = red mode)\n\nOptions:\n\n* Camera sensitivity - R/L
+    bracket\n* Toggle smooth map rotation - L"
 --- !u!114 &9015633337141704576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2419,7 +2393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectColor: {r: 0.21960784, g: 0.54901963, b: 0.26532915, a: 1}
   m_EffectDistance: {x: 3, y: -4}
   m_UseGraphicAlpha: 1
 --- !u!1 &2800001860076107109
