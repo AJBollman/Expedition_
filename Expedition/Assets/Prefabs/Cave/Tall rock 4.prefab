@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8152723973806516674}
   - component: {fileID: 2456927078453843259}
   - component: {fileID: 5302880410695490778}
+  - component: {fileID: 246425293540352101}
+  - component: {fileID: 2370336678492630729}
   m_Layer: 0
   m_Name: Tall rock 4
   m_TagString: Untagged
@@ -28,8 +30,9 @@ Transform:
   m_GameObject: {fileID: 4189495705256436199}
   m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: -28.532034, y: 3.0821872, z: -19.128937}
-  m_LocalScale: {x: 1.7870948, y: 1, z: 3.0389225}
-  m_Children: []
+  m_LocalScale: {x: 9.061667, y: 5.336743, z: 18.335152}
+  m_Children:
+  - {fileID: 4908300779758202977}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
@@ -93,3 +96,127 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: -5495902117074765545, guid: b77760828fd74c543b9cb8f7cba48e3f, type: 3}
+--- !u!114 &246425293540352101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4189495705256436199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fadcc2d9a34a1a34f93d4962ec37e6e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_data: {fileID: 11400000, guid: 2c27c878b9752bb4aaf8c669b8788017, type: 2}
+  m_rootTransform: {fileID: 900524200798934004}
+  m_lodGroup: {fileID: 2370336678492630729}
+  m_renderers:
+  - {fileID: 2456927078453843259}
+  m_lodReplacement: 2
+  m_renderPipelineInUse: 1
+  m_insertIndex: 0
+  m_lastImpostor: {fileID: 6863983637309960325}
+  m_folderPath: Assets/Prefabs/imposters/
+  m_cutMode: 0
+--- !u!205 &2370336678492630729
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4189495705256436199}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.09097862, y: 0.0055146217, z: 0.9551339}
+  m_Size: 5.5925083
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.31019804
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2456927078453843259}
+  - screenRelativeHeight: 0
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6598776000439123300}
+  m_Enabled: 1
+--- !u!1 &6863983637309960325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4908300779758202977}
+  - component: {fileID: 2158362138490986958}
+  - component: {fileID: 6598776000439123300}
+  m_Layer: 0
+  m_Name: tall rock 4 imposter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4908300779758202977
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6863983637309960325}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 900524200798934004}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &2158362138490986958
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6863983637309960325}
+  m_Mesh: {fileID: -3159464737777778488, guid: 2c27c878b9752bb4aaf8c669b8788017, type: 2}
+--- !u!23 &6598776000439123300
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6863983637309960325}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 1384063636071868248, guid: 2c27c878b9752bb4aaf8c669b8788017, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
