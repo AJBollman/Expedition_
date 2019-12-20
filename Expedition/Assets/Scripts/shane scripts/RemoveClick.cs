@@ -6,14 +6,29 @@ public class RemoveClick : MonoBehaviour
 {
     public GameObject destroyedVersion;
     public AudioSource clipsound;
+    public bool timerStart = false;
+    public float lifeTime = 10f;
 
-
+  
 
     void OnMouseDown()
     {
-        clipsound.Play();
-        Instantiate(destroyedVersion, transform.position, transform.rotation);
-        Destroy(gameObject);
-    
+        timerStart = true;
     }
+
+
+
+    void OnMouseOver()
+    {
+        if (timerStart == true) { lifeTime -= Time.deltaTime; }
+
+        if (lifeTime <= 0)
+        {
+            clipsound.Play();
+            Instantiate(destroyedVersion, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
+
+    }
+
 }
