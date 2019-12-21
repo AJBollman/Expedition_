@@ -53,21 +53,14 @@ public class RemoveClick : MonoBehaviour
             backonSound = false;
         }
 
-        /*
-        if (makeSound == true)
-        {
-            sound1.Play();
-            sound2.Play();
-            makeSound = false;
-        }
-        */
+      
 
         if (lifeTime <= 0)
         {
             lookingatSound.Stop();
             sound1.Play();
             sound2.Play();
-           // makeSound = true;
+          
             Instantiate(destroyedVersion, transform.position, transform.rotation);
             Destroy(gameObject);
             
