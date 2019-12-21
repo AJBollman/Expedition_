@@ -6,6 +6,7 @@ public class desovertime : MonoBehaviour
 {
     public float lifeTime = 10f;
 
+
     void Update()
     {
         if (lifeTime > 0)

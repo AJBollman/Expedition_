@@ -11,7 +11,9 @@ public class RemoveClick : MonoBehaviour
     public bool stoplookingSound = false;
     public bool backonSound = false;
     public bool timerStart = false;
+    public bool makeSound = false;
     public float lifeTime = 10f;
+
 
   
 
@@ -50,14 +52,26 @@ public class RemoveClick : MonoBehaviour
             lookingatSound.Play();
             backonSound = false;
         }
-        
+
+        /*
+        if (makeSound == true)
+        {
+            sound1.Play();
+            sound2.Play();
+            makeSound = false;
+        }
+        */
+
         if (lifeTime <= 0)
         {
             lookingatSound.Stop();
             sound1.Play();
             sound2.Play();
+           // makeSound = true;
             Instantiate(destroyedVersion, transform.position, transform.rotation);
             Destroy(gameObject);
+            
+            
             
         }
 
