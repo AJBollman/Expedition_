@@ -37,19 +37,27 @@ public class RemoveClick : MonoBehaviour
         backonSound = true;
     }
 
+    void OnMouseUp()
+    {
+
+        lookingatSound.Stop();
+        stoplookingSound = false;
+        backonSound = true;
+        timerStart = false;
+    }
+
     void OnMouseOver()
     {
         if (timerStart == true)
         {
             
             lifeTime -= Time.deltaTime;
-            
         }
 
 
         if (backonSound == true)
         {
-            lookingatSound.Play();
+            //lookingatSound.Play();
             backonSound = false;
         }
 
@@ -63,9 +71,6 @@ public class RemoveClick : MonoBehaviour
           
             Instantiate(destroyedVersion, transform.position, transform.rotation);
             Destroy(gameObject);
-            
-            
-            
         }
 
     }
