@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8737269118727471515}
   - component: {fileID: 295554530839559085}
   - component: {fileID: 6279860854959179604}
+  - component: {fileID: -6280766936068908248}
   m_Layer: 0
   m_Name: CS_rockpillar2
   m_TagString: Untagged
@@ -78,3 +79,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &-6280766936068908248
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5699967373472904072}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 289301614986012343, guid: 11926c55b7ca694449b1258fd297cbd2, type: 3}
