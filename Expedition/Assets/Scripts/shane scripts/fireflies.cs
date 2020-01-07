@@ -7,6 +7,7 @@ public class fireflies : MonoBehaviour
     public ParticleSystem Moths;
     public bool timerstart = false;
     public float lifeTime = 0f;
+    public Collider player;
 
     private void Start()
     {
@@ -14,7 +15,7 @@ public class fireflies : MonoBehaviour
         Moths.Stop();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider player)
     {
         if(Moths.enableEmission == false)
         {
@@ -23,7 +24,7 @@ public class fireflies : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider player)
     {
         if (Moths.enableEmission == true)
         {
