@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3775188927866808884}
   - component: {fileID: 3775188927866808887}
   - component: {fileID: 3775188927866808886}
+  - component: {fileID: 1833748659707243872}
   m_Layer: 0
   m_Name: mothsource
   m_TagString: Untagged
@@ -29,8 +30,9 @@ Transform:
   m_GameObject: {fileID: 3775188927866809801}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 704.39, y: 203.8, z: 41.236122}
-  m_LocalScale: {x: 0.6999284, y: 0.6999284, z: 0.6999284}
+  m_LocalScale: {x: 0.8507435, y: 0.8507435, z: 0.8507435}
   m_Children:
+  - {fileID: 6997402934700276059}
   - {fileID: 1068264034559947996}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -50,7 +52,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3775188927866809801}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -92,8 +94,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 6.809278, y: 5.2618375, z: 7.0784025}
+  m_Center: {x: -0.12234715, y: 0.25066292, z: -0.26619017}
 --- !u!114 &3775188927866808886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,7 +111,99 @@ MonoBehaviour:
   Moths: {fileID: 0}
   timerstart: 0
   lifeTime: 0
-  player: {fileID: 8754469251116282582, guid: c0aa726d742e74c0ea46d4070518d3fe, type: 3}
+  player: {fileID: 0}
+--- !u!65 &1833748659707243872
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3775188927866809801}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.426858, y: 1.928837, z: 1.4048775}
+  m_Center: {x: -0.07165812, y: 0.09917616, z: -0.031028984}
+--- !u!1 &6287197968860908360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6997402934700276059}
+  - component: {fileID: 2035840724042957677}
+  - component: {fileID: 5727535501730201492}
+  m_Layer: 0
+  m_Name: mothHome
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6997402934700276059
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6287197968860908360}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: -0.069, y: 0.017, z: -0.07}
+  m_LocalScale: {x: 0.3057808, y: 0.3057807, z: 0.3057807}
+  m_Children: []
+  m_Father: {fileID: 3775188927866808882}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &2035840724042957677
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6287197968860908360}
+  m_Mesh: {fileID: -5495902117074765545, guid: 1e9110f946d94904a8c351b68cffbf60, type: 3}
+--- !u!23 &5727535501730201492
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6287197968860908360}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 6be779e511f816a47b57d0ed1156dfb7, type: 2}
+  - {fileID: 2100000, guid: b8cfdc7e40a725744bb6cd3ad3a8e086, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1001 &3775188927195151716
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -125,17 +219,17 @@ PrefabInstance:
     - target: {fileID: 4230874740676430264, guid: b67fb9ea807c7a74c89183dcefd499a9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.09
+      value: 0.08999246
       objectReference: {fileID: 0}
     - target: {fileID: 4230874740676430264, guid: b67fb9ea807c7a74c89183dcefd499a9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1
+      value: -0.0999989
       objectReference: {fileID: 0}
     - target: {fileID: 4230874740676430264, guid: b67fb9ea807c7a74c89183dcefd499a9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.133
+      value: -0.1329994
       objectReference: {fileID: 0}
     - target: {fileID: 4230874740676430264, guid: b67fb9ea807c7a74c89183dcefd499a9,
         type: 3}
@@ -160,7 +254,7 @@ PrefabInstance:
     - target: {fileID: 4230874740676430264, guid: b67fb9ea807c7a74c89183dcefd499a9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4230874740676430264, guid: b67fb9ea807c7a74c89183dcefd499a9,
         type: 3}
@@ -180,17 +274,17 @@ PrefabInstance:
     - target: {fileID: 4230874740676430264, guid: b67fb9ea807c7a74c89183dcefd499a9,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.4287176
+      value: 1.4287175
       objectReference: {fileID: 0}
     - target: {fileID: 4230874740676430264, guid: b67fb9ea807c7a74c89183dcefd499a9,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.4287182
+      value: 1.4287184
       objectReference: {fileID: 0}
     - target: {fileID: 4230874740676430264, guid: b67fb9ea807c7a74c89183dcefd499a9,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.4287182
+      value: 1.4287184
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b67fb9ea807c7a74c89183dcefd499a9, type: 3}
