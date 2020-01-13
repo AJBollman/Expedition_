@@ -14,7 +14,7 @@ public class geyserMovement : MonoBehaviour
     void Update()
     {
 
-        if (lifeTime >= 22f)
+        if (lifeTime >= Random.Range(22.0f, 64.0f))
         {
             begin = true;
         }
