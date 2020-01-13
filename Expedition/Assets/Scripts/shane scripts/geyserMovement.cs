@@ -10,6 +10,7 @@ public class geyserMovement : MonoBehaviour
     public float lifeTime = 0f;
     public AudioSource geyserSound;
     public ParticleSystem geyserfoam;
+    public GameObject geyserCollider;
 
     void Update()
     {
@@ -24,7 +25,8 @@ public class geyserMovement : MonoBehaviour
             lifeTime -= Time.deltaTime;
             geyserfoam.Stop();
             geyserfoam.enableEmission = false;
-           // geyserSound.Stop();
+            geyserCollider.SetActive(false);
+            // geyserSound.Stop();
         }
         if (begin == false)
         {
@@ -32,7 +34,8 @@ public class geyserMovement : MonoBehaviour
             lifeTime += Time.deltaTime;
             geyserfoam.enableEmission = true;
             geyserfoam.Play();
-           // geyserSound.Play();
+            geyserCollider.SetActive(true);
+            // geyserSound.Play();
         }
         
         if (lifeTime <= 0f)
