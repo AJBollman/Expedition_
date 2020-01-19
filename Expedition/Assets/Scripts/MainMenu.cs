@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
     {
         //plankIcon = GameObject.Find("plankIcon");
         //rockIcon = GameObject.Find("rockIcon");
-        StateController.StartGame();
+        //Expedition.StartGame();
         gameObject.SetActive(false);
     }
     public void QuitGame()

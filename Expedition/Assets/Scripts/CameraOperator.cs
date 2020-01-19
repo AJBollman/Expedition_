@@ -1,138 +1,190 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
-public class CameraOperator : MonoBehaviour
+/// <summary> First-person camera controls. </summary>
+[DisallowMultipleComponent]
+[RequireComponent(typeof(Camera))]
+public sealed class CameraOperator : MonoBehaviour
 {
-    // IMPORTANT STUFF
-    public bool enableControls = true;
-    public GameObject followPoint;
-    public float defaultFOV = 90f;
-    public Vector3 sensitivity = new Vector3(1f, 0.65f, 1f);
-    public float sensMultiplier = 1f;
-
-    // SMALL TWEAKS
-    public float maxFOVTweak = 25f;
-    public float maxLookUpAngle = 60f;
-    public float maxLookDownAngle = -70f;
-
-    // COULD BE USEFUL??
-    public bool enableLookAt = false;
-    public GameObject lookAt;
-    public bool doHorizontalBias = false;
+    //////// TESTING
+    public float shakeSmooth;
+    public float sprintExpandFOV;
+    public float handheldSmooth;
+    public float lookSmooth;
+    public static bool doLookAtObject;
 
 
-    private float _lastHeight;
-    private bool _heightChangeBelowThreshold;
-
-    private Vector3 _pivotPoint = new Vector3(0, 1f, 0);
-	private Vector3 _truePivot = 	new Vector3(0,1f,0);
-    private Camera _camCamera;
-    private float _goalFOV;
-    private Vector3 _rotDelta = Vector3.zero;
-
-	private Quaternion _aim;
-	private Vector2 _axisDamper = new Vector2(3f, 3f);
-    private float _distToTLookTarget = 0f;
-    private Vector2 _input = Vector2.zero;
-    private Quaternion _initAim = Quaternion.Euler(new Vector3(0, 85, 0));
-
-
-    //********************************************************************************************************
-    private void Awake()
-    {
-        if (FindObjectsOfType(GetType()).Length > 1)
-        {
-            Destroy(gameObject);
+    /////////////////////////////////////////////////   Public properties
+    /// <summary> Set wether rotation is changed. </summary>
+    private bool _enableControls;
+    public static bool enableControls {
+        get => _inst._enableControls;
+        set {
+            _inst._enableControls = value;
+            Cursor.visible = !value;
+            Cursor.lockState = value ? CursorLockMode.Locked : CursorLockMode.None;
+            //Debug.LogWarning("Toggled camera controls");
         }
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-            StaticsList.add(gameObject);
+    } 
+    /// <summary> Set the object that the camera rotates around. </summary>
+    [SerializeField] private GameObject _followObject;
+    public static GameObject followObject {
+        get => _inst._followObject;
+        set {
+            if(value != null) _inst._followObject = value;
+            else throw new System.Exception("Camera follow point can not be set to null!");
         }
     }
-
-    private void Start()
-    {
-        _goalFOV = defaultFOV;
-		_camCamera = GetComponentInChildren<Camera>();
-        transform.rotation = _aim;
-        //followPoint = GameObject.Find("The Explorer");
+    /// <summary> Set the object that the camera looks at. </summary>
+    [SerializeField] private GameObject _lookAtObject;
+    public static GameObject lookAtObject {
+        get => _inst._lookAtObject;
+        set => _inst._lookAtObject = value;
     }
+    /// <summary> Set the camera's field of view. </summary>
+    private float _FOV = 90f;
+    public static float FOV {
+        get => _inst._FOV;
+        set { if(value >= 0.01f && value < 180) _inst._FOV = value; }
+    }
+    public static bool isReady { get; private set;}
 
-    public float smoothTime = 8f;
+
+    /////////////////////////////////////////////////   Private, Serializable fields
+    [SerializeField][Range(0.01f, 180f)] private float defaultFOV = 90f;
+    [SerializeField] private float sensitivity = 10f;
+    [SerializeField] private float maxFOVTweak = 25f;
+    [SerializeField] private float maxLookUpAngle = 60f;
+    [SerializeField] private float maxLookDownAngle = -70f;
+    [SerializeField] private float smoothTime = 8f;
+
+
+
+    /////////////////////////////////////////////////  Private fields
+    private static Animator camShake;
+    private static Vector3 lastPos;
+    private static float _goalFOV; // what FOV is being lerp'd to.
+    private static Quaternion _goalRot;
+    private static Vector3 _rotDelta = Vector3.zero; // this vector is calculated from mouse input every frame
+    private static GameObject mainCamContainer;
+    private static GameObject handheldContainer;
+    private static GameObject handheldGoal;
+
+
+    // Singleton instance
+    private static CameraOperator _inst;
+    /// <summary> The CameraContainer game object. </summary>
+    public static GameObject Object {get => _inst.gameObject;}
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////  Events
+    private void Awake() {_inst = this;}
+
+    private void OnEnable()
+    {
+        enableControls = false;
+        FOV = defaultFOV;
+        //if(followObject == null) Debug.LogWarning("Camera has no gameObject to follow");
+        camShake = Camera.main.GetComponent<Animator>();
+        if(camShake == null) Debug.LogWarning("Main camera has no animator, camera shake will not work");
+        mainCamContainer = GameObject.Find("Main Cam Container");
+        handheldContainer = GameObject.Find("Handheld Container");
+        handheldGoal = GameObject.Find("Handheld Goal");
+        if(mainCamContainer == null) {
+            enabled = false;
+            throw new System.Exception("CameraOperator is missing 'Main Cam Container' object");
+        }
+        if(handheldContainer == null) {
+            enabled = false;
+            throw new System.Exception("CameraOperator is missing 'Handheld Container' object");
+        }
+        if(handheldGoal == null) {
+            enabled = false;
+            throw new System.Exception("CameraOperator is missing 'Handheld Goal' object");
+        }
+        isReady = true;
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftBracket)) {
-            if (sensMultiplier >= 2) { sensMultiplier--; Debug.Log("Decreasing sens to " + sensMultiplier);}
+        /*if(Time.deltaTime > 0.03f && Camera.main.farClipPlane > 500) Camera.main.farClipPlane--;
+        else if (Camera.main.farClipPlane < 1000) Camera.main.farClipPlane++;*/
+
+        // Apply camera shake based on camera's velocity, biased towards downward vertical velocity.
+        camShake.SetFloat("Shake Amount", 
+            Mathf.Lerp(
+                camShake.GetFloat("Shake Amount"),
+                (Time.deltaTime < 0.05f ?
+                (Vector3.Distance(transform.position, lastPos)) * ((!Movement.isGrounded && transform.position.y < lastPos.y) ? 2f : 0.7f) : 0),
+                Time.deltaTime * shakeSmooth
+            )
+        );
+        /*if (Input.GetKeyDown(KeyCode.LeftBracket)) {
+            if (sensitivity >= 2) { sensitivity--; Debug.Log("Decreasing sens to " + sensitivity);}
         }
         else if (Input.GetKeyDown(KeyCode.RightBracket)){
-            if (sensMultiplier <= 15) {sensMultiplier++; Debug.Log("Increasing sens to " + sensMultiplier);}
-        }
-
+            if (sensitivity <= 15) {sensitivity++; Debug.Log("Increasing sens to " + sensitivity);}
+        }*/
 
         //******* PIVOT and CONTAINER POSITION
-        _pivotPoint = followPoint.transform.position;
-        _lastHeight = _pivotPoint.y;
-
-        _pivotPoint.x = transform.position.x - followPoint.transform.position.x;
-        _pivotPoint.y = transform.position.y - followPoint.transform.position.y;
-        _pivotPoint.z = transform.position.z - followPoint.transform.position.z;
-
-        // Set camera 3D position, with height offset.
-        _truePivot.x = Mathf.Lerp(_pivotPoint.x, 0f, Time.deltaTime * smoothTime);
-        _truePivot.y = Mathf.Lerp(_pivotPoint.y, 0f, Time.deltaTime * smoothTime);
-        _truePivot.z = Mathf.Lerp(_pivotPoint.z, 0f, Time.deltaTime * smoothTime);
-
-        transform.position = new Vector3(
-            followPoint.transform.position.x + _truePivot.x,
-            followPoint.transform.position.y + _truePivot.y,
-            followPoint.transform.position.z + _truePivot.z
+        lastPos = transform.position;
+            transform.position = Vector3.Lerp(
+                transform.position,
+                followObject.transform.position,
+                Time.deltaTime * smoothTime * Mathf.Clamp(Vector3.Distance(transform.position, followObject.transform.position), 0f, 3) * (((Input.GetAxis("Vertical") > 0f || Input.GetAxis("Horizontal") > 0f)) ? 16 : 1)
         );
 
-        if (enableLookAt)
-        {
-            transform.LookAt(lookAt.transform.position);
-        }
-
         // ************** ROTATION
-        if (enableControls && !enableLookAt)
+        if (!doLookAtObject && enableControls)
         {
-            // Set inputs.
-            _input.x = Input.GetAxis("Mouse X");
-            _input.y = Input.GetAxis("Mouse Y");
-
-            /*if (doHorizontalBias)
-            {
-                if (Mathf.Abs(Input.GetAxis("Mouse X")) > Mathf.Abs(Input.GetAxis("Mouse Y"))) _axisDamper.y = 0f;
-                else _axisDamper.y = 3f;
-            }*/
-
             // Set rotation deltas.
-            _rotDelta.x += Mathf.Clamp(_input.x / 10, -1, 1) * sensitivity.x * sensMultiplier * _axisDamper.x * 2;
-            _rotDelta.y += Mathf.Clamp(_input.y / 10, -1, 1) * sensitivity.y * sensMultiplier * _axisDamper.y * 2;
+            _rotDelta.x += Mathf.Clamp(Input.GetAxis("Mouse X") / 10, -1, 1) * sensitivity * 6;
+            _rotDelta.y += Mathf.Clamp(Input.GetAxis("Mouse Y") / 10, -1, 1) * sensitivity * 6;
 
             // Limit vertical angle.
             _rotDelta.y = Mathf.Clamp(_rotDelta.y, maxLookDownAngle, maxLookUpAngle);
 
+            // Slight widening of FOV for high/low angles.
+            _goalFOV = defaultFOV + Mathf.Clamp(((Mathf.Pow(Mathf.Abs(_rotDelta.y), 2)) / 200) - 8, 0, maxFOVTweak);
+
             // Set camera angle. DO THE THING!
-            _aim = Quaternion.Euler(-_rotDelta.y, _rotDelta.x, 0);
-            transform.rotation = _aim;
+            _goalRot = Quaternion.Euler(-_rotDelta.y, _rotDelta.x, 0);
+            mainCamContainer.transform.rotation = Quaternion.Lerp(
+            mainCamContainer.transform.rotation,
+            _goalRot,
+            Time.deltaTime * lookSmooth
+        );
         }
-
-
-        // ****************************** FIELD-OF-VIEW
-        if (enableLookAt)
+        else if(doLookAtObject)
         {
-            _goalFOV = defaultFOV + 10f - _distToTLookTarget/2;
+            // Look at object
+            mainCamContainer.transform.LookAt(lookAtObject.transform.position);
+
+            // zoom in FOV based on how far away it is. TODO
+            _goalFOV = defaultFOV + 10f;
             Mathf.Clamp(_goalFOV, 15f, defaultFOV + 10f);
         }
-        // Slight widening of FOV for high/low angles.
-        _goalFOV = defaultFOV + Mathf.Clamp(((Mathf.Pow(Mathf.Abs(_rotDelta.y), 2)) / 200) - 8, 0, maxFOVTweak);
 
+        // Follow-through / delayed motion for hand-held objects
+        handheldContainer.transform.rotation = Quaternion.Lerp(
+            handheldContainer.transform.rotation,
+            handheldGoal.transform.rotation,
+            Time.deltaTime * handheldSmooth
+        );
+        handheldContainer.transform.position = Vector3.Lerp(
+            handheldContainer.transform.position,
+            handheldGoal.transform.position,
+            Time.deltaTime * handheldSmooth * 0.5f
+        );
+        
         // Lerp to FOV goal.
-        _camCamera.fieldOfView = Mathf.Lerp(_camCamera.fieldOfView, _goalFOV, Time.deltaTime * 8);
+        Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, _goalFOV + 
+            ((Input.GetKey(KeyCode.LeftShift) && Input.GetAxis("Vertical") > 0.1f) ? sprintExpandFOV : 0),
+            Time.deltaTime * 8
+        );
 
     }
 }

@@ -1,11 +1,9 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class StartPortal : MonoBehaviour
 {
-    public Color color;
-
     private bool discovered;
 
     // Start is called before the first frame update
@@ -36,13 +34,6 @@ public class StartPortal : MonoBehaviour
         gameObject.GetComponent<Renderer>().SetPropertyBlock(block);
     }
 
-    private void discoverSequence()
-    {
-        if (discovered) return;
-        discovered = true;
-        GetComponent<SoundPlayer>().Play("Discover");
-        GetComponents<ParticleSystem>()[0].Play();
-    }
 
 
-}
+}*/

@@ -1,107 +1,111 @@
-﻿// This class controls WASD movement and jumping.
-// Put it on the player prefab.
-
-using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+/// <summary> This class controls WASD movement and jumping. Boing </summary>
+[DisallowMultipleComponent]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CharacterController))]
+public sealed class Movement : MonoBehaviour
 {
-    public float speed = 0f;
-    public float movementSpeed = 6f;
-    public float sprintSpeed = 15f;
-    public float jumpForce = 7f;
-    public float gravity = 14f;
-    public string jumpKey = "space";
-    public bool canMove = true;
-    private bool isSprinting;
+    /////////////////////////////////////////////////   Public properties
+    private static bool _isjumping;
+    public static bool isJumping {
+        get => _isjumping;
+    }
+    private static bool _isSprinting;
+    public static bool isSprinting {
+        get => _isSprinting;
+    }
+    public static bool isGrounded {
+        get => controller.isGrounded;
+    }
+    /// <summary> Set wether the character can move. Gravity is still applied.static </summary>
+    public static bool moveAllowed {
+        get => _moveAllowed;
+        set => _moveAllowed = value;
+    }
+    [SerializeField] private static bool _moveAllowed = true;
+
+    
+
+    /////////////////////////////////////////////////   Private, Serializable fields
+    [SerializeField] private float movementSpeed = 6f;
+    [SerializeField] private float sprintSpeed = 15f;
+    [SerializeField] private float jumpForce = 7f;
+    [SerializeField] private float gravity = 14f;
+    [SerializeField] private string jumpKey = "space";
+
+
+
+    /////////////////////////////////////////////////   Private fields
+    private float speed = 0f;
+    private static CharacterController controller;
     private bool jumpSprintSpeed;
-
     private float verticalVelocity;
-    public CharacterController controller;
     private Rigidbody controllerRigidbody;
-    private GameObject cam;
-
-    public float slopeAngle;
-    public bool isjumping;
-
-    public bool moveAllowed = true;
-
-    private Vector3 jumpPoint;
     private Vector3 slopeHit;
-    public Vector3 slopeParallel;
-    private Vector3 slopeSlide;
-    private Vector3 lerpVector;
-
-    //timer
     private float timer;
     private bool stuck;
+    private GameObject stableCam;
+    private float slopeAngle;
 
-    public static bool _created;
 
-    private void Awake()
+    public static bool isReady { get; private set;}
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////  Events
+    void OnEnable()
     {
-        if(_created) Destroy(gameObject);
-    }
-
-    void Start()
-    {
-        if (name.Contains(" ("))
-        {
-            Debug.LogWarning("Duplicate gameplay thingy, destroying...");
-            Destroy(gameObject);
-        }
         controller = GetComponent<CharacterController>();
         controllerRigidbody = GetComponent<Rigidbody>();
-        cam = GameObject.Find("CameraContainer");
-        if (!cam) throw new System.Exception("Movement could not find a 'CameraContainer'. Make sure one is placed.");
-        if (Application.isEditor)
-        {
-            sprintSpeed = 25f;
+        //if (Application.isEditor) sprintSpeed = 25f;
+        stableCam = GameObject.Find("Stable Camera");
+        if(stableCam == null) {
+            enabled = false;
+            throw new System.Exception("Movement requires a 'Stable Camera'. Is there a CameraContainer in the scene?");
         }
-        stuck = false;
+        isReady = true;
     }
 
     void Update()
     {
         // ********************************* ROTATION
         // Set the player's Y rotation to match the main camera's.
-        float goalAngle = cam.transform.localRotation.eulerAngles.y;
+        float goalAngle = stableCam.transform.rotation.eulerAngles.y;
         Vector3 pRot = transform.rotation.eulerAngles;
         pRot.y = goalAngle;
         transform.rotation = Quaternion.Euler(pRot);
 
         //checking to see if character is allowed to move
-        if (moveAllowed == true)
+        if (_moveAllowed == true)
         {
             controllerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         }
         else controllerRigidbody.constraints = RigidbodyConstraints.FreezePosition;
 
-        //slopeCheck();
-
         // ********************************* POSITION
         float deltaX = 0f, deltaZ = 0f;
-        if (moveAllowed)
+        if (_moveAllowed)
         {
             // Sprint boost.
-
-            if (Input.GetKey(KeyCode.LeftShift) && isjumping == false)
+            if (Input.GetKey(KeyCode.LeftShift) && _isjumping == false)
             {
-                isSprinting = true;
+                _isSprinting = true;
                 speed = sprintSpeed;
-
             }
             else
             {
-                isSprinting = false;
+                _isSprinting = false;
                 speed = movementSpeed;
             }
 
             if(jumpSprintSpeed == true)
             {
                 speed = sprintSpeed;
-                if(isjumping == false)
+                if(_isjumping == false)
                 {
                     jumpSprintSpeed = false;
                     speed = movementSpeed;
@@ -121,19 +125,18 @@ public class Movement : MonoBehaviour
         if (controller.isGrounded)
         {
             verticalVelocity = -gravity * Time.deltaTime;
-            isjumping = false;
+            _isjumping = false;
             // Apply jump force on [jumpKey].
             if (Input.GetKeyDown(jumpKey))
             {
-                
-                if (isSprinting == true)
+                if (_isSprinting == true)
                 {
                     jumpSprintSpeed = true;
                 }
                 verticalVelocity = jumpForce;
-                isjumping = true;
+                _isjumping = true;
             }
-            else isjumping = false;
+            else _isjumping = false;
         }
         else verticalVelocity -= gravity * Time.deltaTime;
 
@@ -142,10 +145,10 @@ public class Movement : MonoBehaviour
 
         if (Physics.Raycast(transform.position, Vector3.down, out hit, controller.height / 2 * 2f))
         {
-            if (isjumping == true)
+            /*if (isjumping == true)
             {
                 jumpPoint = hit.point;
-            }
+            }*/
             if (hit.normal != Vector3.up)
             {
                 //slopeAngle = hit.normal;
@@ -160,7 +163,7 @@ public class Movement : MonoBehaviour
         if (slopeAngle >= controller.slopeLimit && controller.isGrounded && stuck == false)
         {
             //slides the character
-            slopeSlide = Vector3.ProjectOnPlane(Vector3.down, slopeHit);
+            var slopeSlide = Vector3.ProjectOnPlane(Vector3.down, slopeHit);
             controller.Move(slopeSlide * (10 * Time.deltaTime));
 
             timer += Time.deltaTime;
@@ -192,6 +195,5 @@ public class Movement : MonoBehaviour
         slopeAngle = Mathf.Round(Vector3.Angle(Vector3.up, hit.normal));
         slopeHit = hit.normal;
         Vector3 groundParallel = Vector3.Cross(transform.up, slopeHit);
-        slopeParallel = Vector3.Cross(groundParallel, slopeHit);
     }
 }

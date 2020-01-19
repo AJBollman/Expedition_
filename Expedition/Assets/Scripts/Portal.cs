@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -99,4 +99,93 @@ public class Portal : MonoBehaviour
         return complete;
     }
 
+}*/
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Portal : MonoBehaviour
+{
+    public bool isEndpoint;
+    public Color color;
+
+    private bool complete;
+    private bool discovered;
+    private Region owner;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        setColor(color);
+    }
+
+    void setColor(Color color)
+    {
+        MaterialPropertyBlock block = new MaterialPropertyBlock();
+        block.SetColor("_BaseColor", color);
+        GetComponent<Renderer>().SetPropertyBlock(block);
+        gameObject.GetComponent<Renderer>().SetPropertyBlock(block);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Explorer enters.
+        if (other.gameObject.name == "The Explorer")
+        {
+            //Expedition.activePortal = this;
+            discoverSequence();
+        }
+        // Traveller enters and this portal is not the active portal.
+        /*else if (other.gameObject.tag == "Traveler" && StateController.activePortal != this && winnableByTraveller)
+        {
+            //Debug.Log("traveler is in");
+            discoverSequence();
+            completeSequence();
+        }*/
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name == "The Explorer")
+        {
+            //Expedition.activePortal = null;
+        }
+    }
+
+    private void discoverSequence()
+    {
+        if (discovered) return;
+        discovered = true;
+        GetComponent<SoundPlayer>().Play("Discover");
+        GetComponents<ParticleSystem>()[0].Play();
+    }
+
+    /*private void completeSequence()
+    {
+        if (complete) return;
+        complete = true;
+        GetComponent<SoundPlayer>().Play("Victory");
+        check.SetActive(true);
+        cross.SetActive(false);
+        //GetComponents<ParticleSystem>()[1].Play();
+        check.transform.localScale = new Vector3(1, 500, 1);
+        checkGoalScale = new Vector3(1, 1, 1);
+        checkGoalPos = Vector3.zero;
+        foreach (Region x in ownedByRegions)
+        {
+            x.checkForCompletion();
+        }
+    }
+
+    public void addOwnerRegion(Region region)
+    {
+        ownedByRegions.Add(region);
+    }
+
+    public bool isComplete()
+    {
+        return complete;
+    }*/
+
 }
+

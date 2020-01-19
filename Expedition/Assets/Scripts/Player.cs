@@ -1,18 +1,31 @@
-﻿// All the stuff the Explorer can do.
-
-using System.Collections;
-using System.Collections.Generic;
+﻿
+using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+/// <summary> All the stuff the Explorer can do. </summary>
+[DisallowMultipleComponent]
+[RequireComponent(typeof(Movement))]
+[RequireComponent(typeof(SoundPlayer))]
+public sealed class Player : MonoBehaviour
 {
-    public bool cameraDrawAllowed = true;
+    /// <summary> The Explorer gameobject. </summary>
+    public static GameObject Explorer {get; private set;}
+
+    /// <summary> Maximum distance for the raycasting. </summary>
+    public static float maxDistance { get => _inst._maxDistance;}
+    [SerializeField] private float _maxDistance = 15f;
+    
+    public static bool isReady { get; private set;}
+
+    [SerializeField] private bool drawDebugLines;
+
+    private static RaycastHit lastRaycastHit;
+    
+    public static bool cameraDrawAllowed = true;
     public string cameraDrawButton = "Fire1";
     public float cameraDrawMaxDistance = 15;
     public LayerMask raycastIgnoreLayers;
     public float coordPlaneSizeFudgeFactor = 1f;
-    //public Vector3 correctCursorPos;
 
     public bool undoRedoAllowed = true;
     public string undoKey = "z";
@@ -34,7 +47,6 @@ public class Player : MonoBehaviour
     public static bool isRedLineMode;
 
     public bool isCameraDrawing;
-    public Vector3 lastRaycastHit;
     private GameObject vignette;
     private GameObject redvignette;
     private GameObject handMap;
@@ -57,22 +69,30 @@ public class Player : MonoBehaviour
     public AudioClip jumpLoop;
     private AudioSource drawLoopSrc;
     public AudioClip drawLoop;
+    private static SoundPlayer sound;
 
-    private void Awake()
-    {
-        if (FindObjectsOfType(GetType()).Length > 1)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-            StaticsList.add(gameObject);
-        }
+    private static Player _inst;
+
+
+
+
+    private void Awake() {
+        _inst = this;
+        Explorer = gameObject;
+        if(Explorer == null) throw new System.Exception("Player could not find player object");
+        /*sound = GetComponent<SoundPlayer>();
+        jumpLoopSrc = gameObject.AddComponent<AudioSource>();
+        jumpLoopSrc.clip = jumpLoop;
+        jumpLoopSrc.loop = true;
+        drawLoopSrc = gameObject.AddComponent<AudioSource>();
+        drawLoopSrc.clip = drawLoop;
+        drawLoopSrc.loop = true;*/
+        isReady = true;
     }
 
-    void Start()
+    private void Start()
     {
+        /*DontDestroyOnLoad(gameObject);
         ccon = GetComponent<CharacterController>();
         vignette = GameObject.Find("Vignette"); if (!vignette) throw new System.Exception("Vignette not found. Make sure there is a gameObject named 'Vignette'");
         redvignette = GameObject.Find("Redline Vignette"); if (!redvignette) throw new System.Exception("Redline Vignette not found. Make sure there is a gameObject named 'Redline Vignette'");
@@ -87,12 +107,7 @@ public class Player : MonoBehaviour
         preFOV = 90f;
         preFOVT = cam.maxFOVTweak;
         mv = GetComponent<Movement>();
-        /*coordPlaneBounds = new Vector3(
-             Mathf.Abs(coordOrigin0.transform.position.x - coordOrigin1.transform.position.x),
-             Mathf.Abs(coordOrigin0.transform.position.y - coordOrigin1.transform.position.y),
-             Mathf.Abs(coordOrigin0.transform.position.z - coordOrigin1.transform.position.z)
-         );*/
-         // COULD SUPPORT NONSQUARE MAP IN THE FUTURE BUT NOT NOW V  V  V
+        // COULD SUPPORT NONSQUARE MAP IN THE FUTURE BUT NOT NOW V  V  V
         coordPlaneBounds = new Vector2(
             Vector3.Distance(coordOrigin.transform.position, measure.transform.position),
             Vector3.Distance(coordOrigin.transform.position, measure.transform.position)
@@ -107,17 +122,44 @@ public class Player : MonoBehaviour
         drawLoopSrc.loop = true;
         PauseMenu.SetActive(false);
         redvignette.SetActive(false);
-        vignette.SetActive(false);
+        vignette.SetActive(false);*/
     }
 
 
     // Called every frame.
     void Update()
     {
+        // When button is pressed, 
+        if (Input.GetButtonDown(cameraDrawButton))
+        {
+            if(startCameraLine()) {
+                sound.Play("DrawStart");
+                isCameraDrawing = true;
+            }
+            else {
+                //sound.Play("DrawFail");
+            }
+        }
+
+        // While the button is down, add new points to the line that was just made.
+        if (Input.GetButton(cameraDrawButton))
+        {
+            if(addLinePoint()) {
+                //if (!drawLoopSrc.isPlaying) drawLoopSrc.Play();
+            }
+        }
+
+        // When the button is released, "end" the line.
+        // For now, that just means sink the line below the ground.
+        if (Input.GetButtonUp(cameraDrawButton))
+        {
+            if(endCameraLine(true)) isCameraDrawing = false;
+        }
         ////////////////////   Fullscreen map lerping.
+        /*
         if (!mapIsFull) isRedLineMode = false;
         Vector3 targetPos;
-        if (StateController.activeRegion == null)
+        if (Expedition.getActiveRegion() == null)
         {
             targetPos = new Vector3(0, -0.25f, -0.25f);
         }
@@ -127,7 +169,7 @@ public class Player : MonoBehaviour
             targetPos,
             Time.deltaTime * mapFullscreenTransitionTime
         );
-        if(!StateController.activeRegion || !isCameraDrawing) drawLoopSrc.Stop();
+        if (!Expedition.getActiveRegion() || !isCameraDrawing) drawLoopSrc.Stop();
 
 
         // Player script does *nothing* in main menu.
@@ -139,24 +181,24 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             var isPaused = !PauseMenu.activeSelf;
-            StateController.setState(isPaused ? gameStates.paused : gameStates.normal);
+            Expedition.setState(isPaused ? gameStates.paused : gameStates.normal);
 
             PauseMenu.SetActive(isPaused);
-            cam.enableControls = !isPaused;
-            if(isPaused)
+            //cam.enableControls = !isPaused;
+            if (isPaused)
             {
-                if (isRedLineMode) endRedLine();
-                if(isCameraDrawing) endCameraLine(false);
+                //if (isRedLineMode) endRedLine();
+                if (isCameraDrawing) endCameraLine(false);
                 redvignette.SetActive(false);
                 vignette.SetActive(false);
             }
-            cachedGS = StateController.getState();
+            cachedGS = Expedition.getState();
         }
 
 
 
         if (cachedGS != gameStates.normal && cachedGS != gameStates.redline) return;
-         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         checkInteract();
@@ -165,13 +207,13 @@ public class Player : MonoBehaviour
         // Start a new line/redline in the active Region while the button is down.
         if (Input.GetButtonDown(cameraDrawButton))
         {
-            if (isRedLineMode) startRedLine();
+            if (isRedLineMode) return;//startRedLine();
             else
             {
                 isCameraDrawing = true;
                 startCameraLine();
-                cam.defaultFOV = preFOV + 5f; // widen FOV a bit while drawing.
-                cam.maxFOVTweak = 0;
+                //cam.defaultFOV = preFOV + 5f; // widen FOV a bit while drawing.
+                //cam.maxFOVTweak = 0;
                 undoRedoPre = undoRedoAllowed;
             }
             undoRedoAllowed = false; // Disable undo/redo while drawing.
@@ -180,7 +222,7 @@ public class Player : MonoBehaviour
         // While the button is down, add new points to the line that was just made.
         if (Input.GetButton(cameraDrawButton))
         {
-            if (isRedLineMode) addToRedLine();
+            if (isRedLineMode) return;//addToRedLine();
             else addToCameraLine();
         }
 
@@ -188,13 +230,13 @@ public class Player : MonoBehaviour
         // For now, that just means sink the line below the ground.
         if (Input.GetButtonUp(cameraDrawButton))
         {
-            if (isRedLineMode) endRedLine();
+            if (isRedLineMode) return;//endRedLine();
             else
             {
                 isCameraDrawing = false;
                 endCameraLine(true);
-                cam.defaultFOV = preFOV; // Reset FOV.
-                cam.maxFOVTweak = 5f;
+                //cam.defaultFOV = preFOV; // Reset FOV.
+                //cam.maxFOVTweak = 5f;
             }
             undoRedoAllowed = undoRedoPre; // Set the undo/redo allowed back to what it was.
         }
@@ -205,26 +247,64 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(undoKey)) undoLastLine();
         if (Input.GetKeyDown(redoKey)) redoLastLine();
         if (Input.GetKeyDown(fullKey)) toggleFullMap();
-        if (Input.GetKeyDown(redLinekey) && mapIsFull && StateController.activePortal != null) isRedLineMode = !isRedLineMode;
-        if (isRedLineMode) StateController.setState(gameStates.redline);
-        else StateController.setState(gameStates.normal);
+        if (Input.GetKeyDown(redLinekey) && mapIsFull && Expedition.getPortalOfActiveRegion() != null) isRedLineMode = !isRedLineMode;
+        if (isRedLineMode) Expedition.setState(gameStates.redline);
+        else Expedition.setState(gameStates.normal);
 
         ////////////////////   Toggle map rotation.
         if (Input.GetKeyDown(toggleMapRotKey)) toggleMapRot();
+        */
     }
 
 
 
+    private static bool viewRaycast(float range) {
+        if(Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)), out RaycastHit hit, range, layerMask: Expedition.raycastIgnoreLayers)) {
+            // Optionally, show the raycast in scene view.
+            if(_inst.drawDebugLines) Debug.DrawLine(_inst.transform.position, hit.point, Color.green, 0.2f);
+            lastRaycastHit = hit;
+            return true;
+        }
+        else return false;
+    }
 
+    public static bool startCameraLine() {
+        if (!cameraDrawAllowed) { Debug.LogWarning("Line drawing not allowed!"); return false; }
+        if(Region.activeRegion == null) { Debug.LogWarning("Can't start line, no active region!"); return false; }
+
+        if(viewRaycast(maxDistance)) {
+            return Region.activeRegion.addLine(lastRaycastHit.point);
+        }
+        else { Debug.LogWarning("Surface is out of range ("+maxDistance+")"); return false; }
+    }
+
+    public static bool addLinePoint() {
+        if (!cameraDrawAllowed) { Debug.LogWarning("Line drawing not allowed!"); return false; }
+        if(Region.activeRegion == null) { Debug.LogWarning("Can't add point, no active region!"); return false; }
+
+        if(viewRaycast(maxDistance)) {
+            //if (!drawLoopSrc.isPlaying) drawLoopSrc.Play();
+            return Region.activeRegion.addLinePoint(lastRaycastHit.point);
+        }
+        else { Debug.LogWarning("Surface is out of range ("+maxDistance+")"); return false; }
+    }
+
+    public bool endCameraLine(bool playSound) {
+        if(Region.activeRegion == null) { Debug.LogWarning("Can't end line, no active region!"); return false; }
+
+        //if (playSound) sound.Play("DrawStop");
+        Region.activeRegion.setSinkOfAllLines(true);
+        return true;
+    }
 
 
 
 
     /////////////////////////////////////////////////////////   RAYCAST DRAWING
     // Instantiate a new Map Line prefab under active Region.
-    private void startCameraLine()
+    /*private void startCameraLine()
     {
-        if (!cameraDrawAllowed || !StateController.activeRegion) return;
+        if (!cameraDrawAllowed || !Expedition.getActiveRegion()) return;
 
         var r = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         RaycastHit hit;
@@ -234,7 +314,7 @@ public class Player : MonoBehaviour
             //Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
             Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
             lastRaycastHit = newHit;
-            StateController.activeRegion.addLineToRegion(newHit);
+            Expedition.getActiveRegion().addLine(newHit);
             GetComponent<SoundPlayer>().Play("DrawStart");
         }
         else inDrawingRange = false;
@@ -242,7 +322,7 @@ public class Player : MonoBehaviour
     // Add a point to the active Map Line under the Active Region.
     private void addToCameraLine()
     {
-        if (!cameraDrawAllowed || !StateController.activeRegion || !isCameraDrawing) return;
+        if (!cameraDrawAllowed || !Expedition.getActiveRegion() || !isCameraDrawing) return;
 
         var r = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         RaycastHit hit;
@@ -252,23 +332,17 @@ public class Player : MonoBehaviour
             //Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
             Vector3 newHit = new Vector3(hit.point.x, hit.point.y, hit.point.z);
             lastRaycastHit = newHit;
-            StateController.activeRegion.addLinePointToRegion(newHit);
+            Expedition.getActiveRegion().addLinePoint(newHit);
             if (!drawLoopSrc.isPlaying) drawLoopSrc.Play();
         }
         else inDrawingRange = false;
     }
-    // Tell the active Region to 'sink' the latest Line under the ground.
-    public void endCameraLine(bool playSound)
-    {
-        if (!cameraDrawAllowed || !StateController.activeRegion || isRedLineMode) return;
-        StateController.activeRegion.sinkLatestLine();
-        if(playSound) GetComponent<SoundPlayer>().Play("DrawStop");
-    }
     private void FixedUpdate()
     {
+        return;
         var mag = Mathf.Abs(Mathf.Max(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"))) * 0.75f + (ccon.velocity.magnitude * 0.1f);
         drawLoopSrc.volume = mag;
-        cachedGS = StateController.getState();
+        cachedGS = Expedition.getState();
     }
 
 
@@ -279,13 +353,13 @@ public class Player : MonoBehaviour
     private void undoLastLine()
     {
         if (!undoRedoAllowed) return;
-        StateController.activeRegion.undoLine();
+        Expedition.getActiveRegion().undoLine();
     }
     // Redoes the last drawn Line in the active Region.
     private void redoLastLine()
     {
         if (!undoRedoAllowed) return;
-        StateController.activeRegion.redoLine();
+        Expedition.getActiveRegion().redoLine();
     }
 
 
@@ -295,13 +369,13 @@ public class Player : MonoBehaviour
     /////////////////////////////////////////////////////////   FULLSCREEN MAP
     public void toggleFullMap()
     {
-        if (StateController.activeRegion == null) return;
+        if (Expedition.getActiveRegion() == null) return;
         mapIsFull = !mapIsFull;
-        if (mapIsFull && StateController.activePortal != null) isRedLineMode = true;
-        cam.maxFOVTweak = (mapIsFull) ? 0f : preFOVT;
+        if (mapIsFull && Expedition.getPortalOfActiveRegion() != null) isRedLineMode = true;
+        //cam.maxFOVTweak = (mapIsFull) ? 0f : preFOVT;
         cameraDrawAllowed = !mapIsFull;
         undoRedoAllowed = !mapIsFull;
-        mv.moveAllowed = !mapIsFull;
+        //mv.moveAllowed = !mapIsFull;
         if (mapIsFull)
         {
             GetComponent<SoundPlayer>().Play("MapFull");
@@ -329,7 +403,8 @@ public class Player : MonoBehaviour
 
 
     /////////////////////////////////////////////////////////   DRAWING ON MAP
-    private Vector3 screenRaycastOntoMap()
+    // Get the position of the mouse relative to the handheld map. Returns zero by default.
+    public Vector2 mousePosToMapPos()
     {
         Ray ray;
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -339,26 +414,26 @@ public class Player : MonoBehaviour
         {
             if (hit.collider.gameObject.name == "HandMap")
             {
+                // coordinate geometry horribleness.
                 var correctedBounds = coordPlaneBounds.y * coordPlaneSizeFudgeFactor;
-                //hit.point += correctCursorPos;
                 Vector2 pos = new Vector2(
                     (Mathf.Abs(coordOrigin.transform.InverseTransformPoint(hit.point).x - coordOrigin.transform.localPosition.x) / correctedBounds) / 100f,
                     (Mathf.Abs(coordOrigin.transform.localPosition.y - coordOrigin.transform.InverseTransformPoint(hit.point).y) / correctedBounds) / 100f
                 );
-
-                if(StateController.activeRegionCamera == null) throw new System.Exception("No region cam to raycast from!");
-                //Debug.Log(pos);
-                var camRay = StateController.activeRegionCamera.ViewportPointToRay(pos);
-                RaycastHit camHit;
-                if (Physics.Raycast(camRay, out camHit, Mathf.Infinity, layerMask: raycastIgnoreLayers))
-                {
-                    //Debug.DrawLine(StateController.activeRegionCamera.transform.position, camHit.point);
-                    return camHit.point;
-                    //StateController.activeRegion.addLinePointToRegion(newHit);
-                }
+                return pos;
             }
+            // Else the mouse is off the map.
         }
-        return Vector3.zero;
+        // Else the ray didn't hit anything.
+        return Vector2.zero;
+    }
+
+    // Get world position by raycasting from the active region camera (if the player is in a region).
+    public Vector3 mapPosToWorldPos(Vector2 mapPos) {
+        if(!Expedition.getActiveRegion()) {
+            throw new Exception("Can't raycast from region camera, no active region!");
+        }
+        return Expedition.getActiveRegion().raycastFromRegionCamera(mapPos);
     }
 
 
@@ -369,29 +444,36 @@ public class Player : MonoBehaviour
     // Instantiate a new Red Line prefab under active Region.
     private void startRedLine()
     {
-        if (StateController.activePortal != null)
+        if (Expedition.getPortalOfActiveRegion() == null)
         {
-            StateController.activeRegion.addRedLineToRegion(screenRaycastOntoMap());
+            Debug.LogWarning("Can't start redline, not in a portal!");
+            return;
         }
-        else Debug.LogWarning("Can't start redline, not in a portal!");
+        Vector2 mapPos = mousePosToMapPos(); // where the mouse cursor is
+        Vector3 worldPos = mapPosToWorldPos(mapPos); // where the point on the map is, in world space
+        Expedition.getActiveRegion().restartRedLine(worldPos);
     }
+
     // Add a point to the active Red Line under the Active Region.
     private void addToRedLine()
     {
-        if (StateController.activePortal != null)
-        {
-            StateController.activeRegion.addRedLinePointToRegion(screenRaycastOntoMap());
+        if (Expedition.getPortalOfActiveRegion() == null) {
+            throw new Exception("Can't add point to the redline, not in a portal!");
         }
-        else Debug.LogWarning("Can't add to redline, not in a portal!");
+        Vector2 mapPos = mousePosToMapPos(); // get mouse pos on map.
+        Vector3 worldPos = mapPosToWorldPos(mapPos);
+        Expedition.getActiveRegion().addRedLinePoint(worldPos);
     }
+
+    // Start the traveller from the current portal.
     private void endRedLine()
     {
-        if (StateController.activePortal != null)
-        {
-            StateController.startTraveller();
-            toggleFullMap();
+        if(Expedition.getPortalOfActiveRegion() == null) {
+            throw new Exception("Can't end the redline, not in a portal!");
         }
-        else Debug.LogWarning("Can't end redline, not in a portal!");
+        //Expedition.getPortalOfActiveRegion().startTraveller();
+        Debug.Log("START TRAVELLER HERE");
+        toggleFullMap(); // put the map down.
     }
 
 
@@ -401,10 +483,10 @@ public class Player : MonoBehaviour
     // Set crosshair to indicate how you can interact with things.
     private void checkInteract()
     {
-        if (StateController.getState() != gameStates.normal) return;
+        if (Expedition.getState() != gameStates.normal) return;
         if (isCameraDrawing)
         {
-            if (inDrawingRange && StateController.activeRegion != null)
+            if (inDrawingRange && Expedition.getActiveRegion() != null)
             { // can draw a line.
                 UserInterface.SetCursor(crosshairTypes.draw);
             }
@@ -418,7 +500,7 @@ public class Player : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f)));
         RaycastHit hit;
         var hol = holdItems.getCheckOnDropped();
-        /*if (hol != null && Physics.Raycast(ray, out hit, 100f, layerMask: droppedItemCheck) && hit.transform.gameObject != null && hit.transform.gameObject == hol)
+        if (hol != null && Physics.Raycast(ray, out hit, 100f, layerMask: droppedItemCheck) && hit.transform.gameObject != null && hit.transform.gameObject == hol)
         {
                 UserInterface.SetCursor(crosshairTypes.grab);
                 if (Input.GetKeyDown(KeyCode.E))
@@ -426,8 +508,8 @@ public class Player : MonoBehaviour
                     holdItems.Pickup(hit.transform.gameObject);
                 }
             return;
-        }*/
-        if(hol != null && transform.position.y - hol.transform.position.y > recallPlankIfLowerThan)
+        }
+        if (hol != null && transform.position.y - hol.transform.position.y > recallPlankIfLowerThan)
         {
             holdItems.Pickup(hol);
         }
@@ -451,12 +533,12 @@ public class Player : MonoBehaviour
                         }
                     }
                 }
-                else if(holdItems.getHeldObject() != null)
+                else if (holdItems.getHeldObject() != null)
                 {
                     if (hit.transform.gameObject.tag == "Event")
                     // Looking at an event.
                     {
-                        if(hit.transform.gameObject.name.Contains(holdItems.getHeldObject().name))
+                        if (hit.transform.gameObject.name.Contains(holdItems.getHeldObject().name))
                         // looking at an event while holding the proper item.
                         {
                             UserInterface.SetCursor(crosshairTypes.place);
@@ -490,7 +572,7 @@ public class Player : MonoBehaviour
         }
         else // not in interact range.
         {
-            if(holdItems.getHeldObject() != null) // if holding something, can yeet it.
+            if (holdItems.getHeldObject() != null) // if holding something, can yeet it.
             {
                 UserInterface.SetCursor(crosshairTypes.yeet);
                 if (Input.GetKeyDown(KeyCode.E)) holdItems.Drop(true);
@@ -506,5 +588,5 @@ public class Player : MonoBehaviour
     public void LoadMainMenu()
     {
         StaticsList.destroyAll();
-    }
+    }*/
 }
