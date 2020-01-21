@@ -4390,6 +4390,88 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2237148420391543553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6635170930319770434}
+  - component: {fileID: 3885253752751839139}
+  - component: {fileID: 8759089652666628737}
+  m_Layer: 5
+  m_Name: dr suess tree text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &6635170930319770434
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2237148420391543553}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2733161833060323672}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 326.40015, y: 85.2}
+  m_SizeDelta: {x: 1267.2, y: 501.7}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3885253752751839139
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2237148420391543553}
+  m_CullTransparentMesh: 0
+--- !u!114 &8759089652666628737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2237148420391543553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.91764706}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 7e49dd37ec9844a14a2b1631ad1cb596, type: 3}
+    m_FontSize: 20
+    m_FontStyle: 1
+    m_BestFit: 1
+    m_MinSize: 0
+    m_MaxSize: 60
+    m_Alignment: 3
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'A tall and vibrant tree that produces a soft material used in place of
+    fabrics like silk and wool, and whose bark bears a sweet and creamy nectar mostly
+    used in deserts. As such, the fabrics that come from the material are traded world
+    wide, despite the few locations the tree actually grows.  '
 --- !u!1 &2267640483404313183
 GameObject:
   m_ObjectHideFlags: 0
@@ -4469,6 +4551,81 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Discoveries
+--- !u!1 &2287084315786204483
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6896008912853563047}
+  - component: {fileID: 2846514896887899209}
+  - component: {fileID: 6913196127437519703}
+  m_Layer: 5
+  m_Name: dr suess tree image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &6896008912853563047
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2287084315786204483}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 124}
+  m_LocalScale: {x: 1.1444955, y: 1.1444955, z: 1.1444955}
+  m_Children: []
+  m_Father: {fileID: 2733161833060323672}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -668.07, y: 143.85}
+  m_SizeDelta: {x: 527.5, y: 525.1}
+  m_Pivot: {x: 0.5534168, y: 0.58949846}
+--- !u!222 &2846514896887899209
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2287084315786204483}
+  m_CullTransparentMesh: 0
+--- !u!114 &6913196127437519703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2287084315786204483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: f31d020c7d988ea49ab72611fb96ae8c, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2405185194898990029
 GameObject:
   m_ObjectHideFlags: 0
@@ -5669,7 +5826,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2733161833060323672
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5687,6 +5844,8 @@ RectTransform:
   - {fileID: 681647874279343462}
   - {fileID: 3343269793183273038}
   - {fileID: 6854902807276441725}
+  - {fileID: 6896008912853563047}
+  - {fileID: 6635170930319770434}
   m_Father: {fileID: 450209062551449945}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7039,7 +7198,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5993086579649847733
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9353,15 +9512,15 @@ PrefabInstance:
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef723b07764522743a2c87ecd0e2ce6d, type: 3}
---- !u!1 &4556843930406002735 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4556843929309236384, guid: ef723b07764522743a2c87ecd0e2ce6d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1340206223}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4361293916219238560 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4361293917114598447, guid: ef723b07764522743a2c87ecd0e2ce6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1340206223}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4556843930406002735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4556843929309236384, guid: ef723b07764522743a2c87ecd0e2ce6d,
     type: 3}
   m_PrefabInstance: {fileID: 1340206223}
   m_PrefabAsset: {fileID: 0}
