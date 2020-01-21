@@ -26,6 +26,14 @@ public sealed class Expedition : MonoBehaviour
     [SerializeField] private GameObject _redlinePrefab;
     public static GameObject redLinePrefab { get => _inst._redlinePrefab; }
 
+    /// <summary>  </summary>
+    [SerializeField] private GameObject _lineVertexPrefab;
+    public static GameObject lineVertexPrefab { get => _inst._lineVertexPrefab; }
+
+    /// <summary>  </summary>
+    [SerializeField] private GameObject _lineEdgePrefab;
+    public static GameObject lineEdgePrefab { get => _inst._lineEdgePrefab; }
+
     /// <summary> The renderTexture used by the handheld map's material. Regions cameras can use this as their target texture. </summary>
     [SerializeField] private RenderTexture _mapTexure;
     public static RenderTexture mapTexture { get => _inst._mapTexure; }
@@ -41,6 +49,22 @@ public sealed class Expedition : MonoBehaviour
 
     [SerializeField] private Color _questColorCompleteable;
     public static Color questColorCompleteable { get => _inst._questColorCompleteable; }
+
+    /// <summary> Initial number of line points samples to project onto surfaces. Will be decimated after. </summary>
+    [SerializeField] private int _lineQualityIterations;
+    public static int lineQualityIterations { get => _inst._lineQualityIterations;}
+
+    /// <summary> Farthest distance that line projection rays will travel past the line connecting the start and end points. </summary>
+    [SerializeField] private float _lineProjectionOvershootDistance;
+    public static float lineProjectionOvershootDistance { get => _inst._lineProjectionOvershootDistance;}
+
+    /// <summary> How far out to 'walk' the points from which lines are projected onto the surface between them. </summary>
+    [SerializeField] private int _lineProjectionSolverMaxRange;
+    public static int lineProjectionSolverMaxRange { get => _inst._lineProjectionSolverMaxRange;}
+
+    /// <summary>  </summary>
+    [SerializeField] private int _lineProjectionStartDistance;
+    public static int lineProjectionStartDistance { get => _inst._lineProjectionStartDistance;}
 
 
 

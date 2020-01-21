@@ -118,7 +118,7 @@ public sealed class CameraOperator : MonoBehaviour
             Mathf.Lerp(
                 camShake.GetFloat("Shake Amount"),
                 (Time.deltaTime < 0.05f ?
-                (Vector3.Distance(transform.position, lastPos)) * ((!Movement.isGrounded && transform.position.y < lastPos.y) ? 2f : 0.7f) : 0),
+                (Vector3.Distance(transform.position, lastPos)) * ((!Movement.isGrounded && transform.position.y < lastPos.y) ? 2.1f : 0.75f) : 0),
                 Time.deltaTime * shakeSmooth
             )
         );

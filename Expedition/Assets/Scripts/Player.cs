@@ -8,6 +8,26 @@ using UnityEngine;
 [RequireComponent(typeof(SoundPlayer))]
 public sealed class Player : MonoBehaviour
 {
+    // TESTING
+    private GameObject indicator;
+    private GameObject lastIndicator;
+
+    [SerializeField] private Gradient trueGradient;
+    [SerializeField] private Gradient falseGradient;
+
+    private Vector3 indicGoalPos;
+    private Quaternion indicGoalRot;
+    [SerializeField] private float indicPosSmooth = 1f;
+    [SerializeField] private float indicRotSmooth = 1f;
+
+    [SerializeField] private GameObject indicatorEnd;
+    [SerializeField] private GameObject lastIndicatorEnd;
+
+    [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private GameObject line;
+
+
+
     /// <summary> The Explorer gameobject. </summary>
     public static GameObject Explorer {get; private set;}
 
@@ -20,7 +40,10 @@ public sealed class Player : MonoBehaviour
     [SerializeField] private bool drawDebugLines;
 
     private static RaycastHit lastRaycastHit;
+    private LineVertex lastVert;
     
+
+    ///////////////////// REWORK
     public static bool cameraDrawAllowed = true;
     public string cameraDrawButton = "Fire1";
     public float cameraDrawMaxDistance = 15;
@@ -71,6 +94,8 @@ public sealed class Player : MonoBehaviour
     public AudioClip drawLoop;
     private static SoundPlayer sound;
 
+
+    // Singleton instance.
     private static Player _inst;
 
 
@@ -88,6 +113,17 @@ public sealed class Player : MonoBehaviour
         drawLoopSrc.clip = drawLoop;
         drawLoopSrc.loop = true;*/
         isReady = true;
+
+        indicator = GameObject.Find("indicator");
+        lastIndicator = GameObject.Find("lastIndicator");
+        line = GameObject.Find("Line");
+        lineRenderer = line.GetComponent<LineRenderer>();
+        indicatorEnd = indicator.transform.Find("penEnd").gameObject;
+        lastIndicatorEnd = lastIndicator.transform.Find("penEnd").gameObject;
+        lineRenderer.positionCount = 2;
+        lastVert = null;
+        lastIndicator.SetActive(false);
+        line.SetActive(false);
     }
 
     private void Start()
@@ -124,36 +160,72 @@ public sealed class Player : MonoBehaviour
         redvignette.SetActive(false);
         vignette.SetActive(false);*/
     }
-
-
+    
     // Called every frame.
     void Update()
     {
+
+        if(viewRaycast(maxDistance)) {
+            indicGoalPos = lastRaycastHit.point;
+            indicGoalRot = Quaternion.FromToRotation(Vector3.up, lastRaycastHit.normal);
+        }
+        indicator.transform.position = Vector3.Lerp(indicator.transform.position, indicGoalPos, Time.deltaTime * indicPosSmooth);
+        indicator.transform.rotation = Quaternion.Slerp(indicator.transform.rotation, indicGoalRot, Time.deltaTime * indicRotSmooth);
+
+        lineRenderer.SetPosition(0, lastIndicatorEnd.transform.position);
+        lineRenderer.SetPosition(1, indicatorEnd.transform.position);
+
+        if(lastVert != null) {
+            if( Physics.Linecast(indicatorEnd.transform.position, lastIndicatorEnd.transform.position, layerMask:Expedition.raycastIgnoreLayers) ) {
+                cameraDrawAllowed = false;
+                lineRenderer.colorGradient = falseGradient;
+            }
+            else {
+                cameraDrawAllowed = true;
+                lineRenderer.colorGradient = trueGradient;
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.E) && lastVert != null) {
+            lastVert = null;
+            lastIndicator.SetActive(false);
+            line.SetActive(false);
+        }
+
         // When button is pressed, 
         if (Input.GetButtonDown(cameraDrawButton))
         {
-            if(startCameraLine()) {
+            /*if(startCameraLine()) {
                 sound.Play("DrawStart");
                 isCameraDrawing = true;
             }
             else {
                 //sound.Play("DrawFail");
-            }
+            }*/
         }
 
         // While the button is down, add new points to the line that was just made.
         if (Input.GetButton(cameraDrawButton))
         {
-            if(addLinePoint()) {
+            /*if(addLinePoint()) {
                 //if (!drawLoopSrc.isPlaying) drawLoopSrc.Play();
-            }
+            }*/
         }
 
         // When the button is released, "end" the line.
         // For now, that just means sink the line below the ground.
-        if (Input.GetButtonUp(cameraDrawButton))
+        if (Input.GetButtonUp(cameraDrawButton) && cameraDrawAllowed)
         {
-            if(endCameraLine(true)) isCameraDrawing = false;
+            LineVertex newVert = LineVertex.SpawnVertex(indicGoalPos, indicGoalRot);
+            if(lastVert != null) {
+                LineVertex.connectVertices(lastVert, newVert);
+            }
+            lastVert = newVert;
+            lastIndicator.SetActive(true);
+            line.SetActive(true);
+            lastIndicator.transform.position = indicator.transform.position;
+            lastIndicator.transform.rotation = indicator.transform.rotation;
+            //if(endCameraLine(true)) isCameraDrawing = false;
         }
         ////////////////////   Fullscreen map lerping.
         /*

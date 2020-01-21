@@ -10,6 +10,7 @@ public class prototype : MonoBehaviour
     private GameObject fullMap;
     private GameObject handMap;
     private bool fullScreenMap;
+    private GameObject indicator;
 
     // Start is called before the first frame update
     void Start()
