@@ -11,6 +11,6 @@ public class ScorringSystem : MonoBehaviour
 
     void Update()
     {
-        scoreText.GetComponent<Text>().text = "Discoveries: " + theScore + " / 10"; 
+        if(scoreText != null) scoreText.GetComponent<Text>().text = "Discoveries: " + theScore + " / 10"; 
     }
 }
