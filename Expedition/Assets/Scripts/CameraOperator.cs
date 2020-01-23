@@ -9,7 +9,6 @@ public sealed class CameraOperator : MonoBehaviour
     //////// TESTING
     public float shakeSmooth;
     public float sprintExpandFOV;
-    public float handheldSmooth;
     public float lookSmooth;
     public static bool doLookAtObject;
 
@@ -67,8 +66,6 @@ public sealed class CameraOperator : MonoBehaviour
     private static Quaternion _goalRot;
     private static Vector3 _rotDelta = Vector3.zero; // this vector is calculated from mouse input every frame
     private static GameObject mainCamContainer;
-    private static GameObject handheldContainer;
-    private static GameObject handheldGoal;
 
 
     // Singleton instance
@@ -91,19 +88,9 @@ public sealed class CameraOperator : MonoBehaviour
         camShake = Camera.main.GetComponent<Animator>();
         if(camShake == null) Debug.LogWarning("Main camera has no animator, camera shake will not work");
         mainCamContainer = GameObject.Find("Main Cam Container");
-        handheldContainer = GameObject.Find("Handheld Container");
-        handheldGoal = GameObject.Find("Handheld Goal");
         if(mainCamContainer == null) {
             enabled = false;
             throw new System.Exception("CameraOperator is missing 'Main Cam Container' object");
-        }
-        if(handheldContainer == null) {
-            enabled = false;
-            throw new System.Exception("CameraOperator is missing 'Handheld Container' object");
-        }
-        if(handheldGoal == null) {
-            enabled = false;
-            throw new System.Exception("CameraOperator is missing 'Handheld Goal' object");
         }
         isReady = true;
     }
@@ -167,18 +154,6 @@ public sealed class CameraOperator : MonoBehaviour
             _goalFOV = defaultFOV + 10f;
             Mathf.Clamp(_goalFOV, 15f, defaultFOV + 10f);
         }
-
-        // Follow-through / delayed motion for hand-held objects
-        handheldContainer.transform.rotation = Quaternion.Lerp(
-            handheldContainer.transform.rotation,
-            handheldGoal.transform.rotation,
-            Time.deltaTime * handheldSmooth
-        );
-        handheldContainer.transform.position = Vector3.Lerp(
-            handheldContainer.transform.position,
-            handheldGoal.transform.position,
-            Time.deltaTime * handheldSmooth * 0.5f
-        );
         
         // Lerp to FOV goal.
         Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, _goalFOV + 

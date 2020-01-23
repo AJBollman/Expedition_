@@ -26,6 +26,10 @@ public sealed class Player : MonoBehaviour
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private GameObject line;
 
+    [SerializeField] private float miniMapZoom;
+    [SerializeField] private float fullMapZoom;
+    [SerializeField] private GameObject minimapCam;
+
 
 
     /// <summary> The Explorer gameobject. </summary>
@@ -42,6 +46,17 @@ public sealed class Player : MonoBehaviour
     private static RaycastHit lastRaycastHit;
     private LineVertex lastVert;
     
+
+    public float handheldSmooth;
+    private static GameObject handheldContainer;
+    private static GameObject handheldGoal;
+    private static GameObject fullMapGoal;
+    private Vector3 mapGoalPos;
+    private Quaternion mapGoalRot;
+    private bool isFullMap;
+    private Vector3 mapCamGoalPos;
+
+
 
     ///////////////////// REWORK
     public static bool cameraDrawAllowed = true;
@@ -101,7 +116,7 @@ public sealed class Player : MonoBehaviour
 
 
 
-    private void Awake() {
+    private void OnEnable() {
         _inst = this;
         Explorer = gameObject;
         if(Explorer == null) throw new System.Exception("Player could not find player object");
@@ -112,7 +127,6 @@ public sealed class Player : MonoBehaviour
         drawLoopSrc = gameObject.AddComponent<AudioSource>();
         drawLoopSrc.clip = drawLoop;
         drawLoopSrc.loop = true;*/
-        isReady = true;
 
         indicator = GameObject.Find("indicator");
         lastIndicator = GameObject.Find("lastIndicator");
@@ -124,6 +138,25 @@ public sealed class Player : MonoBehaviour
         lastVert = null;
         lastIndicator.SetActive(false);
         line.SetActive(false);
+        handheldContainer = GameObject.Find("Handheld Container");
+        handheldGoal = GameObject.Find("Handheld Goal");
+        fullMapGoal = GameObject.Find("FullMap Goal");
+        minimapCam = GameObject.Find("Minimap Cam");
+        mapCamGoalPos = minimapCam.transform.position;
+
+        if(handheldContainer == null) {
+            enabled = false;
+            throw new System.Exception("Player is missing 'Handheld Container' object");
+        }
+        if(handheldGoal == null) {
+            enabled = false;
+            throw new System.Exception("Player is missing 'Handheld Goal' object");
+        }
+        if(fullMapGoal == null) {
+            enabled = false;
+            throw new System.Exception("Player is missing 'FullMap Goal' object");
+        }
+        isReady = true;
     }
 
     private void Start()
@@ -165,7 +198,7 @@ public sealed class Player : MonoBehaviour
     void Update()
     {
 
-        if(viewRaycast(maxDistance)) {
+        if(viewRaycast(maxDistance) && !isFullMap) {
             indicGoalPos = lastRaycastHit.point;
             indicGoalRot = Quaternion.FromToRotation(Vector3.up, lastRaycastHit.normal);
         }
@@ -186,31 +219,46 @@ public sealed class Player : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.E) && lastVert != null) {
-            lastVert = null;
-            lastIndicator.SetActive(false);
-            line.SetActive(false);
+        if(Input.GetKeyDown(KeyCode.E)) {
+            if(lastVert != null) {
+                lastVert = null;
+                lastIndicator.SetActive(false);
+                line.SetActive(false);
+            }
+            else if(fullMapAllowed) {
+                isFullMap = !isFullMap;
+                CameraOperator.enableControls = !isFullMap;
+                Movement.moveAllowed = !isFullMap;
+                minimapCam.GetComponent<Camera>().orthographicSize = (isFullMap) ? fullMapZoom : miniMapZoom;
+            }
         }
+
+        if(isFullMap) {
+            mapCamGoalPos += new Vector3(
+                (Input.GetAxis("Horizontal")),
+                0,
+                (Input.GetAxis("Vertical"))
+            );
+            Debug.Log((Input.GetAxis("Vertical")));
+        }
+        else {
+            mapCamGoalPos = new Vector3(
+                Player.Explorer.transform.position.x,
+                minimapCam.transform.position.y,
+                Player.Explorer.transform.position.z
+            );
+        }
+
+        minimapCam.transform.position = Vector3.Lerp(minimapCam.transform.position, mapCamGoalPos, Time.deltaTime * 10);
 
         // When button is pressed, 
-        if (Input.GetButtonDown(cameraDrawButton))
-        {
-            /*if(startCameraLine()) {
-                sound.Play("DrawStart");
-                isCameraDrawing = true;
-            }
-            else {
-                //sound.Play("DrawFail");
-            }*/
-        }
+        if (Input.GetButtonDown(cameraDrawButton)) {}
 
         // While the button is down, add new points to the line that was just made.
-        if (Input.GetButton(cameraDrawButton))
-        {
-            /*if(addLinePoint()) {
-                //if (!drawLoopSrc.isPlaying) drawLoopSrc.Play();
-            }*/
-        }
+        if (Input.GetButton(cameraDrawButton)) {}
+
+        mapGoalRot = (isFullMap) ? fullMapGoal.transform.rotation : handheldGoal.transform.rotation;
+        mapGoalPos = (isFullMap) ? fullMapGoal.transform.position : handheldGoal.transform.position;
 
         // When the button is released, "end" the line.
         // For now, that just means sink the line below the ground.
@@ -227,6 +275,18 @@ public sealed class Player : MonoBehaviour
             lastIndicator.transform.rotation = indicator.transform.rotation;
             //if(endCameraLine(true)) isCameraDrawing = false;
         }
+
+        // Follow-through / delayed motion for hand-held objects
+        handheldContainer.transform.rotation = Quaternion.Lerp(
+            handheldContainer.transform.rotation,
+            mapGoalRot,
+            Time.deltaTime * handheldSmooth
+        );
+        handheldContainer.transform.position = Vector3.Lerp(
+            handheldContainer.transform.position,
+            mapGoalPos,
+            Time.deltaTime * handheldSmooth * 0.5f
+        );
         ////////////////////   Fullscreen map lerping.
         /*
         if (!mapIsFull) isRedLineMode = false;
