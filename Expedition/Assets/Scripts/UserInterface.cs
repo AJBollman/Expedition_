@@ -22,8 +22,12 @@ public sealed class UserInterface : MonoBehaviour
             _inst.pauseMenu.SetActive(value);
             if(!_inst.pauseMenu.activeInHierarchy && !_inst.optionsMenu.activeInHierarchy && !_inst.mainMenu.activeInHierarchy) {
                 pauseMenuOpacityGoal = 0f;
+                Player.cameraDrawAllowed = true;
             }
-            else pauseMenuOpacityGoal = 1f;
+            else {
+                pauseMenuOpacityGoal = 1f;
+                Player.cameraDrawAllowed = false;
+            }
         }
     }
 
@@ -65,6 +69,7 @@ public sealed class UserInterface : MonoBehaviour
         }
         background.SetActive(true);
         pauseMenuFill = background.GetComponent<Image>();
+        if(pauseMenuFill == null) throw new System.Exception("Pause Menu Background image missing.");
         startupMenuActive = true;
         isReady = true;
     }

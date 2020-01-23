@@ -56,13 +56,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf629a694e01487b8a0195d5e974755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trueGradient:
+    serializedVersion: 2
+    key0: {r: 0.25098044, g: 0.93333334, b: 0.55962074, a: 1}
+    key1: {r: 0.2509804, g: 0.9333334, b: 0.56078434, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  falseGradient:
+    serializedVersion: 2
+    key0: {r: 0.9333334, g: 0.2509804, b: 0.34901962, a: 1}
+    key1: {r: 0.9333334, g: 0.2509804, b: 0.34901962, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  indicPosSmooth: 20
+  indicRotSmooth: 10
+  indicatorEnd: {fileID: 0}
+  lastIndicatorEnd: {fileID: 0}
+  lineRenderer: {fileID: 0}
+  line: {fileID: 0}
+  miniMapZoom: 32
+  fullMapZoom: 64
+  minimapCam: {fileID: 0}
   _maxDistance: 15
   drawDebugLines: 0
+  handheldSmooth: 40
   cameraDrawButton: Fire1
   cameraDrawMaxDistance: 15
   raycastIgnoreLayers:
     serializedVersion: 2
-    m_Bits: 2867
+    m_Bits: 35635
   coordPlaneSizeFudgeFactor: 0.82821
   undoRedoAllowed: 1
   undoKey: z
@@ -226,6 +294,10 @@ MonoBehaviour:
   - name: MapFull
     soundsList:
     - {fileID: 8300000, guid: bf41cf823a62b4f788657511b0708315, type: 3}
+    volume: 1
+  - name: DrawFail
+    soundsList:
+    - {fileID: 8300000, guid: d336cf104820a40c1a2f0e117292d5ce, type: 3}
     volume: 1
 --- !u!82 &4081490390107586918
 AudioSource:

@@ -128,9 +128,9 @@ public sealed class Player : MonoBehaviour
         drawLoopSrc.clip = drawLoop;
         drawLoopSrc.loop = true;*/
 
-        indicator = GameObject.Find("indicator");
-        lastIndicator = GameObject.Find("lastIndicator");
-        line = GameObject.Find("Line");
+        indicator = GameObject.Find("Vertex Indicator");
+        lastIndicator = GameObject.Find("Last Vertex Indicator");
+        line = GameObject.Find("Indicator Line");
         lineRenderer = line.GetComponent<LineRenderer>();
         indicatorEnd = indicator.transform.Find("penEnd").gameObject;
         lastIndicatorEnd = lastIndicator.transform.Find("penEnd").gameObject;
