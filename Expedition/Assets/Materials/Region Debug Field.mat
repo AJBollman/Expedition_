@@ -22,11 +22,11 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Region Debug Field
   m_Shader: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
-  m_ShaderKeywords: _DISTORTION_ON _FADING_ON _RECEIVE_SHADOWS_OFF _SOFTPARTICLES_ON
+  m_ShaderKeywords: _FADING_ON _RECEIVE_SHADOWS_OFF _SOFTPARTICLES_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 3050
+  m_CustomRenderQueue: 3000
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
@@ -35,7 +35,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 63ffbba53230a654fb2b32dc6cfdff40, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -68,13 +68,13 @@ Material:
     - _BlendOp: 0
     - _BumpScale: 1
     - _CameraFadingEnabled: 1
-    - _CameraFarFadeDistance: 2
-    - _CameraNearFadeDistance: 0.5
+    - _CameraFarFadeDistance: 1.5
+    - _CameraNearFadeDistance: 1
     - _ColorMode: 0
     - _Cull: 0
     - _Cutoff: 0.5
     - _DistortionBlend: 0
-    - _DistortionEnabled: 1
+    - _DistortionEnabled: 0
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0.1
     - _DstBlend: 1
@@ -89,24 +89,24 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _QueueOffset: 0
+    - _QueueOffset: 50
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 1
-    - _SoftParticlesFarFadeDistance: 0
-    - _SoftParticlesNearFadeDistance: 5
+    - _SoftParticlesFarFadeDistance: 2
+    - _SoftParticlesNearFadeDistance: 6
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 1
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0, g: 1, b: 0.5964391, a: 1}
+    - _BaseColor: {r: 0, g: 0.6509434, b: 0.38801327, a: 1}
     - _BaseColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
-    - _CameraFadeParams: {r: 0.5, g: 0.6666667, b: 0, a: 0}
+    - _CameraFadeParams: {r: 1, g: 2, b: 0, a: 0}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0.22908506, g: 0.41501904, b: 0.49056602, a: 1}
-    - _SoftParticleFadeParams: {r: 5, g: -0.2, b: 0, a: 0}
+    - _SoftParticleFadeParams: {r: 6, g: -0.25, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
