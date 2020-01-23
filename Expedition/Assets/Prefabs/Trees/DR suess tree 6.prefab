@@ -168,6 +168,8 @@ GameObject:
   - component: {fileID: 7243701671021091536}
   - component: {fileID: 4015598029227058729}
   - component: {fileID: 804360179356628682}
+  - component: {fileID: 3802467598279572575}
+  - component: {fileID: 8574957210990592563}
   m_Layer: 0
   m_Name: DR suess tree 6
   m_TagString: Untagged
@@ -252,6 +254,34 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4781277628412113339, guid: e265581fdc03e7b44b5a924c22936166, type: 3}
+--- !u!114 &3802467598279572575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3424586390179173109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9d865cd10adf1e419786fd5791e716a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
+  NarrativeText: {fileID: 0}
+  discover: {fileID: 0}
+--- !u!65 &8574957210990592563
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3424586390179173109}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 22.694624, y: 242.8392, z: 32.586308}
+  m_Center: {x: 0.15515581, y: 121.53958, z: -2.0729804}
 --- !u!1 &8929937559055391543
 GameObject:
   m_ObjectHideFlags: 0
