@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5411000736441797892}
   - component: {fileID: 5411000736441797893}
-  - component: {fileID: 1967208465128380198}
   m_Layer: 0
   m_Name: GameStateManager
   m_TagString: Untagged
@@ -44,28 +43,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d44b9c63274214608a33e1d5cec458cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _raycastIgnoreLayers:
-    serializedVersion: 2
-    m_Bits: 2867
-  _linePrefab: {fileID: 4035439266716946739, guid: b357270562bb84843b9af19d90464c2e,
-    type: 3}
-  _redlinePrefab: {fileID: 2436107601953190067, guid: c94cf2bdd6eae4f99944d5926c7ed943,
-    type: 3}
-  _mapTexure: {fileID: 8400000, guid: b45712d3564504d1e947d97574e894fd, type: 2}
-  autoStartGameWhileEditor: 0
---- !u!114 &1967208465128380198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5411000736441797894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f9bc30456ded4563bf546f0c5b9835a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  identifier: Expedition
-  limit: 1
-  dontDestroy: 1
-  doLogWarning: 1

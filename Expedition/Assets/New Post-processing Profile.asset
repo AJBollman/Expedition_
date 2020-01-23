@@ -18,35 +18,35 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 7
+    value: 4.23
   threshold:
     overrideState: 1
-    value: 0.9
+    value: 1
   softKnee:
     overrideState: 1
-    value: 0.3
+    value: 0.5
   clamp:
-    overrideState: 1
-    value: 65384
+    overrideState: 0
+    value: 65472
   diffusion:
     overrideState: 1
-    value: 8
+    value: 7
   anamorphicRatio:
     overrideState: 0
-    value: 1
+    value: 0
   color:
     overrideState: 0
-    value: {r: 0.9103774, g: 0.93118054, b: 1, a: 1}
+    value: {r: 1, g: 0.8480815, b: 0.8349056, a: 1}
   fastMode:
     overrideState: 1
     value: 1
   dirtTexture:
-    overrideState: 1
-    value: {fileID: 2800000, guid: a2960ffde020f27409e070d92fb2e00b, type: 3}
+    overrideState: 0
+    value: {fileID: 2800000, guid: 225a686afd6bb414bb3d7959441672fb, type: 3}
     defaultState: 1
   dirtIntensity:
-    overrideState: 1
-    value: 2
+    overrideState: 0
+    value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,24 +87,24 @@ MonoBehaviour:
     defaultState: 1
   tonemapper:
     overrideState: 1
-    value: 3
+    value: 0
   toneCurveToeStrength:
     overrideState: 1
-    value: 0.15
+    value: 0.1
   toneCurveToeLength:
     overrideState: 1
-    value: 1
+    value: 0.79
   toneCurveShoulderStrength:
     overrideState: 1
     value: 1
   toneCurveShoulderLength:
     overrideState: 1
-    value: 0.55
+    value: 0.26
   toneCurveShoulderAngle:
     overrideState: 1
-    value: 0.27
+    value: 0
   toneCurveGamma:
-    overrideState: 0
+    overrideState: 1
     value: 1
   ldrLut:
     overrideState: 0
@@ -126,16 +126,16 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   saturation:
-    overrideState: 0
+    overrideState: 1
     value: 0
   brightness:
     overrideState: 0
     value: 0
   postExposure:
-    overrideState: 0
+    overrideState: 1
     value: 0
   contrast:
-    overrideState: 0
+    overrideState: 1
     value: 1
   mixerRedOutRedIn:
     overrideState: 0
@@ -166,13 +166,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.80933976, y: 0.9024743, z: 1, w: 0}
+    value: {x: 0.84000385, y: 0.9304707, z: 1, w: 0}
   gamma:
     overrideState: 0
-    value: {x: 0.7550927, y: 0.816867, z: 1, w: 0}
+    value: {x: 1, y: 0.9671363, z: 0.99328434, w: 0}
   gain:
-    overrideState: 0
-    value: {x: 1, y: 0.9672093, z: 0.94597113, w: -0.0022930684}
+    overrideState: 1
+    value: {x: 1, y: 0.8910599, z: 0.88974714, w: 0.1584786}
   masterCurve:
     overrideState: 0
     value:

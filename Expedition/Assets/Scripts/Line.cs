@@ -32,11 +32,11 @@ public class Line : MonoBehaviour
 
     // Self-explanatory; add a point to the line.
     // Will check to make sure it's not too close.
-    public bool addPoint(Vector3 pos)
+    public void addPoint(Vector3 pos)
     {
-        pos.y += 0.05f; // raise Y pos a tiny bit, for visibility.
+        pos.y += 0.05f;
         var cpos = transform.InverseTransformPoint(pos);
-        if (Vector3.Distance(lastPoint, cpos) < 0.010f) { return false; }
+        if (Vector3.Distance(lastPoint, cpos) < 0.010f) { return; }
         {
 
             //Debug.DrawLine(transform.position, pos, Color.green, 0.5f);
@@ -49,7 +49,6 @@ public class Line : MonoBehaviour
             rawLineData.Insert(0, pos);
             linerender.SetPositions(lineData.ToArray());
             lastPoint = cpos;
-            return true;
         }
     }
 

@@ -9,22 +9,21 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8754469251116282581}
-  - component: {fileID: 8754469251116282585}
-  - component: {fileID: 8754469251116282579}
   - component: {fileID: 8754469251116282580}
   - component: {fileID: 8754469251116282584}
   - component: {fileID: 8754469251116282582}
   - component: {fileID: 8754469251116282583}
   - component: {fileID: 8754469251116282578}
+  - component: {fileID: 8754469251116282579}
+  - component: {fileID: 8754469251116282585}
   - component: {fileID: 1376070341406052198}
   - component: {fileID: 4081490390107586918}
   - component: {fileID: 6843702237901218247}
   - component: {fileID: 420960443}
-  - component: {fileID: 3509341830135309805}
   m_Layer: 12
   m_Name: The Explorer
   m_TagString: Player
-  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -44,59 +43,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8754469251116282585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8754469251116282577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccf629a694e01487b8a0195d5e974755, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxDistance: 15
-  drawDebugLines: 0
-  cameraDrawButton: Fire1
-  cameraDrawMaxDistance: 15
-  raycastIgnoreLayers:
-    serializedVersion: 2
-    m_Bits: 2867
-  coordPlaneSizeFudgeFactor: 0.82821
-  undoRedoAllowed: 1
-  undoKey: z
-  redoKey: x
-  fullMapAllowed: 1
-  fullKey: f
-  mapFullscreenTransitionTime: 5
-  fullMapPos: {x: 0, y: 0, z: 0.12}
-  miniMapPos: {x: 0.26, y: -0.1, z: 0.23}
-  toggleMapRotKey: l
-  redLineAllowed: 1
-  redLinekey: r
-  fullscreenLineDrawAllowed: 0
-  recallPlankIfLowerThan: 10
-  isCameraDrawing: 0
-  jumpLoop: {fileID: 0}
-  drawLoop: {fileID: 8300000, guid: 69bc053d9be0d405d8a8c5672fb66e91, type: 3}
---- !u!114 &8754469251116282579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8754469251116282577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1630139d7567349acb66558ad320a1c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 5
-  sprintSpeed: 9
-  jumpForce: 10
-  gravity: 18
-  jumpKey: space
 --- !u!33 &8754469251116282580
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -191,6 +137,66 @@ CharacterController:
   m_SkinWidth: 0.25
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8754469251116282579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8754469251116282577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1630139d7567349acb66558ad320a1c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  movementSpeed: 6
+  sprintSpeed: 15
+  jumpForce: 8
+  gravity: 12
+  jumpKey: space
+  canMove: 1
+  controller: {fileID: 0}
+  slopeAngle: 0
+  isjumping: 0
+  moveAllowed: 1
+  slopeParallel: {x: 0, y: 0, z: 0}
+--- !u!114 &8754469251116282585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8754469251116282577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf629a694e01487b8a0195d5e974755, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraDrawAllowed: 1
+  cameraDrawButton: Fire1
+  cameraDrawMaxDistance: 15
+  raycastIgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 2867
+  coordPlaneSizeFudgeFactor: 0.82821
+  undoRedoAllowed: 1
+  undoKey: z
+  redoKey: x
+  fullMapAllowed: 1
+  fullKey: f
+  mapFullscreenTransitionTime: 5
+  fullMapPos: {x: 0, y: 0, z: 0.12}
+  miniMapPos: {x: 0.26, y: -0.1, z: 0.23}
+  toggleMapRotKey: l
+  redLineAllowed: 1
+  redLinekey: r
+  fullscreenLineDrawAllowed: 0
+  recallPlankIfLowerThan: 10
+  isCameraDrawing: 0
+  lastRaycastHit: {x: 0, y: 0, z: 0}
+  jumpLoop: {fileID: 0}
+  drawLoop: {fileID: 8300000, guid: 69bc053d9be0d405d8a8c5672fb66e91, type: 3}
 --- !u!114 &1376070341406052198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,22 +358,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Moths: {fileID: 786712417181051573}
---- !u!114 &3509341830135309805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8754469251116282577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f9bc30456ded4563bf546f0c5b9835a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  identifier: Player
-  limit: 1
-  dontDestroy: 1
-  doLogWarning: 1
 --- !u!1001 &19352662940608422
 PrefabInstance:
   m_ObjectHideFlags: 0
