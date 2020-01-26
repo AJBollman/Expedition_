@@ -30,6 +30,12 @@ public sealed class Player : MonoBehaviour
     [SerializeField] private float fullMapZoom;
     [SerializeField] private GameObject minimapCam;
 
+    public static bool isInQuestZone;
+    private GameObject pickupScroll;
+    private GameObject handheldScrollTarget;
+    private Vector3 pickupScrollGoalPos;
+    private Quaternion pickupScrollGoalRot;
+
 
 
     /// <summary> The Explorer gameobject. </summary>
@@ -59,6 +65,7 @@ public sealed class Player : MonoBehaviour
 
 
     ///////////////////// REWORK
+    #region preRework
     public static bool cameraDrawAllowed = true;
     public string cameraDrawButton = "Fire1";
     public float cameraDrawMaxDistance = 15;
@@ -108,6 +115,7 @@ public sealed class Player : MonoBehaviour
     private AudioSource drawLoopSrc;
     public AudioClip drawLoop;
     private static SoundPlayer sound;
+    #endregion
 
 
     // Singleton instance.
@@ -192,6 +200,8 @@ public sealed class Player : MonoBehaviour
         PauseMenu.SetActive(false);
         redvignette.SetActive(false);
         vignette.SetActive(false);*/
+
+        
     }
     
     // Called every frame.

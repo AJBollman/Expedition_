@@ -1,11 +1,15 @@
 ﻿
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
 public enum QuestState { hidden, undiscovered, discovered, completeable, complete, next };
 
+[RequireComponent(typeof(SoundPlayer))]
 public sealed class QuestPoint : MonoBehaviour
 {
+    [SerializeField] public Texture2D questIcon;
+
     [SerializeField] public QuestPoint goalQuest;
     [HideInInspector] public QuestPoint parentQuest;
 
@@ -19,14 +23,34 @@ public sealed class QuestPoint : MonoBehaviour
     private bool _triggerActive;
     private bool _isInsideTrigger;
     private Color _color;
+    private SoundPlayer _sound;
 
-
-    void Start()
-    {
+    private void Awake() {
+        _sound = GetComponent<SoundPlayer>();
         _mapIcon = transform.Find("MapIcon").gameObject;
         _mapIconBg = _mapIcon.transform.Find("MapIconBackground").gameObject;
         _lookTarget = transform.Find("LookTarget").gameObject;
         _ballEffect = transform.Find("BallEffect").gameObject;
+
+        // https://forum.unity.com/threads/how-to-save-manually-save-a-png-of-a-camera-view.506269
+        // rendering icon textures dynamically, using a camera.
+        /*Camera Cam = GetComponentInChildren<Camera>();
+        if(Cam == null) throw new System.Exception("ahkdfahfd");
+        RenderTexture currentRT = RenderTexture.active;
+        RenderTexture.active = Cam.targetTexture;
+        Cam.Render();
+        questIcon = new Texture2D(Cam.targetTexture.width, Cam.targetTexture.height);
+        questIcon.ReadPixels(new Rect(0, 0, Cam.targetTexture.width, Cam.targetTexture.height), 0, 0);
+        questIcon.Apply();
+        RenderTexture.active = currentRT;
+
+        MaterialPropertyBlock block = new MaterialPropertyBlock();
+        block.SetTexture("_BaseMap", questIcon);
+        _mapIcon.GetComponentInChildren<Renderer>().SetPropertyBlock(block);*/
+    }
+
+    void Start()
+    {
         setState(_state);
         if(goalQuest != null) goalQuest.parentQuest = this;
     }
@@ -34,6 +58,9 @@ public sealed class QuestPoint : MonoBehaviour
     void Update()
     {
         if (!EditorApplication.isPlaying && Selection.Contains(gameObject) && goalQuest != null) Debug.DrawLine(transform.position, goalQuest.transform.position, Color.cyan, 0.1f, false);
+        if(Player.isInQuestZone) {
+            
+        }
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -61,9 +88,16 @@ public sealed class QuestPoint : MonoBehaviour
         }
     }
 
+    private IEnumerator QuestSequence() {
+        _sound.Play("Get");
+        yield return new WaitForSeconds(0.688f);
+
+    }
+
     private void setColorFade() {
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         block.SetColor("_BaseColor", _color);
+        block.SetFloat("_SoftParticlesFarFadeDistance", 2);
         _ballEffect.GetComponent<Renderer>().SetPropertyBlock(block);
         _mapIconBg.GetComponent<Renderer>().SetPropertyBlock(block);
     }
