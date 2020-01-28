@@ -1,4 +1,4 @@
-﻿
+﻿#if false
 using UnityEngine;
 
 [RequireComponent(typeof(Light))]
@@ -15,3 +15,4 @@ public class Sun : MonoBehaviour
         //dir.shadows = (Input.GetAxis("Horizontal") < 0.2f && Input.GetAxis("Vertical") < 0.2f && Time.deltaTime < 0.02f) ? LightShadows.Soft : LightShadows.Hard;
     }
 }
+#endif

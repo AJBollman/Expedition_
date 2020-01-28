@@ -91,7 +91,6 @@ public sealed class Expedition : MonoBehaviour
 
     /////////////////////////////////////////////////   Private, Serializable fields
     [SerializeField] private bool autoStartGameWhileEditor;
-    private static Region activeRegion;
     private static Camera activeRegionCamera;
     private static S_CameraOperator cam;
     private static GameObject camInitialLookAt;
@@ -246,7 +245,7 @@ public sealed class Expedition : MonoBehaviour
         }
     }
 
-    public static Region getActiveRegion()
+    /*public static Region getActiveRegion()
     {
         return activeRegion;
     }
@@ -265,7 +264,7 @@ public sealed class Expedition : MonoBehaviour
         var r = getActiveRegion();
         if (r != null) return r.getActivePortal();
         else return null;
-    }
+    }*/
 
     public static gameStates getState()
     {

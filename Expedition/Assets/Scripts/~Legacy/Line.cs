@@ -1,4 +1,4 @@
-﻿
+﻿#if false
 // This class lets you add points to the lineRenderer.
 
 using System.Collections;
@@ -72,3 +72,4 @@ public class Line : MonoBehaviour
         return rawLineData;
     }
 }
+#endif

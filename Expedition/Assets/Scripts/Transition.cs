@@ -31,7 +31,7 @@ public class Transition : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
-            StaticsList.add(gameObject);
+            //StaticsList.add(gameObject);
         }
         names.Add(name);
     }

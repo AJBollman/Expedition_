@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
-public enum QuestState { hidden, undiscovered, discovered, completeable, complete, next };
+public enum QuestState { next, hidden, undiscovered, discovered, completeable, complete };
 
 [RequireComponent(typeof(SoundPlayer))]
 public sealed class QuestPoint : MonoBehaviour
