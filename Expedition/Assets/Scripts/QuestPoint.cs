@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
-public enum QuestState { hidden, undiscovered, discovered, completeable, complete, next };
+public enum QuestState { next, hidden, undiscovered, discovered, completeable, complete };
 
 [RequireComponent(typeof(SoundPlayer))]
 public sealed class QuestPoint : MonoBehaviour
@@ -58,13 +58,13 @@ public sealed class QuestPoint : MonoBehaviour
     void Update()
     {
         if (!EditorApplication.isPlaying && Selection.Contains(gameObject) && goalQuest != null) Debug.DrawLine(transform.position, goalQuest.transform.position, Color.cyan, 0.1f, false);
-        if(Player.isInQuestZone) {
+        if(S_Player.isInQuestZone) {
             
         }
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(_triggerActive && other.gameObject == Player.Explorer) {
+        if(_triggerActive && other.gameObject == S_Player.Explorer) {
             _isInsideTrigger = true;
             setColorFade();
             if(_state == QuestState.next) { // meaning this questpoint was paired with another one, now they are both ready to be connected by a redline.
@@ -80,7 +80,7 @@ public sealed class QuestPoint : MonoBehaviour
     }
 
     private void OnTriggerExit(Collider other) {
-        if(_triggerActive && other.gameObject == Player.Explorer) {
+        if(_triggerActive && other.gameObject == S_Player.Explorer) {
             _isInsideTrigger = false;
             setColorFade();
             //CameraOperator.lookAtObject = null;
