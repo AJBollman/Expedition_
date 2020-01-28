@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#if false
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,3 +31,4 @@ public class RotateMapWithCharacter : MonoBehaviour
         transform.localRotation = Quaternion.AngleAxis(snapGoal, Vector3.forward);
     }
 }
+#endif

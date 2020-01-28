@@ -1,4 +1,4 @@
-﻿
+﻿#if false
 // Class for map regions
 
 using System;
@@ -216,5 +216,4 @@ public sealed class Region : MonoBehaviour
     }
 
 }
-
-
+#endif

@@ -1,8 +1,8 @@
-﻿
+﻿#if false
 
 // This class controls WASD movement and jumping.
 // Put it on the player prefab.
-/*
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -72,11 +72,12 @@ public class Movement : MonoBehaviour
         //movement.y = verticalVelocity;
         //controller.Move(transform.TransformDirection(movement) * Time.deltaTime);
 
-        /*movement.y = Input.GetKeyDown(jumpKey) ? jumpForce : 0f;
+        movement.y = Input.GetKeyDown(jumpKey) ? jumpForce : 0f;
         if (rbody.velocity.magnitude < maxMoveSpeed)
         {
             rbody.AddForce(transform.TransformDirection(movement), ForceMode.Impulse);
         }
         //else rbody.velocity = maxMoveSpeed;
     }
-}*/
+}
+#endif

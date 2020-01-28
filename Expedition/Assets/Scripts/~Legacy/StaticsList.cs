@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#if false
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,3 +25,4 @@ public class StaticsList : MonoBehaviour
         statics.Add(g);
     }
 }
+#endif

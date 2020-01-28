@@ -404,7 +404,7 @@ public sealed class S_Player : MonoBehaviour
         else return false;
     }
 
-    public bool startCameraLine() {
+    /*public bool startCameraLine() {
         if (!cameraDrawAllowed) { Debug.LogWarning("Line drawing not allowed!"); return false; }
         if(Region.activeRegion == null) { Debug.LogWarning("Can't start line, no active region!"); return false; }
 
@@ -431,7 +431,7 @@ public sealed class S_Player : MonoBehaviour
         //if (playSound) sound.Play("DrawStop");
         Region.activeRegion.setSinkOfAllLines(true);
         return true;
-    }
+    }*/
     #endregion
 
 

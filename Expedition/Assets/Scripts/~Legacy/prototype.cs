@@ -1,4 +1,5 @@
-﻿/*using System.Collections;
+﻿#if false
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,4 +40,5 @@ public class prototype : MonoBehaviour
     }
 
 
-}*/
+}
+#endif
