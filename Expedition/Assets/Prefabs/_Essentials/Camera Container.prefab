@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1579426440}
   m_Layer: 0
-  m_Name: CoordOrigin
+  m_Name: Lower Left Corner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1743270084}
   m_Layer: 0
-  m_Name: Measure
+  m_Name: Upper Right Corner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2040121823565171804}
   m_Layer: 0
-  m_Name: FullMap Goal
+  m_Name: Full Map Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,12 +102,12 @@ GameObject:
   - component: {fileID: 8622747592896687683}
   - component: {fileID: 4573634839267265394}
   m_Layer: 0
-  m_Name: Scroll
+  m_Name: Hand Scroll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7041398876413818231
 Transform:
   m_ObjectHideFlags: 0
@@ -204,7 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5796392820581133454}
   m_Layer: 0
-  m_Name: Scroll Goal
+  m_Name: Hand Scroll Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,7 +234,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5423975051489417692}
   m_Layer: 0
-  m_Name: Handheld Goal
+  m_Name: Hand Map Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -294,7 +294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5508428989476540238}
   m_Layer: 0
-  m_Name: Main Cam Container
+  m_Name: Main Camera Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -333,7 +333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8406212836554016301
 Transform:
   m_ObjectHideFlags: 0
@@ -359,7 +359,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2168606252636463333}
   m_Layer: 0
-  m_Name: Handheld Container
+  m_Name: Handheld Items Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,10 +466,9 @@ GameObject:
   - component: {fileID: 8763471622720501560}
   - component: {fileID: 8763471622720501565}
   - component: {fileID: 8763471622720501566}
-  - component: {fileID: 8763471622720501567}
   - component: {fileID: 1329104835}
   m_Layer: 12
-  m_Name: HandMap
+  m_Name: Hand Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -537,19 +536,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &8763471622720501567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8763471622720501561}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37d1c2b0108284d78a4748df1f32db31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotIncrement: 0
 --- !u!65 &1329104835
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -930,7 +916,7 @@ GameObject:
   - component: {fileID: 8763471623879234703}
   - component: {fileID: 182276704}
   m_Layer: 0
-  m_Name: CameraContainer
+  m_Name: Camera Container
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: 7cba34d70552e144586a4d3ce4a33de5, type: 3}
   m_NavMeshLayer: 0
@@ -964,17 +950,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c97f602766b4a0c45960a42867273fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeSmooth: 6
-  sprintExpandFOV: 10
-  lookSmooth: 40
-  _followObject: {fileID: 0}
-  _lookAtObject: {fileID: 0}
-  defaultFOV: 90
-  sensitivity: 10
-  maxFOVTweak: 7
-  maxLookUpAngle: 80
-  maxLookDownAngle: -85
-  smoothTime: 64
+  _defaultFOV: 90
+  _sensitivity: 10
+  _maxFOVTweak: 7
+  _maxLookUpAngle: 80
+  _maxLookDownAngle: -85
+  _smoothCameraPosition: 8
+  _smoothCameraShake: 6
+  _FOVWhileSprinting: 10
+  _smoothCamRotation: 40
 --- !u!114 &182276704
 MonoBehaviour:
   m_ObjectHideFlags: 0

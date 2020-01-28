@@ -35,7 +35,7 @@ public sealed class Region : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == Player.Explorer) 
+        if (other.gameObject == S_Player.Explorer) 
         {
             activeRegion = this;
             Debug.Log("asdf");
@@ -47,7 +47,7 @@ public sealed class Region : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject == Player.Explorer)
+        if(other.gameObject == S_Player.Explorer)
         {
             activeRegion = null;
             foreach (GameObject l in lines) {l.SetActive(false);} // Hide region's lines

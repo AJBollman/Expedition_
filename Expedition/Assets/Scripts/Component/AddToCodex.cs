@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class addtoCodex : MonoBehaviour
+public class AddToCodex : MonoBehaviour
 {
     public GameObject image;
     public GameObject NarrativeText;

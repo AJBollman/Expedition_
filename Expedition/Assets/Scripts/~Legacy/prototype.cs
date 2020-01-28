@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,18 +25,18 @@ public class prototype : MonoBehaviour
     void Update()
     {
         minimapCam.transform.position = new Vector3(
-            Player.Explorer.transform.position.x,
+            S_Player.Explorer.transform.position.x,
             minimapCam.transform.position.y,
-            Player.Explorer.transform.position.z
+            S_Player.Explorer.transform.position.z
         );
 
         if(Input.GetKeyDown(KeyCode.F)) {
             fullScreenMap = !fullScreenMap;
             fullMap.SetActive(fullScreenMap);
             handMap.SetActive(!fullScreenMap);
-            CameraOperator.enableControls = !fullScreenMap;
+            S_CameraOperator.AllowInput = !fullScreenMap;
         }
     }
 
 
-}
+}*/

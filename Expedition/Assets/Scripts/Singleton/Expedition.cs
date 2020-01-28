@@ -1,15 +1,36 @@
 ﻿
+using System;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
+
 public enum gameStates { menu, paused, normal, redline };
+public enum crosshairTypes { draw, yeet, drop, grab, place, nope, none };
 
 
-/// <summary> Controls and state management for the entire game. </summary>
+/// <summary> Controls and state management for the entire game. Classes must inherit from this in order to make changes related to the game's mechanics </summary>
 [DisallowMultipleComponent]
 public sealed class Expedition : MonoBehaviour
 {
+
+    #region [Important]
+    /// <summary> All the stuff the Explorer can do. Handles all input. </summary>
+    public static S_Player Player { get => S_Player.instance; }
+    /// <summary> First-person camera controls. </summary>
+    public static S_CameraOperator CameraOperator { get => S_CameraOperator.instance; }
+    /// <summary> This class controls WASD movement and jumping. Boing. </summary>
+    public static S_Movement Movement { get => S_Movement.instance; }
+    /// <summary> Controls user interface elements. </summary>
+    public static S_UserInterface UserInterface { get => S_UserInterface.instance; }
+
+    //public static S_Map Map { get => S_Map.instance; }
+    //public static S_Interaction Interaction { get => S_Interaction.instance; }
+    //public static S_Drawing Drawing { get => S_Drawing.instance; }
+    //public static S_Codex Codex { get => S_Codex.instance; }
+    //public static S_SaveManager SaveManager { get => S_SaveManager.instance; }
+    #endregion
+
     /////////////////////////////////////////////////   Public properties
     /// <summary> If the game has successfully started or not. </summary>
     public static bool gameplayStarted {get; private set;}
@@ -72,7 +93,7 @@ public sealed class Expedition : MonoBehaviour
     [SerializeField] private bool autoStartGameWhileEditor;
     private static Region activeRegion;
     private static Camera activeRegionCamera;
-    private static CameraOperator cam;
+    private static S_CameraOperator cam;
     private static GameObject camInitialLookAt;
     private static GameObject camInitialFollowPoint;
     private static GameObject transitionDinghy;
@@ -135,38 +156,39 @@ public sealed class Expedition : MonoBehaviour
             if(linePrefab == null || redLinePrefab == null || mapTexture == null) throw new System.Exception("Expedition.cs is missing prefabs. Assign them in the inspector!");
 
             // Check CameraOperator
-            CameraOperator.followObject = GameObject.Find("The Explorer");
-            if(!CameraOperator.isReady) throw new System.Exception("CameraOperator.cs could not start");
+            CameraOperator.ObjectToFollow = GameObject.Find("The Explorer");
+            if(!CameraOperator.isReady) throw new System.Exception("CameraOperator not ready");
             Debug.Log("<color=green><size=18>Camera Ready</size></color>");
 
             // Check Movement
-            if(!Movement.isReady) throw new System.Exception("Movement.cs could not start");
+            if(!Movement.isReady) throw new System.Exception("Movement not ready");
             Debug.Log("<color=green><size=18>Movement Ready</size></color>");
 
             // Check Player
-            if(!Player.isReady) throw new System.Exception("Player.cs could not start");
+            if(!Player.isReady) throw new System.Exception("Player not ready");
             Debug.Log("<color=green><size=18>Player Ready</size></color>");
 
             // Check UI
-            if(!UserInterface.isReady) throw new System.Exception("UserInterface.cs could not start");
+            if(!UserInterface.isReady) throw new System.Exception("UserInterface not ready");
             Debug.Log("<color=green><size=18>UI Ready</size></color>");
             Debug.Log("<color=lime><size=18>Starting Game...</size></color>");
 
         }
-        catch(System.Exception e) {
+        catch(Exception e) {
             Debug.LogException(e);
             Debug.LogError("<color=red><size=18>Could not start game</size></color>");
             return;
         }
         UserInterface.startupMenuActive = false;
-        CameraOperator.enableControls = true;
+        CameraOperator.AllowInput = true;
+        Movement.AllowInput = true;
         gameplayStarted = true;
     }
 
     public static void SetGamePaused(bool set) {
         UserInterface.pauseMenuActive = set;
-        Movement.moveAllowed = !set;
-        CameraOperator.enableControls = !set;
+        Movement.AllowInput = !set;
+        CameraOperator.AllowInput = !set;
         timeScaleGoal = (set) ? 0f : 1f;
         _paused = set;
         if(!set) Time.timeScale = 0.9f;
@@ -202,7 +224,7 @@ public sealed class Expedition : MonoBehaviour
                     Camera.main.GetComponent<Animator>().enabled = true;
                     Camera.main.nearClipPlane = 1;
                     //cam.smoothTime = 2;
-                    UserInterface.SetCursor(crosshairTypes.none);
+                    S_UserInterface.SetCursor(crosshairTypes.none);
                     break;
             }
             case gameStates.paused:
@@ -284,7 +306,7 @@ public sealed class Expedition : MonoBehaviour
         //cam.lookAt = bo;
         //cam.smoothTime = 0.75f;
 		ex.transform.LookAt(bo.transform);
-        CameraOperator.followObject = null;
+        CameraOperator.ObjectToFollow = null;
 		//inst.StartCoroutine(flyToStart(Application.isEditor ? 0.1f : 5f));
     }
 
@@ -557,3 +579,4 @@ public class Region : MonoBehaviour
         return r;
     }
 }*/
+

@@ -1,38 +1,40 @@
 ﻿
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum crosshairTypes { draw, yeet, drop, grab, place, nope, none };
-
-/// <summary> Controls User Interface elements. </summary>
+/// <summary> Controls user interface elements. </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Canvas))]
-public sealed class UserInterface : MonoBehaviour
+public sealed class S_UserInterface : MonoBehaviour
 {
-    /////////////////////////////////////////////////   Public properties
-    public static bool startupMenuActive {
-        get => _inst.startupMenu.activeInHierarchy;
+
+    #region [Public]
+    public bool startupMenuActive {
+        get => startupMenu.activeInHierarchy;
         set {
-            _inst.startupMenu.SetActive(value);
+            startupMenu.SetActive(value);
         }
     }
-    public static bool pauseMenuActive {
-        get => _inst.pauseMenu.activeInHierarchy;
+    public bool pauseMenuActive {
+        get => pauseMenu.activeInHierarchy;
         set {
-            _inst.pauseMenu.SetActive(value);
-            if(!_inst.pauseMenu.activeInHierarchy && !_inst.optionsMenu.activeInHierarchy && !_inst.mainMenu.activeInHierarchy) {
+            pauseMenu.SetActive(value);
+            if(!pauseMenu.activeInHierarchy && !optionsMenu.activeInHierarchy && !mainMenu.activeInHierarchy) {
                 pauseMenuOpacityGoal = 0f;
-                Player.cameraDrawAllowed = true;
+                S_Player.cameraDrawAllowed = true;
             }
             else {
                 pauseMenuOpacityGoal = 1f;
-                Player.cameraDrawAllowed = false;
+                S_Player.cameraDrawAllowed = false;
             }
         }
     }
+    #endregion
 
 
-    /////////////////////////////////////////////////   Private, Serializable fields
+
+    #region [Private]
     [SerializeField] private GameObject crosshair;
     [SerializeField] private GameObject vignette;
     [SerializeField] private GameObject redlineVignette;
@@ -42,42 +44,46 @@ public sealed class UserInterface : MonoBehaviour
     [SerializeField] private GameObject item;
     [SerializeField] private GameObject startupMenu;
     [SerializeField] private GameObject background;
-
-
-    /////////////////////////////////////////////////   Private fields
     private crosshairTypes currentCrosshair;
     private static float pauseMenuOpacityGoal;
     private static Image pauseMenuFill;
-
-
-   // Singleton instance
-    private static UserInterface _inst;
-    public static bool isReady { get; private set;}
-
-
+    #endregion
 
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////  Events
+    #region [Events]
     private void OnEnable()
     {
-        _inst = this;
-        if(crosshair == null || vignette == null || redlineVignette == null || pauseMenu == null ||
-        optionsMenu == null || mainMenu == null || item == null || startupMenu == null) {
-            enabled = false;
-            throw new System.Exception("All UI child gameObjects are required! Check the 'User Interface' in the inspector");
+        instance = this;
+        try {
+            if(crosshair == null || vignette == null || redlineVignette == null || pauseMenu == null ||
+            optionsMenu == null || mainMenu == null || item == null || startupMenu == null) {
+                enabled = false;
+                throw new System.Exception("All UI child gameObjects are required! Check the 'User Interface' in the inspector");
+            }
+            background.SetActive(true);
+            pauseMenuFill = background.GetComponent<Image>();
+            if(pauseMenuFill == null) throw new System.Exception("Pause Menu Background image missing.");
+            startupMenuActive = true;
+
+            isReady = true;
         }
-        background.SetActive(true);
-        pauseMenuFill = background.GetComponent<Image>();
-        if(pauseMenuFill == null) throw new System.Exception("Pause Menu Background image missing.");
-        startupMenuActive = true;
-        isReady = true;
+        catch(Exception e) {
+            enabled = false;
+            isReady = false;
+            Debug.LogException(e);
+        }
     }
 
     private void Update() {
         pauseMenuFill.fillAmount = Mathf.Lerp(pauseMenuFill.fillAmount, pauseMenuOpacityGoal, Time.fixedUnscaledDeltaTime * 4f);
     }
+    #endregion
 
+
+
+    #region [Methods]
     public static void SetCursor(crosshairTypes type)
     {
         //if ((int)type != (int)currentCrosshair) return;
@@ -127,4 +133,10 @@ public sealed class UserInterface : MonoBehaviour
         }
         currentCrosshair = type;*/
     }
+    #endregion
+
+
+
+    public static S_UserInterface instance { get; private set; }
+    public bool isReady { get; private set;}
 }

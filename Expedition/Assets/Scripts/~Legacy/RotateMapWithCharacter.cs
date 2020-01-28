@@ -22,7 +22,7 @@ public class RotateMapWithCharacter : MonoBehaviour
     {
         //if (!Player.mapSpins) return;
         cameraRot = Camera.main.transform.rotation.eulerAngles.y;
-        increment = (Player.mapIsFull || !Player.mapSpins) ? 90 : rotIncrement;
+        increment = (S_Player.mapIsFull || !S_Player.mapSpins) ? 90 : rotIncrement;
 
         snapGoal = (Mathf.Round(cameraRot / increment) * increment);
 
