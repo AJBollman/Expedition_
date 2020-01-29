@@ -6,6 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public sealed class LineEdge : MonoBehaviour
 {
+    public bool IsRed { get => _IsRed; }
+    [SerializeField] private bool _IsRed;
+
     public LineVertex from {get; private set;}
     public LineVertex to {get; private set;}
 

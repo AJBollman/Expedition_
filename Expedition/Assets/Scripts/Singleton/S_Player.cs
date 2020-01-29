@@ -1,5 +1,7 @@
 ﻿
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary> All the stuff the Explorer can do. </summary>
@@ -9,32 +11,15 @@ using UnityEngine;
 public sealed class S_Player : MonoBehaviour
 {
     // TESTING
-    private GameObject indicator;
-    private GameObject lastIndicator;
-
-    [SerializeField] private Gradient trueGradient;
-    [SerializeField] private Gradient falseGradient;
-
-    private Vector3 indicGoalPos;
-    private Quaternion indicGoalRot;
-    [SerializeField] private float indicPosSmooth = 20f;
-    [SerializeField] private float indicRotSmooth = 10f;
-
-    [SerializeField] private GameObject indicatorEnd;
-    [SerializeField] private GameObject lastIndicatorEnd;
-
-    [SerializeField] private LineRenderer lineRenderer;
-    [SerializeField] private GameObject line;
-
     [SerializeField] private float miniMapZoom = 32f;
     [SerializeField] private float fullMapZoom = 64f;
     [SerializeField] private GameObject minimapCam;
 
     public static bool isInQuestZone;
-    private GameObject pickupScroll;
+    /*private GameObject pickupScroll;
     private GameObject handheldScrollTarget;
     private Vector3 pickupScrollGoalPos;
-    private Quaternion pickupScrollGoalRot;
+    private Quaternion pickupScrollGoalRot;*/
     public float handheldSmooth = 40f;
 
 
@@ -42,13 +27,9 @@ public sealed class S_Player : MonoBehaviour
     /// <summary> The Explorer gameobject. </summary>
     public static GameObject Explorer {get; private set;}
 
-    /// <summary> Maximum distance for the raycasting. </summary>
-    public float maxDistance { get; private set; } = 15f;
-
     [SerializeField] private bool drawDebugLines;
 
-    private static RaycastHit lastRaycastHit;
-    private LineVertex lastVert;
+    public RaycastHit lastRaycastHit { get; private set; }
     
     private static GameObject handheldContainer;
     private static GameObject handheldGoal;
@@ -57,6 +38,11 @@ public sealed class S_Player : MonoBehaviour
     private Quaternion mapGoalRot;
     private bool isFullMap;
     private Vector3 mapCamGoalPos;
+    private static SoundPlayer _Sound;
+    private Vector3 lastEditorTP;
+
+    private playerStates _playerState;
+    public playerStates PlayerState { get => _playerState; }
 
 
 
@@ -120,7 +106,6 @@ public sealed class S_Player : MonoBehaviour
         instance = this;
         try {
             Explorer = gameObject;
-            if(Explorer == null) throw new System.Exception("Player could not find player object");
             /*sound = GetComponent<SoundPlayer>();
             jumpLoopSrc = gameObject.AddComponent<AudioSource>();
             jumpLoopSrc.clip = jumpLoop;
@@ -129,32 +114,17 @@ public sealed class S_Player : MonoBehaviour
             drawLoopSrc.clip = drawLoop;
             drawLoopSrc.loop = true;*/
 
-            indicator = GameObject.Find("Vertex Indicator");
-            lastIndicator = GameObject.Find("Last Vertex Indicator");
-            line = GameObject.Find("Indicator Line");
             handheldContainer = GameObject.Find("Handheld Items Container");
             handheldGoal = GameObject.Find("Hand Map Goal");
             fullMapGoal = GameObject.Find("Full Map Goal");
             minimapCam = GameObject.Find("Minimap Cam");
-            lineRenderer = line.GetComponent<LineRenderer>();
-            indicatorEnd = indicator.transform.Find("penEnd").gameObject;
-            lastIndicatorEnd = lastIndicator.transform.Find("penEnd").gameObject;
+            _Sound = GetComponent<SoundPlayer>();
 
-            if(indicator == null) throw new Exception("Player has no vertex indicator");
-            if(lastIndicator == null) throw new Exception("Player has no last indicator");
-            if(line == null) throw new Exception("Player has no indicator line");
             if(handheldContainer == null) throw new Exception("Player has no handheld container");
             if(handheldGoal == null) throw new Exception("Player has no handheld goal");
             if(fullMapGoal == null) throw new Exception("Player has no fullmap goal");
             if(minimapCam == null) throw new Exception("Player has no minimap cam");
-            if(lineRenderer == null) throw new Exception("Line has no line renderer");
-            if(indicatorEnd == null) throw new Exception("indicator has no indicatorEnd");
-            if(lastIndicatorEnd == null) throw new Exception("lastindicator has no indicatorEnd");
 
-            lineRenderer.positionCount = 2;
-            lastVert = null;
-            lastIndicator.SetActive(false);
-            line.SetActive(false);
             mapCamGoalPos = minimapCam.transform.position;
 
             isReady = true;
@@ -202,45 +172,17 @@ public sealed class S_Player : MonoBehaviour
 
         
     }
-    
+
+    private IEnumerator soundd() {
+        yield return new WaitForSeconds(0.08f);
+        Expedition.Drawing.connectVertex();
+        cameraDrawAllowed = true;
+        Expedition.Drawing._Indicator.transform.localScale = Vector3.one;
+    }
+
     // Called every frame.
     void Update()
     {
-
-        if(viewRaycast(maxDistance) && !isFullMap) {
-            indicGoalPos = lastRaycastHit.point;
-            indicGoalRot = Quaternion.FromToRotation(Vector3.up, lastRaycastHit.normal);
-        }
-        indicator.transform.position = Vector3.Lerp(indicator.transform.position, indicGoalPos, Time.deltaTime * indicPosSmooth);
-        indicator.transform.rotation = Quaternion.Slerp(indicator.transform.rotation, indicGoalRot, Time.deltaTime * indicRotSmooth);
-
-        lineRenderer.SetPosition(0, lastIndicatorEnd.transform.position);
-        lineRenderer.SetPosition(1, indicatorEnd.transform.position);
-
-        if(lastVert != null) {
-            if( Physics.Linecast(indicatorEnd.transform.position, lastIndicatorEnd.transform.position, layerMask:Expedition.raycastIgnoreLayers) ) {
-                cameraDrawAllowed = false;
-                lineRenderer.colorGradient = falseGradient;
-            }
-            else {
-                cameraDrawAllowed = true;
-                lineRenderer.colorGradient = trueGradient;
-            }
-        }
-
-        if(Input.GetKeyDown(KeyCode.E)) {
-            if(lastVert != null) {
-                lastVert = null;
-                lastIndicator.SetActive(false);
-                line.SetActive(false);
-            }
-            else if(fullMapAllowed) {
-                isFullMap = !isFullMap;
-                Expedition.CameraOperator.AllowInput = !isFullMap;
-                Expedition.Movement.AllowInput = !isFullMap;
-                minimapCam.GetComponent<Camera>().orthographicSize = (isFullMap) ? fullMapZoom : miniMapZoom;
-            }
-        }
 
         if(isFullMap) {
             mapCamGoalPos += new Vector3(
@@ -258,31 +200,49 @@ public sealed class S_Player : MonoBehaviour
             );
         }
 
+        if(Input.GetKeyDown(KeyCode.Z) && Application.isEditor) {
+            if( viewRaycast(Mathf.Infinity, new Vector2(0.5f, 0.5f)) ) {
+                lastEditorTP = transform.position;
+                transform.position = lastRaycastHit.point + new Vector3(0, 1f, 0);
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.X) && Application.isEditor && lastEditorTP != Vector3.zero) {
+            transform.position = lastEditorTP;
+        }
+
         minimapCam.transform.position = Vector3.Lerp(minimapCam.transform.position, mapCamGoalPos, Time.deltaTime * 10);
-
-        // When button is pressed, 
-        if (Input.GetButtonDown(cameraDrawButton)) {}
-
-        // While the button is down, add new points to the line that was just made.
-        if (Input.GetButton(cameraDrawButton)) {}
 
         mapGoalRot = (isFullMap) ? fullMapGoal.transform.rotation : handheldGoal.transform.rotation;
         mapGoalPos = (isFullMap) ? fullMapGoal.transform.position : handheldGoal.transform.position;
 
-        // When the button is released, "end" the line.
-        // For now, that just means sink the line below the ground.
+        if (Input.GetButtonDown(cameraDrawButton) && cameraDrawAllowed) {
+            if(Expedition.Drawing.hasLOS) {
+                _Sound.Play("PlaceVertex");
+                Expedition.Drawing.placeVertex();
+                Expedition.Drawing._Indicator.transform.localScale = new Vector3(0.5f, 1, 0.5f);
+            }
+        }
+
         if (Input.GetButtonUp(cameraDrawButton) && cameraDrawAllowed)
         {
-            LineVertex newVert = LineVertex.SpawnVertex(indicGoalPos, indicGoalRot);
-            if(lastVert != null) {
-                LineVertex.connectVertices(lastVert, newVert);
+            if(Expedition.Drawing.hasLOS) {
+                cameraDrawAllowed = false;
+                _Sound.Play("ConnectVertex");
+                StartCoroutine("soundd");
             }
-            lastVert = newVert;
-            lastIndicator.SetActive(true);
-            line.SetActive(true);
-            lastIndicator.transform.position = indicator.transform.position;
-            lastIndicator.transform.rotation = indicator.transform.rotation;
-            //if(endCameraLine(true)) isCameraDrawing = false;
+        }
+
+        if(Input.GetKeyDown(KeyCode.E)) {
+            if(Expedition.Drawing.IsDrawing) {
+                Expedition.Drawing.startNewLine();
+                _Sound.Play("DrawFail");
+            }
+            else if(fullMapAllowed) {
+                isFullMap = !isFullMap;
+                Expedition.CameraOperator.AllowInput = !isFullMap;
+                Expedition.Movement.AllowInput = !isFullMap;
+                minimapCam.GetComponent<Camera>().orthographicSize = (isFullMap) ? fullMapZoom : miniMapZoom;
+            }
         }
 
         // Follow-through / delayed motion for hand-held objects
@@ -394,8 +354,8 @@ public sealed class S_Player : MonoBehaviour
 
 
     #region [Methods]
-    private bool viewRaycast(float range) {
-        if(Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)), out RaycastHit hit, range, layerMask: Expedition.raycastIgnoreLayers)) {
+    public bool viewRaycast(float range, Vector2 pos) {
+        if(Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(pos.x, pos.y, 0f)), out RaycastHit hit, range, layerMask: Expedition.raycastIgnoreLayers)) {
             // Optionally, show the raycast in scene view.
             if(drawDebugLines) Debug.DrawLine(transform.position, hit.point, Color.green, 0.2f);
             lastRaycastHit = hit;

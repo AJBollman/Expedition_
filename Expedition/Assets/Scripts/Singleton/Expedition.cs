@@ -6,6 +6,7 @@ using UnityEngine;
 
 
 public enum gameStates { menu, paused, normal, redline };
+public enum playerStates { clear, mini, drawing, full };
 public enum crosshairTypes { draw, yeet, drop, grab, place, nope, none };
 
 
@@ -23,6 +24,8 @@ public sealed class Expedition : MonoBehaviour
     public static S_Movement Movement { get => S_Movement.instance; }
     /// <summary> Controls user interface elements. </summary>
     public static S_UserInterface UserInterface { get => S_UserInterface.instance; }
+    /// <summary> This class handles the player's ability to draw lines. </summary>
+    public static S_Drawing Drawing { get => S_Drawing.instance; }
 
     //public static S_Map Map { get => S_Map.instance; }
     //public static S_Interaction Interaction { get => S_Interaction.instance; }
@@ -87,6 +90,10 @@ public sealed class Expedition : MonoBehaviour
     [SerializeField] private int _lineProjectionStartDistance;
     public static int lineProjectionStartDistance { get => _inst._lineProjectionStartDistance;}
 
+    public static LineRenderer IndicatorLine { get; private set; }
+    public static AudioSource DrawDroneClear;
+    public static AudioSource DrawDroneUnclear;
+
 
 
     /////////////////////////////////////////////////   Private, Serializable fields
@@ -116,7 +123,14 @@ public sealed class Expedition : MonoBehaviour
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////  Events
-    private void Awake() {_inst = this;}
+    private void Awake() {
+        IndicatorLine = GetComponentInChildren<LineRenderer>();
+        DrawDroneClear = GetComponents<AudioSource>()[0];
+        DrawDroneUnclear = GetComponents<AudioSource>()[1];
+        DrawDroneClear.volume = 0;
+        DrawDroneUnclear.volume = 0;
+        _inst = this;
+    }
 
     private void Start()
     {
@@ -162,6 +176,10 @@ public sealed class Expedition : MonoBehaviour
             // Check Movement
             if(!Movement.isReady) throw new System.Exception("Movement not ready");
             Debug.Log("<color=green><size=18>Movement Ready</size></color>");
+
+            // Check Movement
+            if(!Drawing.isReady) throw new System.Exception("Drawing not ready");
+            Debug.Log("<color=green><size=18>Drawing Ready</size></color>");
 
             // Check Player
             if(!Player.isReady) throw new System.Exception("Player not ready");

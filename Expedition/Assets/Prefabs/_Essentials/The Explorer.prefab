@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8754469251116282581}
   - component: {fileID: 8754469251116282585}
+  - component: {fileID: 8134645575640543033}
   - component: {fileID: 8754469251116282579}
   - component: {fileID: 8754469251116282580}
   - component: {fileID: 8754469251116282584}
@@ -56,76 +57,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf629a694e01487b8a0195d5e974755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trueGradient:
-    serializedVersion: 2
-    key0: {r: 0.25098044, g: 0.93333334, b: 0.55962074, a: 1}
-    key1: {r: 0.2509804, g: 0.9333334, b: 0.56078434, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  falseGradient:
-    serializedVersion: 2
-    key0: {r: 0.9333334, g: 0.2509804, b: 0.34901962, a: 1}
-    key1: {r: 0.9333334, g: 0.2509804, b: 0.34901962, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  indicPosSmooth: 20
-  indicRotSmooth: 10
-  indicatorEnd: {fileID: 0}
-  lastIndicatorEnd: {fileID: 0}
-  lineRenderer: {fileID: 0}
-  line: {fileID: 0}
   miniMapZoom: 32
   fullMapZoom: 64
   minimapCam: {fileID: 0}
-  _maxDistance: 15
-  drawDebugLines: 0
   handheldSmooth: 40
+  drawDebugLines: 0
   cameraDrawButton: Fire1
   cameraDrawMaxDistance: 15
   raycastIgnoreLayers:
@@ -148,6 +84,81 @@ MonoBehaviour:
   isCameraDrawing: 0
   jumpLoop: {fileID: 0}
   drawLoop: {fileID: 8300000, guid: 69bc053d9be0d405d8a8c5672fb66e91, type: 3}
+--- !u!114 &8134645575640543033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8754469251116282577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e7c247040bb4c15b79dc5d20706f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ColorCanDrawLine:
+    serializedVersion: 2
+    key0: {r: 0.43805626, g: 0.8679245, b: 0.67594457, a: 1}
+    key1: {r: 0.4237718, g: 0.8396226, b: 0.64986545, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0.32156864}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 193
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  _ColorCannotDrawLine:
+    serializedVersion: 2
+    key0: {r: 0.8679245, g: 0.45443216, b: 0.56765026, a: 1}
+    key1: {r: 0.8490566, g: 0.41251338, b: 0.5074139, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 386
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  _ScreenCoordsRaycastOrigin: {x: 0.5, y: 0.42}
+  _smoothIndicatorPos: 20
+  _smoothIndicatorRot: 10
+  _maxRaycastDistance: 15
+  _volumeDrawDrone: 0.3
 --- !u!114 &8754469251116282579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,11 +171,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1630139d7567349acb66558ad320a1c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
-  sprintSpeed: 9
-  jumpForce: 10
-  gravity: 18
-  jumpKey: space
+  _movementSpeed: 5
+  _sprintSpeed: 9
+  _jumpForce: 10
+  _gravity: 18
+  _jumpKey: space
 --- !u!33 &8754469251116282580
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -298,6 +309,14 @@ MonoBehaviour:
   - name: DrawFail
     soundsList:
     - {fileID: 8300000, guid: d336cf104820a40c1a2f0e117292d5ce, type: 3}
+    volume: 1
+  - name: ConnectVertex
+    soundsList:
+    - {fileID: 8300000, guid: dd07b3bec68ec4be8bad17344fe47c64, type: 3}
+    volume: 1
+  - name: PlaceVertex
+    soundsList:
+    - {fileID: 8300000, guid: 6de87869947b848f3841b768d7a9c55a, type: 3}
     volume: 1
 --- !u!82 &4081490390107586918
 AudioSource:
