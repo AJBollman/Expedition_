@@ -10,17 +10,11 @@ using UnityEngine;
 [RequireComponent(typeof(SoundPlayer))]
 public sealed class S_Player : MonoBehaviour
 {
-    // TESTING
-    [SerializeField] private float miniMapZoom = 32f;
-    [SerializeField] private float fullMapZoom = 64f;
-    [SerializeField] private GameObject minimapCam;
-
     public static bool isInQuestZone;
     /*private GameObject pickupScroll;
     private GameObject handheldScrollTarget;
     private Vector3 pickupScrollGoalPos;
     private Quaternion pickupScrollGoalRot;*/
-    public float handheldSmooth = 40f;
 
 
 
@@ -28,21 +22,11 @@ public sealed class S_Player : MonoBehaviour
     public static GameObject Explorer {get; private set;}
 
     [SerializeField] private bool drawDebugLines;
-
     public RaycastHit lastRaycastHit { get; private set; }
-    
-    private static GameObject handheldContainer;
-    private static GameObject handheldGoal;
-    private static GameObject fullMapGoal;
-    private Vector3 mapGoalPos;
-    private Quaternion mapGoalRot;
-    private bool isFullMap;
-    private Vector3 mapCamGoalPos;
-    private static SoundPlayer _Sound;
-    private Vector3 lastEditorTP;
-
-    private playerStates _playerState;
     public playerStates PlayerState { get => _playerState; }
+    private SoundPlayer _Sound;
+    private Vector3 lastEditorTP;
+    private playerStates _playerState;
 
 
 
@@ -106,6 +90,7 @@ public sealed class S_Player : MonoBehaviour
         instance = this;
         try {
             Explorer = gameObject;
+            _Sound = GetComponent<SoundPlayer>();
             /*sound = GetComponent<SoundPlayer>();
             jumpLoopSrc = gameObject.AddComponent<AudioSource>();
             jumpLoopSrc.clip = jumpLoop;
@@ -113,19 +98,6 @@ public sealed class S_Player : MonoBehaviour
             drawLoopSrc = gameObject.AddComponent<AudioSource>();
             drawLoopSrc.clip = drawLoop;
             drawLoopSrc.loop = true;*/
-
-            handheldContainer = GameObject.Find("Handheld Items Container");
-            handheldGoal = GameObject.Find("Hand Map Goal");
-            fullMapGoal = GameObject.Find("Full Map Goal");
-            minimapCam = GameObject.Find("Minimap Cam");
-            _Sound = GetComponent<SoundPlayer>();
-
-            if(handheldContainer == null) throw new Exception("Player has no handheld container");
-            if(handheldGoal == null) throw new Exception("Player has no handheld goal");
-            if(fullMapGoal == null) throw new Exception("Player has no fullmap goal");
-            if(minimapCam == null) throw new Exception("Player has no minimap cam");
-
-            mapCamGoalPos = minimapCam.transform.position;
 
             isReady = true;
         }
@@ -180,26 +152,9 @@ public sealed class S_Player : MonoBehaviour
         Expedition.Drawing._Indicator.transform.localScale = Vector3.one;
     }
 
-    // Called every frame.
     void Update()
     {
-
-        if(isFullMap) {
-            mapCamGoalPos += new Vector3(
-                (Input.GetAxis("Horizontal")),
-                0,
-                (Input.GetAxis("Vertical"))
-            );
-            Debug.Log((Input.GetAxis("Vertical")));
-        }
-        else {
-            mapCamGoalPos = new Vector3(
-                S_Player.Explorer.transform.position.x,
-                minimapCam.transform.position.y,
-                S_Player.Explorer.transform.position.z
-            );
-        }
-
+        // debug teleport.
         if(Input.GetKeyDown(KeyCode.Z) && Application.isEditor) {
             if( viewRaycast(Mathf.Infinity, new Vector2(0.5f, 0.5f)) ) {
                 lastEditorTP = transform.position;
@@ -210,12 +165,8 @@ public sealed class S_Player : MonoBehaviour
             transform.position = lastEditorTP;
         }
 
-        minimapCam.transform.position = Vector3.Lerp(minimapCam.transform.position, mapCamGoalPos, Time.deltaTime * 10);
-
-        mapGoalRot = (isFullMap) ? fullMapGoal.transform.rotation : handheldGoal.transform.rotation;
-        mapGoalPos = (isFullMap) ? fullMapGoal.transform.position : handheldGoal.transform.position;
-
-        if (Input.GetButtonDown(cameraDrawButton) && cameraDrawAllowed) {
+        // mouse down.
+        if (Input.GetButtonDown(cameraDrawButton) && cameraDrawAllowed && _playerState == playerStates.drawing) {
             if(Expedition.Drawing.hasLOS) {
                 _Sound.Play("PlaceVertex");
                 Expedition.Drawing.placeVertex();
@@ -223,7 +174,8 @@ public sealed class S_Player : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonUp(cameraDrawButton) && cameraDrawAllowed)
+        // mouse up.
+        if (Input.GetButtonUp(cameraDrawButton) && cameraDrawAllowed && _playerState == playerStates.drawing)
         {
             if(Expedition.Drawing.hasLOS) {
                 cameraDrawAllowed = false;
@@ -233,127 +185,69 @@ public sealed class S_Player : MonoBehaviour
         }
 
         if(Input.GetKeyDown(KeyCode.E)) {
-            if(Expedition.Drawing.IsDrawing) {
-                Expedition.Drawing.startNewLine();
-                _Sound.Play("DrawFail");
-            }
-            else if(fullMapAllowed) {
-                isFullMap = !isFullMap;
-                Expedition.CameraOperator.AllowInput = !isFullMap;
-                Expedition.Movement.AllowInput = !isFullMap;
-                minimapCam.GetComponent<Camera>().orthographicSize = (isFullMap) ? fullMapZoom : miniMapZoom;
-            }
+            var state = ((int)_playerState + 1);
+            if(state > 3) state = 2;
+            setPlayerState( (playerStates)state );
         }
 
-        // Follow-through / delayed motion for hand-held objects
-        handheldContainer.transform.rotation = Quaternion.Lerp(
-            handheldContainer.transform.rotation,
-            mapGoalRot,
-            Time.deltaTime * handheldSmooth
-        );
-        handheldContainer.transform.position = Vector3.Lerp(
-            handheldContainer.transform.position,
-            mapGoalPos,
-            Time.deltaTime * handheldSmooth * 0.5f
-        );
-
-        /*if (!mapIsFull) isRedLineMode = false;
-        Vector3 targetPos;
-        if (Expedition.getActiveRegion() == null)
-        {
-            targetPos = new Vector3(0, -0.25f, -0.25f);
-        }
-        else targetPos = (mapIsFull) ? fullMapPos : miniMapPos;
-        handMap.transform.localPosition = Vector3.Lerp(
-            handMap.transform.localPosition,
-            targetPos,
-            Time.deltaTime * mapFullscreenTransitionTime
-        );
-        if (!Expedition.getActiveRegion() || !isCameraDrawing) drawLoopSrc.Stop();
-
-
-        // Player script does nothing in main menu.
-        if (cachedGS == gameStates.menu) return;
-
-        ////////////////////    opening the pause menu
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            var isPaused = !PauseMenu.activeSelf;
-            Expedition.setState(isPaused ? gameStates.paused : gameStates.normal);
-
-            PauseMenu.SetActive(isPaused);
-            //cam.enableControls = !isPaused;
-            if (isPaused)
-            {
-                //if (isRedLineMode) endRedLine();
-                if (isCameraDrawing) endCameraLine(false);
-                redvignette.SetActive(false);
-                vignette.SetActive(false);
-            }
-            cachedGS = Expedition.getState();
+        if(Input.GetKeyDown(KeyCode.Q)) {
+            var state = ((int)_playerState - 1);
+            if(state < 0) state = 0;
+            setPlayerState( (playerStates)state );
         }
 
-        if (cachedGS != gameStates.normal && cachedGS != gameStates.redline) return;
-
-        checkInteract();
-
-        /////////////////////   Do raycast drawing stuff.
-        // Start a new line/redline in the active Region while the button is down.
-        if (Input.GetButtonDown(cameraDrawButton))
-        {
-            if (isRedLineMode) return;//startRedLine();
-            else
-            {
-                isCameraDrawing = true;
-                startCameraLine();
-                //cam.defaultFOV = preFOV + 5f; // widen FOV a bit while drawing.
-                //cam.maxFOVTweak = 0;
-                undoRedoPre = undoRedoAllowed;
-            }
-            undoRedoAllowed = false; // Disable undo/redo while drawing.
-        }
-
-        // While the button is down, add new points to the line that was just made.
-        if (Input.GetButton(cameraDrawButton))
-        {
-            if (isRedLineMode) return;//addToRedLine();
-            else addToCameraLine();
-        }
-
-        // When the button is released, "end" the line.
-        // For now, that just means sink the line below the ground.
-        if (Input.GetButtonUp(cameraDrawButton))
-        {
-            if (isRedLineMode) return;//endRedLine();
-            else
-            {
-                isCameraDrawing = false;
-                endCameraLine(true);
-                //cam.defaultFOV = preFOV; // Reset FOV.
-                //cam.maxFOVTweak = 5f;
-            }
-            undoRedoAllowed = undoRedoPre; // Set the undo/redo allowed back to what it was.
-        }
-        vignette.SetActive(Input.GetButton(cameraDrawButton)); // Camera vignette is visible as long as the mouse is down.
-        redvignette.SetActive(isRedLineMode); // Camera vignette is visible as long as the mouse is down.
-
-        /////////////////////   Do undo/redo stuff.
-        if (Input.GetKeyDown(undoKey)) undoLastLine();
-        if (Input.GetKeyDown(redoKey)) redoLastLine();
-        if (Input.GetKeyDown(fullKey)) toggleFullMap();
-        if (Input.GetKeyDown(redLinekey) && mapIsFull && Expedition.getPortalOfActiveRegion() != null) isRedLineMode = !isRedLineMode;
-        if (isRedLineMode) Expedition.setState(gameStates.redline);
-        else Expedition.setState(gameStates.normal);
-
-        ////////////////////   Toggle map rotation.
-        if (Input.GetKeyDown(toggleMapRotKey)) toggleMapRot();
-        */
-    }
+    } // end update
     #endregion
 
 
 
     #region [Methods]
+    public void setPlayerState(playerStates state) {
+        _playerState = state;
+        if(Expedition.Drawing.IsDrawing) {
+            Expedition.Drawing.cancelLine();
+            _Sound.Play("DrawFail");
+        }
+        switch(_playerState) {
+            case playerStates.clear: {
+                Expedition.CameraOperator.AllowInput = true;
+                Expedition.Movement.AllowInput = true;
+                Expedition.Drawing.AllowCameraDrawing = false;
+                Expedition.Map.IsMapVisible = false;
+                Expedition.Map.IsFullMap = false;
+
+                break;
+            }
+            case playerStates.mini: {
+                Expedition.CameraOperator.AllowInput = true;
+                Expedition.Movement.AllowInput = true;
+                Expedition.Drawing.AllowCameraDrawing = false;
+                Expedition.Map.IsMapVisible = true;
+                Expedition.Map.IsFullMap = false;
+
+                break;
+            }
+            case playerStates.drawing: {
+                Expedition.CameraOperator.AllowInput = true;
+                Expedition.Movement.AllowInput = true;
+                Expedition.Drawing.AllowCameraDrawing = true;
+                Expedition.Map.IsMapVisible = true;
+                Expedition.Map.IsFullMap = false;
+
+                break;
+            }
+            case playerStates.full: {
+                Expedition.CameraOperator.AllowInput = false;
+                Expedition.Movement.AllowInput = false;
+                Expedition.Drawing.AllowCameraDrawing = false;
+                Expedition.Map.IsMapVisible = true;
+                Expedition.Map.IsFullMap = true;
+
+                break;
+            }
+        }
+    }
+
     public bool viewRaycast(float range, Vector2 pos) {
         if(Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(pos.x, pos.y, 0f)), out RaycastHit hit, range, layerMask: Expedition.raycastIgnoreLayers)) {
             // Optionally, show the raycast in scene view.
@@ -363,35 +257,6 @@ public sealed class S_Player : MonoBehaviour
         }
         else return false;
     }
-
-    /*public bool startCameraLine() {
-        if (!cameraDrawAllowed) { Debug.LogWarning("Line drawing not allowed!"); return false; }
-        if(Region.activeRegion == null) { Debug.LogWarning("Can't start line, no active region!"); return false; }
-
-        if(viewRaycast(maxDistance)) {
-            return Region.activeRegion.addLine(lastRaycastHit.point);
-        }
-        else { Debug.LogWarning("Surface is out of range ("+maxDistance+")"); return false; }
-    }
-
-    public bool addLinePoint() {
-        if (!cameraDrawAllowed) { Debug.LogWarning("Line drawing not allowed!"); return false; }
-        if(Region.activeRegion == null) { Debug.LogWarning("Can't add point, no active region!"); return false; }
-
-        if(viewRaycast(maxDistance)) {
-            //if (!drawLoopSrc.isPlaying) drawLoopSrc.Play();
-            return Region.activeRegion.addLinePoint(lastRaycastHit.point);
-        }
-        else { Debug.LogWarning("Surface is out of range ("+maxDistance+")"); return false; }
-    }
-
-    public bool endCameraLine(bool playSound) {
-        if(Region.activeRegion == null) { Debug.LogWarning("Can't end line, no active region!"); return false; }
-
-        //if (playSound) sound.Play("DrawStop");
-        Region.activeRegion.setSinkOfAllLines(true);
-        return true;
-    }*/
     #endregion
 
 

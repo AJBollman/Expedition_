@@ -26,6 +26,8 @@ public sealed class Expedition : MonoBehaviour
     public static S_UserInterface UserInterface { get => S_UserInterface.instance; }
     /// <summary> This class handles the player's ability to draw lines. </summary>
     public static S_Drawing Drawing { get => S_Drawing.instance; }
+    /// <summary> This class handles the player's ability to use the map. </summary>
+    public static S_Map Map { get => S_Map.instance; }
 
     //public static S_Map Map { get => S_Map.instance; }
     //public static S_Interaction Interaction { get => S_Interaction.instance; }
@@ -177,9 +179,13 @@ public sealed class Expedition : MonoBehaviour
             if(!Movement.isReady) throw new System.Exception("Movement not ready");
             Debug.Log("<color=green><size=18>Movement Ready</size></color>");
 
-            // Check Movement
+            // Check Drawing
             if(!Drawing.isReady) throw new System.Exception("Drawing not ready");
             Debug.Log("<color=green><size=18>Drawing Ready</size></color>");
+
+            // Check Mapping
+            if(!Map.isReady) throw new System.Exception("Map not ready");
+            Debug.Log("<color=green><size=18>Map Ready</size></color>");
 
             // Check Player
             if(!Player.isReady) throw new System.Exception("Player not ready");

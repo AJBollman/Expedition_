@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8754469251116282581}
   - component: {fileID: 8754469251116282585}
+  - component: {fileID: 5717823224904575940}
   - component: {fileID: 8134645575640543033}
   - component: {fileID: 8754469251116282579}
   - component: {fileID: 8754469251116282580}
@@ -84,6 +85,18 @@ MonoBehaviour:
   isCameraDrawing: 0
   jumpLoop: {fileID: 0}
   drawLoop: {fileID: 8300000, guid: 69bc053d9be0d405d8a8c5672fb66e91, type: 3}
+--- !u!114 &5717823224904575940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8754469251116282577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf78f3842e44148408bbcb92100df0b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8134645575640543033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +172,7 @@ MonoBehaviour:
   _smoothIndicatorRot: 10
   _maxRaycastDistance: 15
   _volumeDrawDrone: 0.3
+  _Indicator: {fileID: 0}
 --- !u!114 &8754469251116282579
 MonoBehaviour:
   m_ObjectHideFlags: 0
