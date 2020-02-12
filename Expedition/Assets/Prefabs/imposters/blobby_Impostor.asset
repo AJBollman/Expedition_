@@ -24,7 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Emission:
-        m_Texture: {fileID: 2800000, guid: 4ac4e6fb913548d45809edf6b6b09947, type: 3}
+        m_Texture: {fileID: 2800000, guid: 39fe2a317e6df3b40b0a7d8ddc83096b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normals:
@@ -40,17 +40,17 @@ Material:
     - _AI_ShadowBias: 0.25
     - _AI_ShadowView: 1
     - _ClipMask: 0.918
-    - _DepthSize: 27.858213
-    - _Frames: 16
+    - _DepthSize: 27.43824
+    - _Frames: 8
     - _Hemi: 0
     - _Hue: 0
-    - _ImpostorSize: 28.010162
+    - _ImpostorSize: 27.524586
     - _Parallax: 1
     - _TextureBias: -1
     m_Colors:
-    - _AI_SizeOffset: {r: 28.010162, g: 27.858213, b: 0, a: 0.0013420245}
+    - _AI_SizeOffset: {r: 27.524586, g: 27.43824, b: 0.000390625, a: 0.003125}
     - _HueVariation: {r: 0, g: 0, b: 0, a: 0}
-    - _Offset: {r: 1.5311842, g: 9.896423, b: -5.1134415, a: -0.021472393}
+    - _Offset: {r: 1.5311575, g: 9.896411, b: -5.1134424, a: -0.025}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,24 +68,24 @@ MonoBehaviour:
   Version: 9602
   ImpostorType: 1
   LockedSizes: 1
-  SelectedSize: 2048
-  TexSize: {x: 2048, y: 2048}
+  SelectedSize: 512
+  TexSize: {x: 512, y: 512}
   DecoupleAxisFrames: 0
-  HorizontalFrames: 16
-  VerticalFrames: 16
+  HorizontalFrames: 8
+  VerticalFrames: 8
   PixelPadding: 32
   MaxVertices: 8
   Tolerance: 0.15
   NormalScale: 0.01
   ShapePoints:
-  - {x: 0.082826704, y: 0.5722151}
-  - {x: 0.2285279, y: 1}
-  - {x: 0.7253582, y: 1}
-  - {x: 0.9317357, y: 0.6525508}
-  - {x: 0.8622644, y: 0.120352864}
-  - {x: 0.65017307, y: 0}
-  - {x: 0.28017566, y: 0}
-  - {x: 0.12955804, y: 0.25116295}
+  - {x: 0.066595644, y: 0.42675442}
+  - {x: 0.11966076, y: 0.78157467}
+  - {x: 0.26901415, y: 1}
+  - {x: 0.723677, y: 1}
+  - {x: 0.91894215, y: 0.68480885}
+  - {x: 0.85990345, y: 0.08287132}
+  - {x: 0.46173877, y: 0}
+  - {x: 0.22754008, y: 0.05608797}
   Preset: {fileID: 11400000, guid: 089f3a2f6b5f48348a48c755f8d9a7a2, type: 2}
   OverrideOutput: []
 --- !u!43 &684714083038251648
@@ -105,8 +105,8 @@ Mesh:
     firstVertex: 0
     vertexCount: 8
     localAABB:
-      m_Center: {x: 0.20394754, y: 0.6014452, z: 0}
-      m_Extent: {x: 11.88904, y: 14.005081, z: 0}
+      m_Center: {x: -0.11301851, y: 0.68811417, z: 0}
+      m_Extent: {x: 11.730242, y: 13.762293, z: 0}
   m_Shapes:
     vertices: []
     shapes: []
@@ -185,7 +185,7 @@ Mesh:
       format: 0
       dimension: 0
     m_DataSize: 256
-    _typelessdata: 23f63ac184edb5bf000000000000000000000000ffff7fbf0ca1a93da006db3ec953f3c04b7556c1000000000000000000000000000080bf38036a3e0000000085fec9404b7556c1000000000000000000000000000080bf13b1393f00000000e07c414150fa6ac0000000000000000000000000000080bf3b866e3fdce4b13e755a22414bc43341000000000000000000000000000080bf5cbd5c3f8e30613f999a864055b46941000000000000000000000000000080bfbe71263f0000803fbb08c5c055b46941000000000000000000000000000080bf2f738f3e0000803fab0426c10149f240000000000000000000000000000080bfddaa043ec9b33f3f
+    _typelessdata: ff7d3dc11b112d40000000000000000000000000000080bf4c63883d39c0123f661f26c1d1fce1c0000000000000000000000000000080bfb310f53de4aa5f3e63b2c8c0d62f51c1000000000000000000000000000080bf39bc893e00000000a1c3c740d62f51c1000000000000000000000000ffff7fbfe542393f0000000026e03941edc18cc0000000000000000000000000ffff7fbfcb3f6b3fbc60a13e15e01f41e6b54241000000000000000000000000000080bfa2225c3ff2c86a3f8a9477bfde346741000000000000000000000000000080bf0669ec3e0000803f043aedc079814e41000000000000000000000000000080bf4400693e38a4713f
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -239,8 +239,8 @@ Mesh:
       m_BitSize: 0
     m_UVInfo: 0
   m_LocalAABB:
-    m_Center: {x: 1.5311842, y: 9.896423, z: -5.1134415}
-    m_Extent: {x: 11.024164, y: 14.722588, z: 12.144262}
+    m_Center: {x: 1.5311575, y: 9.896411, z: -5.1134424}
+    m_Extent: {x: 11.024164, y: 14.722587, z: 12.144263}
   m_MeshUsageFlags: 0
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 

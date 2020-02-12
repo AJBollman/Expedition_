@@ -40,17 +40,17 @@ Material:
     - _AI_ShadowBias: 0.25
     - _AI_ShadowView: 1
     - _ClipMask: 0.5
-    - _DepthSize: 437.67474
-    - _Frames: 16
+    - _DepthSize: 438.7617
+    - _Frames: 8
     - _Hemi: 0
     - _Hue: 0
-    - _ImpostorSize: 435.35547
+    - _ImpostorSize: 432.37164
     - _Parallax: 1
     - _TextureBias: -1
     m_Colors:
-    - _AI_SizeOffset: {r: 435.35547, g: 437.67474, b: 0, a: -0.00013185653}
+    - _AI_SizeOffset: {r: 432.37164, g: 438.7617, b: 0.00026260506, a: -0.0005252101}
     - _HueVariation: {r: 0, g: 0, b: 0, a: 0}
-    - _Offset: {r: 12.252554, g: 213.36029, b: 1.337143, a: 0.0021097045}
+    - _Offset: {r: 12.252554, g: 213.36029, b: 1.337143, a: 0.004201681}
 --- !u!43 &-2176790857328765803
 Mesh:
   m_ObjectHideFlags: 0
@@ -68,8 +68,8 @@ Mesh:
     firstVertex: 0
     vertexCount: 8
     localAABB:
-      m_Center: {x: 4.987892, y: -0.9184723, z: 0}
-      m_Extent: {x: 92.1804, y: 217.67773, z: 0}
+      m_Center: {x: 2.215889, y: -1.8166809, z: 0}
+      m_Extent: {x: 88.56117, y: 216.18582, z: 0}
   m_Shapes:
     vertices: []
     shapes: []
@@ -148,7 +148,7 @@ Mesh:
       format: 0
       dimension: 0
     m_DataSize: 256
-    _typelessdata: 9062aec28a1c17c2000000000000000000000000000080bf0c75993ec8a6d43e2cd809c2a1985ac3000000000000000000000000000080bfd578d73e0000000065efed41a1985ac3000000000000000000000000000080bf2e7d113f000000002a56c242954cd6c1000000000000000000000000000080bf2d23393fac93e13e11ab7e420a7ec942000000000000000000000000000080bf1670253f08c83b3f528891415fc25843000000000000000000000000000080bf75b20a3f0000803f8ede94c15fc25843000000000000000000000000000080bf821dea3e0000803f99e999c2eeb0a342000000000000000000000000000080bfde7ea53ed7aa303f
+    _typelessdata: c9b0acc2d7b419c2000000000000000000000000000080bf5cad983ed4a5d43ea862e6c1a4005ac3000000000000000000000000000080bf92d2dc3e00000000e9f3f041a4005ac3000000000000000000000000000080bf924b113f00000000db8db542529fd0c1000000000000000000000000000080bfb335353f5445e33ee16a83426665ac42000000000000000000000000000080bf035e263faf1c343fcfea7241805e5643000000000000000000000000000080bf8e73083f0000803fa5a39ac1805e5643000000000000000000000000ffff7fbfd808e83e0000803fd6a59ec2f87c3942000000000000000000000000000080bfdefda03e20881c3f
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -231,23 +231,23 @@ MonoBehaviour:
   Version: 9602
   ImpostorType: 1
   LockedSizes: 1
-  SelectedSize: 2048
-  TexSize: {x: 2048, y: 2048}
+  SelectedSize: 512
+  TexSize: {x: 512, y: 512}
   DecoupleAxisFrames: 0
-  HorizontalFrames: 16
-  VerticalFrames: 16
+  HorizontalFrames: 8
+  VerticalFrames: 8
   PixelPadding: 32
   MaxVertices: 8
   Tolerance: 0.15
   NormalScale: 0.01
   ShapePoints:
-  - {x: 0.29972112, y: 0.58466506}
-  - {x: 0.42084375, y: 1}
-  - {x: 0.56831634, y: 1}
-  - {x: 0.723193, y: 0.5594202}
-  - {x: 0.64624155, y: 0.26647902}
-  - {x: 0.54178554, y: 0}
-  - {x: 0.45725638, y: 0}
-  - {x: 0.32323354, y: 0.3098932}
+  - {x: 0.29819763, y: 0.58467233}
+  - {x: 0.43129402, y: 1}
+  - {x: 0.56755936, y: 1}
+  - {x: 0.70785064, y: 0.5561117}
+  - {x: 0.649872, y: 0.29643732}
+  - {x: 0.5330132, y: 0}
+  - {x: 0.45319247, y: 0}
+  - {x: 0.31443685, y: 0.3885479}
   Preset: {fileID: 11400000, guid: 089f3a2f6b5f48348a48c755f8d9a7a2, type: 2}
   OverrideOutput: []
