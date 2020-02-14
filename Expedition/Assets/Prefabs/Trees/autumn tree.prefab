@@ -87,7 +87,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8228360419012313907}
-  - component: {fileID: 3828292326179080148}
   m_Layer: 0
   m_Name: ttttt
   m_TagString: Untagged
@@ -111,29 +110,6 @@ Transform:
   m_Father: {fileID: 4242666598689775413}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!205 &3828292326179080148
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1227270374140459527}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.61587334, y: 5.817732, z: -4.478038}
-  m_Size: 33.198223
-  m_FadeMode: 2
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.16022998
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 8655357416964224112}
-  - screenRelativeHeight: 0
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 5665693333529576657}
-  m_Enabled: 1
 --- !u!1 &1372004451010070764
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,7 +704,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1464726725926290773}
   - component: {fileID: 7603269938317138888}
-  - component: {fileID: 4101171475001616466}
   m_Layer: 0
   m_Name: blobby
   m_TagString: Untagged
@@ -773,7 +748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_data: {fileID: 11400000, guid: aae8eefbf2c95324e8ef01842d0b832c, type: 2}
   m_rootTransform: {fileID: 1464726725926290773}
-  m_lodGroup: {fileID: 4101171475001616466}
+  m_lodGroup: {fileID: 0}
   m_renderers:
   - {fileID: 7270251267642893536}
   - {fileID: 2199983201892386445}
@@ -784,40 +759,10 @@ MonoBehaviour:
   - {fileID: 2530093394018430185}
   m_lodReplacement: 2
   m_renderPipelineInUse: 1
-  m_insertIndex: 1
+  m_insertIndex: 0
   m_lastImpostor: {fileID: 1020518546550266761}
   m_folderPath: Assets/Prefabs/imposters/
   m_cutMode: 0
---- !u!205 &4101171475001616466
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7111582592872852316}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 1.531023, y: 9.89646, z: -5.113285}
-  m_Size: 30.301468
-  m_FadeMode: 2
-  m_AnimateCrossFading: 1
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.10450035
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 7270251267642893536}
-    - renderer: {fileID: 2199983201892386445}
-    - renderer: {fileID: 4873537817573129371}
-    - renderer: {fileID: 9163128379722075714}
-    - renderer: {fileID: 8722316232334178817}
-    - renderer: {fileID: 7752936937934319899}
-    - renderer: {fileID: 2530093394018430185}
-  - screenRelativeHeight: 0
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 4258229879856014309}
-    - renderer: {fileID: 1884829809035262110}
-  m_Enabled: 1
 --- !u!1 &7827652395594038056
 GameObject:
   m_ObjectHideFlags: 0
@@ -983,6 +928,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4242666598689775413}
+  - component: {fileID: 5010992755968957090}
   m_Layer: 0
   m_Name: autumn tree
   m_TagString: Untagged
@@ -1006,6 +952,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &5010992755968957090
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8631352330878289410}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 1.6614146, y: 8.220212, z: -5.78586}
+  m_Size: 38.003166
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.11821037
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8655357416964224112}
+    - renderer: {fileID: 7270251267642893536}
+    - renderer: {fileID: 2199983201892386445}
+    - renderer: {fileID: 4873537817573129371}
+    - renderer: {fileID: 9163128379722075714}
+    - renderer: {fileID: 8722316232334178817}
+    - renderer: {fileID: 7752936937934319899}
+    - renderer: {fileID: 2530093394018430185}
+  - screenRelativeHeight: 0
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 5665693333529576657}
+    - renderer: {fileID: 4258229879856014309}
+    - renderer: {fileID: 1884829809035262110}
+  m_Enabled: 1
 --- !u!1 &8996442795269034044
 GameObject:
   m_ObjectHideFlags: 0

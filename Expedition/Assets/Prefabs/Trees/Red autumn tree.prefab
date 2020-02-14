@@ -1,63 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &745530354200471888
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4324579552890526531}
-  - component: {fileID: 223885336586107669}
-  m_Layer: 0
-  m_Name: autumn tree 1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &4324579552890526531
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 745530354200471888}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.312632, y: -1.8757185, z: -0.13444643}
-  m_LocalScale: {x: 0.91121584, y: 0.91121584, z: 0.91121584}
-  m_Children:
-  - {fileID: 1685865251110791547}
-  - {fileID: 8539832097829238921}
-  - {fileID: 3737456069253855994}
-  m_Father: {fileID: 3427127145808207586}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!205 &223885336586107669
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 745530354200471888}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.6919136, y: 37.347435, z: 0.22335052}
-  m_Size: 52.496628
-  m_FadeMode: 1
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.11297099
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 6279387958241853645}
-  - screenRelativeHeight: 0
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 8835232710403236348}
-    - renderer: {fileID: 7943295378983952664}
-  m_Enabled: 1
 --- !u!1 &863167350652948046
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,11 +27,11 @@ Transform:
   m_GameObject: {fileID: 863167350652948046}
   m_LocalRotation: {x: 0.00000008195639, y: -0.0000000013969839, z: 2.3646862e-10,
     w: 1}
-  m_LocalPosition: {x: 0.542224, y: 35.5703, z: 0.56702566}
-  m_LocalScale: {x: 0.22752725, y: 0.22752728, z: 0.22752723}
+  m_LocalPosition: {x: 0.8067151, y: 30.5365, z: 0.3822363}
+  m_LocalScale: {x: 0.20732641, y: 0.20732646, z: 0.20732638}
   m_Children: []
-  m_Father: {fileID: 4324579552890526531}
-  m_RootOrder: 1
+  m_Father: {fileID: 3427127145808207586}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6270114745875224756
 MeshFilter:
@@ -146,6 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3427127145808207586}
+  - component: {fileID: 5028063230778935685}
   m_Layer: 0
   m_Name: Red autumn tree
   m_TagString: Untagged
@@ -164,11 +107,42 @@ Transform:
   m_LocalPosition: {x: 95.03943, y: -14.457336, z: -107.752426}
   m_LocalScale: {x: 0.26385367, y: 0.27702013, z: 0.26385367}
   m_Children:
-  - {fileID: 766221216681249556}
-  - {fileID: 4324579552890526531}
+  - {fileID: 6895287694988151919}
+  - {fileID: 7570884898336431160}
+  - {fileID: 571365849759871866}
+  - {fileID: 1685865251110791547}
+  - {fileID: 8539832097829238921}
+  - {fileID: 3737456069253855994}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 4.3360004, y: 0.35300002, z: 4.6540003}
+--- !u!205 &5028063230778935685
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044630645920535132}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.94309807, y: 28.03564, z: 0.06905174}
+  m_Size: 56.076187
+  m_FadeMode: 2
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.10784937
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 235800615633960407}
+    - renderer: {fileID: 3883351351832112512}
+    - renderer: {fileID: 6279387958241853645}
+  - screenRelativeHeight: 0
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 1631616897037106573}
+    - renderer: {fileID: 8835232710403236348}
+    - renderer: {fileID: 7943295378983952664}
+  m_Enabled: 1
 --- !u!1 &4064742337129286888
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +155,7 @@ GameObject:
   - component: {fileID: 4467375859005403995}
   - component: {fileID: 1631616897037106573}
   m_Layer: 0
-  m_Name: Impostor
+  m_Name: impidimp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,12 +168,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4064742337129286888}
-  m_LocalRotation: {x: -2.3283064e-10, y: -9.549087e-12, z: 0.000000007450577, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000001, y: 1, z: 0.9999999}
+  m_LocalRotation: {x: -0.0008414984, y: 0.0000045648776, z: 0.00008360497, w: 0.99999964}
+  m_LocalPosition: {x: 0.3362897, y: -0.000033902972, z: -0.047814183}
+  m_LocalScale: {x: 0.22752726, y: 0.2275272, z: 0.22752717}
   m_Children: []
-  m_Father: {fileID: 6895287694988151919}
-  m_RootOrder: 0
+  m_Father: {fileID: 3427127145808207586}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4467375859005403995
 MeshFilter:
@@ -247,62 +221,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!1 &4393670437111970055
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 766221216681249556}
-  - component: {fileID: 717070648851373402}
-  m_Layer: 0
-  m_Name: autumn tree
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &766221216681249556
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4393670437111970055}
-  m_LocalRotation: {x: -0.00084157696, y: 0.0000045647953, z: 0.00008358895, w: 0.99999964}
-  m_LocalPosition: {x: 0.33637714, y: 0, z: -0.047847316}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 6895287694988151919}
-  - {fileID: 7570884898336431160}
-  m_Father: {fileID: 3427127145808207586}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0.096, y: 0.001, z: 0.010000001}
---- !u!205 &717070648851373402
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4393670437111970055}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.94324493, y: 27.013268, z: 0.52053165}
-  m_Size: 54.026566
-  m_FadeMode: 1
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.32744297
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 3883351351832112512}
-  - screenRelativeHeight: 0
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 1631616897037106573}
-  m_Enabled: 1
 --- !u!1 &4698237915072266472
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,11 +246,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4698237915072266472}
-  m_LocalRotation: {x: 0.0008416584, y: -0.000004564802, z: -0.00008358895, w: 0.99999964}
-  m_LocalPosition: {x: 0.4387491, y: 26.001993, z: 0.3850122}
-  m_LocalScale: {x: 0.20732646, y: 0.20732644, z: 0.20732644}
+  m_LocalRotation: {x: 0.00000008195639, y: -0, z: 1.8189894e-10, w: 1}
+  m_LocalPosition: {x: 0.7707847, y: 26.002676, z: 0.2933917}
+  m_LocalScale: {x: 0.20732643, y: 0.20732643, z: 0.2073264}
   m_Children: []
-  m_Father: {fileID: 766221216681249556}
+  m_Father: {fileID: 3427127145808207586}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7757362390829351559
@@ -409,11 +327,11 @@ Transform:
   m_GameObject: {fileID: 5641764494723288273}
   m_LocalRotation: {x: 0.00000008195639, y: -0.0000000013969839, z: 2.3646862e-10,
     w: 1}
-  m_LocalPosition: {x: 0.542224, y: 35.5703, z: 0.56702566}
-  m_LocalScale: {x: 0.22752726, y: 0.22752726, z: 0.22752726}
+  m_LocalPosition: {x: 0.8067151, y: 30.5365, z: 0.3822363}
+  m_LocalScale: {x: 0.20732643, y: 0.20732644, z: 0.20732641}
   m_Children: []
-  m_Father: {fileID: 4324579552890526531}
-  m_RootOrder: 0
+  m_Father: {fileID: 3427127145808207586}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1189619165339448738
 MeshFilter:
@@ -482,7 +400,7 @@ MonoBehaviour:
   - {fileID: 0}
   m_lodReplacement: 2
   m_renderPipelineInUse: 1
-  m_insertIndex: 1
+  m_insertIndex: 0
   m_lastImpostor: {fileID: 863167350652948046}
   m_folderPath: Assets/Prefabs/imposters/
   m_cutMode: 0
@@ -511,12 +429,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6814176035492583911}
-  m_LocalRotation: {x: 0.000000020489097, y: 0.9642943, z: 0.00000008568168, w: 0.26483324}
-  m_LocalPosition: {x: 0.9959945, y: 35.570305, z: 0.0043429295}
-  m_LocalScale: {x: 0.22752725, y: 0.22752728, z: 0.22752723}
+  m_LocalRotation: {x: 0.000000013038516, y: 0.96429425, z: 0.00000008940697, w: 0.26483324}
+  m_LocalPosition: {x: 1.2201979, y: 30.536505, z: -0.13048908}
+  m_LocalScale: {x: 0.20732659, y: 0.20732646, z: 0.20732653}
   m_Children: []
-  m_Father: {fileID: 4324579552890526531}
-  m_RootOrder: 2
+  m_Father: {fileID: 3427127145808207586}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 149.28601, z: 0}
 --- !u!33 &7151773776617833781
 MeshFilter:
@@ -577,7 +495,6 @@ GameObject:
   - component: {fileID: 235800615633960407}
   - component: {fileID: 1400090392619093226}
   - component: {fileID: 2029105694014113841}
-  - component: {fileID: 3903248816902329342}
   m_Layer: 0
   m_Name: trunk
   m_TagString: Untagged
@@ -592,12 +509,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8616136426896347327}
-  m_LocalRotation: {x: 0.00000008119969, y: -9.549694e-12, z: 0.000000008418208, w: 1}
-  m_LocalPosition: {x: -0.00009868117, y: -0.000032139167, z: 0.000033766948}
-  m_LocalScale: {x: 0.22752726, y: 0.22752726, z: 0.22752726}
-  m_Children:
-  - {fileID: 571365849759871866}
-  m_Father: {fileID: 766221216681249556}
+  m_LocalRotation: {x: -0.00084149465, y: 0.000004564761, z: 0.00008359751, w: 0.99999964}
+  m_LocalPosition: {x: 0.3362897, y: -0.000033902972, z: -0.047814183}
+  m_LocalScale: {x: 0.22752725, y: 0.22752723, z: 0.22752722}
+  m_Children: []
+  m_Father: {fileID: 3427127145808207586}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6703181354702050000
@@ -673,7 +589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_data: {fileID: 11400000, guid: 63d8d457c12640a498cb820bbeae0ca6, type: 2}
   m_rootTransform: {fileID: 6895287694988151919}
-  m_lodGroup: {fileID: 3903248816902329342}
+  m_lodGroup: {fileID: 0}
   m_renderers:
   - {fileID: 235800615633960407}
   m_lodReplacement: 2
@@ -682,25 +598,3 @@ MonoBehaviour:
   m_lastImpostor: {fileID: 4064742337129286888}
   m_folderPath: Assets/Prefabs/imposters/
   m_cutMode: 0
---- !u!205 &3903248816902329342
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8616136426896347327}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.40192223, y: 118.7256, z: 0.31503773}
-  m_Size: 237.45102
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.37163913
-    fadeTransitionWidth: 0
-    renderers: []
-  - screenRelativeHeight: 0
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 1631616897037106573}
-  m_Enabled: 1
