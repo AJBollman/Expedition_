@@ -8,6 +8,8 @@ using UnityEngine;
 public enum gameStates { menu, paused, normal, redline };
 public enum playerStates { clear, mini, drawing, full };
 public enum crosshairTypes { draw, yeet, drop, grab, place, nope, none };
+public enum QuestState { next, hidden, undiscovered, discovered, completeable, complete };
+public enum TravellerType { generic, rockdude, frogwizard, mushroom, wisp };
 
 
 /// <summary> Controls and state management for the entire game. Classes must inherit from this in order to make changes related to the game's mechanics </summary>
