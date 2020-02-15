@@ -182,7 +182,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 125
   m_IsActive: 1
 --- !u!4 &6685060042025764535
 Transform:
@@ -424,7 +424,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 125
   m_IsActive: 1
 --- !u!4 &2517234052166020161
 Transform:
@@ -498,6 +498,7 @@ GameObject:
   - component: {fileID: 231916603930052567}
   - component: {fileID: 3442758603010640233}
   - component: {fileID: 9156814778816080066}
+  - component: {fileID: 4458539864988903185}
   m_Layer: 0
   m_Name: trunk
   m_TagString: Untagged
@@ -588,6 +589,20 @@ MonoBehaviour:
   m_lastImpostor: {fileID: 3542223091976263561}
   m_folderPath: Assets/Prefabs/imposters/
   m_cutMode: 0
+--- !u!136 &4458539864988903185
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5620099484312365631}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 81.07431
+  m_Height: 444.11108
+  m_Direction: 1
+  m_Center: {x: -8.5061, y: 179.79822, z: 0.25652865}
 --- !u!1 &8724622946864245242
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,7 +619,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 125
   m_IsActive: 1
 --- !u!4 &53182009103305641
 Transform:
