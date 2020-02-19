@@ -8,7 +8,7 @@ public sealed class Quest : MonoBehaviour
 {
     public static List<Quest> AllQuests;
 
-    #region [Private]
+    #region [Public]
     [Tooltip("All quests to show after this one is completed")]
     [SerializeField] private List<Quest> _QuestsToUnlockOnCompletion;
 
@@ -30,6 +30,12 @@ public sealed class Quest : MonoBehaviour
     [Tooltip("The Traveller associated with this quest")]
     [SerializeField] private TravellerType _associatedTraveller;
 
+    [Tooltip("If this quest is initially visible on game start")]
+    [SerializeField] private bool _isVisibleOnStart;
+
+    #endregion
+
+    #region [Private]
     private QuestState _state = QuestState.hidden;
     private Quest _ParentQuest;
     private QuestBall _StartPoint;
@@ -44,28 +50,36 @@ public sealed class Quest : MonoBehaviour
 
     #region [Events]
     private void Awake() {
-        /*
-        // https://forum.unity.com/threads/how-to-save-manually-save-a-png-of-a-camera-view.506269
-        // rendering icon textures dynamically, using a camera.
-        Camera Cam = GetComponentInChildren<Camera>();
-        if(Cam == null) throw new System.Exception("ahkdfahfd");
-        RenderTexture currentRT = RenderTexture.active;
-        RenderTexture.active = Cam.targetTexture;
-        Cam.Render();
-        questIcon = new Texture2D(Cam.targetTexture.width, Cam.targetTexture.height);
-        questIcon.ReadPixels(new Rect(0, 0, Cam.targetTexture.width, Cam.targetTexture.height), 0, 0);
-        questIcon.Apply();
-        RenderTexture.active = currentRT;
+        _StartPoint = transform.Find("StartPoint").GetComponent<QuestBall>();
+        _EndPoint = transform.Find("EndPoint").GetComponent<QuestBall>();
+        AllQuests.Add(this);
+    }
 
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        block.SetTexture("_BaseMap", questIcon);
-        _mapIcon.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
-        */
+    private void OnDestroy() {
+        AllQuests.Remove(this);
     }
 
     void Start()
     {
-        setState(_state);
+        if(_generateIconFromCamera) {
+            // https://forum.unity.com/threads/how-to-save-manually-save-a-png-of-a-camera-view.506269
+            // rendering icon textures dynamically, using a camera.
+            Camera Cam = GetComponentInChildren<Camera>();
+            if(Cam == null) throw new System.Exception("ahkdfahfd");
+            RenderTexture currentRT = RenderTexture.active;
+            RenderTexture.active = Cam.targetTexture;
+            Cam.Render();
+            _QuestIcon = new Texture2D(Cam.targetTexture.width, Cam.targetTexture.height);
+            _QuestIcon.ReadPixels(new Rect(0, 0, Cam.targetTexture.width, Cam.targetTexture.height), 0, 0);
+            _QuestIcon.Apply();
+            RenderTexture.active = currentRT;
+
+            MaterialPropertyBlock block = new MaterialPropertyBlock();
+            block.SetTexture("_BaseMap", _QuestIcon);
+            _EndPoint._MinimapIconObj.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
+            _StartPoint._MinimapIconObj.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
+        }
+        setState((_isVisibleOnStart) ? QuestState.undiscovered : QuestState.hidden);
     }
 
     /*(private void OnTriggerEnter(Collider other) {
@@ -102,83 +116,129 @@ public sealed class Quest : MonoBehaviour
 
     }
 
-    private void setColorFade() {
+    /*private void setColorFade() {
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         block.SetColor("_BaseColor", _ballColor);
         block.SetFloat("_SoftParticlesFarFadeDistance", 2);
         //_StartPointBallEffectObj.GetComponent<Renderer>().SetPropertyBlock(block);
         //_mapIconBorderObj.GetComponent<Renderer>().SetPropertyBlock(block);
+    }*/
+
+    private void setVisibility(bool showStart, bool showEnd, bool showStartIcon, bool showEndIcon) {
+        _EndPoint.gameObject.SetActive(showEnd);
+        _StartPoint.gameObject.SetActive(showStart);
+        _EndPoint._MinimapIconObj.SetActive(showEndIcon);
+        _StartPoint._MinimapIconObj.SetActive(showStartIcon);
     }
 
     public void setState(QuestState state) {
-        /*_state = state;
+        _state = state;
         switch(_state) {
             case QuestState.hidden: { // Quest is invisible.
-                _MinimapIconObj.SetActive(false);
+                setVisibility(false, false, false, false);
                 _ballColor = Expedition.questColorUniscovered;
-                Debug.LogWarning("Questpoint '"+_questName+"' set to 'hidden'");
                 break;
             }
             case QuestState.undiscovered: { // Quest can be found by exploring on foot.
-                _MinimapIconObj.SetActive(false);
+                setVisibility(true, false, false, false);
                 _ballColor = Expedition.questColorUniscovered;
-                Debug.LogWarning("Questpoint '"+_questName+"' set to 'undiscovered'");
                 break;
             }
             case QuestState.discovered: { // Quest goal is visible on the minimap.
-                _MinimapIconObj.SetActive(true);
+                setVisibility(true, true, true, false);
                 _ballColor = Expedition.questColorUncompleted;
-                Debug.LogWarning("Questpoint '"+_questName+"' set to 'discovered'");
-                if(_GoalQuest == null) { // Meaning this is the end of a chain of questpoints.
-                    setState(QuestState.complete);
-                }
-                else if(_GoalQuest._state == QuestState.hidden) _GoalQuest.setState(QuestState.next);
                 break;
             }
             case QuestState.completeable: { // Quest is ready to be red-lined.
-                _MinimapIconObj.SetActive(true);
+                setVisibility(true, true, true, true);
                 _ballColor = Expedition.questColorCompleteable;
-                Debug.LogWarning("Questpoint '"+_questName+"' set to 'completeable'");
                 break;
             }
             case QuestState.complete: { // Quest is done.
-                _MinimapIconObj.SetActive(true);
+                setVisibility(true, true, true, true);
                 _ballColor = Expedition.questColorCompleted;
-                Debug.LogWarning("Questpoint '"+_questName+"' set to 'complete'");
-                break;
-            }
-            case QuestState.next: { // Like discoverable, but it solves its parent quest.
-                _MinimapIconObj.SetActive(false);
-                _ballColor = Expedition.questColorUncompleted;
-                Debug.LogWarning("Questpoint '"+_questName+"' set to 'next'");
                 break;
             }
         }
-        if(_state == QuestState.hidden) {
-            _triggerActive = false;
-            _StartPointBallEffectObj.SetActive(false);
-        }
-        else {
-            _triggerActive = true;
-            _StartPointBallEffectObj.SetActive(true);
-            setColorFade();
-        }*/
+        _EndPoint.SetBallColor(_ballColor);
+        _StartPoint.SetBallColor(_ballColor);
+        Debug.Log("Questpoint set to "+_state);
     }
 
     public void onEndpointEnter() {
         Debug.Log("Entered Endpoint");
+        switch(_state) {
+            case QuestState.undiscovered: { // Quest can be found by exploring on foot.
+                return;
+                break;
+            }
+            case QuestState.discovered: { // Quest goal is visible on the minimap.
+                setState(QuestState.completeable);
+                break;
+            }
+            case QuestState.completeable: { // Quest is ready to be red-lined.
+                break;
+            }
+            case QuestState.complete: { // Quest is done.
+                break;
+            }
+        }
     }
 
     public void onEndpointExit() {
         Debug.Log("Exited Endpoint");
+        switch(_state) {
+            case QuestState.undiscovered: { // Quest can be found by exploring on foot.
+                return;
+                break;
+            }
+            case QuestState.discovered: { // Quest goal is visible on the minimap.
+                break;
+            }
+            case QuestState.completeable: { // Quest is ready to be red-lined.
+                break;
+            }
+            case QuestState.complete: { // Quest is done.
+                break;
+            }
+        }
     }
 
     public void onStartpointEnter() {
         Debug.Log("Entered Startpoint");
+        switch(_state) {
+            case QuestState.undiscovered: { // Quest can be found by exploring on foot.
+                setState(QuestState.discovered);
+                break;
+            }
+            case QuestState.discovered: { // Quest goal is visible on the minimap.
+                break;
+            }
+            case QuestState.completeable: { // Quest is ready to be red-lined.
+                break;
+            }
+            case QuestState.complete: { // Quest is done.
+                break;
+            }
+        }
     }
 
     public void onStartpointExit() {
         Debug.Log("Exited Startpoint");
+        switch(_state) {
+            case QuestState.undiscovered: { // Quest can be found by exploring on foot.
+                break;
+            }
+            case QuestState.discovered: { // Quest goal is visible on the minimap.
+                break;
+            }
+            case QuestState.completeable: { // Quest is ready to be red-lined.
+                break;
+            }
+            case QuestState.complete: { // Quest is done.
+                break;
+            }
+        }
     }
     #endregion
     
