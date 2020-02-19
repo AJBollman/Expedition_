@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4133775603474826185}
   - component: {fileID: 4735974857605981546}
+  - component: {fileID: 4093297044296123953}
   m_Layer: 0
   m_Name: IconCamera
   m_TagString: Untagged
@@ -40,8 +41,8 @@ Camera:
   m_GameObject: {fileID: 2459859708855207975}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -52,7 +53,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.56
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 50
@@ -64,7 +65,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: b1e52444d810a42f28b1cff9fcd242bd, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -74,6 +75,20 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &4093297044296123953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2459859708855207975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a83b51931a664764bbfd9f3ba88df2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Target: {fileID: 4360243047009033769}
+  _Color: {r: 0.8353495, g: 0.3915094, b: 1, a: 1}
 --- !u!1 &4360243047009033773
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,9 +917,10 @@ MonoBehaviour:
   _ObjectsToToggleOnCompletion: []
   _bestPossibleScore: 0
   _QuestIcon: {fileID: 0}
-  _generateIconFromCamera: 0
+  _generateIconFromCamera: 1
   _flavorText: 
   _associatedTraveller: 0
+  _isVisibleOnStart: 0
 --- !u!1 &7887818991499171101
 GameObject:
   m_ObjectHideFlags: 0
