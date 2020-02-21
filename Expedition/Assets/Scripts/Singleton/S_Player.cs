@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 /// <summary> All the stuff the Explorer can do. </summary>
@@ -163,6 +164,9 @@ public sealed class S_Player : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.X) && Application.isEditor && lastEditorTP != Vector3.zero) {
             transform.position = lastEditorTP;
+        }
+        if(Input.GetKeyDown(KeyCode.P) && Application.isEditor) {
+            EditorApplication.isPaused = true;
         }
 
         // mouse down.

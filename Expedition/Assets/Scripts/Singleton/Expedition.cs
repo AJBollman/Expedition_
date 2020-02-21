@@ -94,26 +94,30 @@ public sealed class Expedition : MonoBehaviour
     [SerializeField] private int _lineProjectionStartDistance;
     public static int lineProjectionStartDistance { get => _inst._lineProjectionStartDistance;}
 
+    [SerializeField] private float _questCineDuration;
+    [SerializeField] private float _questCineScrollFlySmooth; // how fast the scroll flies toward you
+
     public static LineRenderer IndicatorLine { get; private set; }
     public static AudioSource DrawDroneClear;
     public static AudioSource DrawDroneUnclear;
 
 
 
-    /////////////////////////////////////////////////   Private, Serializable fields
+    /////////////////////////////////////////////////   Private fields
     [SerializeField] private bool autoStartGameWhileEditor;
     private static Camera activeRegionCamera;
     private static S_CameraOperator cam;
     private static GameObject camInitialLookAt;
     private static GameObject camInitialFollowPoint;
     private static GameObject transitionDinghy;
-
-
-
-    /////////////////////////////////////////////////   Private fields
-    private static gameStates state = gameStates.paused;
+    private static GameObject questScroll;
+    private static gameStates _state = gameStates.paused;
     private static bool _paused;
-    private static float timeScaleGoal = 1f;
+    private static float _timeScaleGoal = 1f;
+    private static Vector3 _goalQuestScrollPos;
+    private static Vector3 _goalQuestScrollScale;
+    private static Quaternion _goalQuestScrollRot;
+    private bool _isCinematic;
 
 
 
@@ -128,6 +132,8 @@ public sealed class Expedition : MonoBehaviour
 
     //////////////////////////////////////////////////////////////////////////////////////////////////  Events
     private void Awake() {
+        questScroll = transform.Find("Quest Scroll").gameObject;
+        questScroll.SetActive(false);
         IndicatorLine = GetComponentInChildren<LineRenderer>();
         DrawDroneClear = GetComponents<AudioSource>()[0];
         DrawDroneUnclear = GetComponents<AudioSource>()[1];
@@ -160,16 +166,17 @@ public sealed class Expedition : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape)) {
             SetGamePaused(!_paused);
         }
-        Time.timeScale = Mathf.Lerp(Time.timeScale, timeScaleGoal, Time.fixedUnscaledDeltaTime * 2);
+        Time.timeScale = Mathf.Lerp(Time.timeScale, _timeScaleGoal, Time.fixedUnscaledDeltaTime * 2);
+        if(_isCinematic) CinematicGetQuestUpdate();
     }
 
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////  Methods
-    private static void startGameplay() {
+    private void startGameplay() {
         gameplayStarted = false;
         try {
-            if(_inst == null) throw new System.Exception("Expedition.cs singleton instance was not assigned!");
+            if(_inst == null) throw new System.Exception("Expedition.cs singleton instance was SOMEHOW not assigned!");
             if(linePrefab == null || redLinePrefab == null || mapTexture == null) throw new System.Exception("Expedition.cs is missing prefabs. Assign them in the inspector!");
 
             // Check CameraOperator
@@ -198,6 +205,7 @@ public sealed class Expedition : MonoBehaviour
             Debug.Log("<color=green><size=18>UI Ready</size></color>");
             Debug.Log("<color=lime><size=18>Starting Game...</size></color>");
 
+            StartCoroutine(Transition.LoadYourAsyncScene("Overlay"));
         }
         catch(Exception e) {
             Debug.LogException(e);
@@ -207,6 +215,7 @@ public sealed class Expedition : MonoBehaviour
         UserInterface.startupMenuActive = false;
         CameraOperator.AllowInput = true;
         Movement.AllowInput = true;
+        Player.setPlayerState(playerStates.mini);
         gameplayStarted = true;
     }
 
@@ -214,12 +223,65 @@ public sealed class Expedition : MonoBehaviour
         UserInterface.pauseMenuActive = set;
         Movement.AllowInput = !set;
         CameraOperator.AllowInput = !set;
-        timeScaleGoal = (set) ? 0f : 1f;
+        _timeScaleGoal = (set) ? 0f : 1f;
         _paused = set;
         if(!set) Time.timeScale = 0.9f;
     }
 
-    public static void setState(gameStates state)
+    public static void CinematicGetQuest(Quest quest) {
+        _inst.StartCoroutine("IECinematicGetQuest", quest);
+    }
+
+    public IEnumerator IECinematicGetQuest(Quest quest) {
+        yield return new WaitForSeconds(0.5f);
+        // pre
+        Expedition.Player.gameObject.GetComponent<SoundPlayer>().Play("GetQuest");
+        Player.setPlayerState(playerStates.mini);
+        var hmap = GameObject.Find("Hand Map");
+        hmap.SetActive(false);
+        Movement.AllowInput = false;
+        CameraOperator.DoLookAtObject = true;
+        CameraOperator.FOV = 55;
+        CameraOperator.ObjectToLookAt = quest.proxyScroll.gameObject;
+        questScroll.transform.localScale = quest.proxyScroll.localScale;
+        questScroll.transform.position = quest.proxyScroll.position;
+        questScroll.transform.rotation = quest.proxyScroll.rotation;
+        questScroll.SetActive(true);
+        questScroll.GetComponent<Animator>().SetBool("IsOpen", false);
+        yield return new WaitForSeconds(0.5f);
+        _isCinematic = true;
+
+        // throw scroll
+        yield return new WaitForSeconds(_inst._questCineDuration);
+
+        // unfurl scroll
+        Expedition.Player.gameObject.GetComponent<SoundPlayer>().Play("RevealQuest");
+        questScroll.GetComponent<Animator>().SetBool("IsOpen", true);
+        yield return new WaitForSeconds(2);
+
+        // post
+        Player.setPlayerState(playerStates.mini);
+        hmap.SetActive(true);
+        Movement.AllowInput = true;
+        CameraOperator.DoLookAtObject = false;
+        CameraOperator.FOV = CameraOperator.defaultFOV;
+        CameraOperator.ObjectToLookAt = null;
+        questScroll.SetActive(false);
+        _isCinematic = false;
+    }
+
+    public void CinematicGetQuestUpdate() {
+        Transform playerHandheld = GameObject.Find("Quest Scroll Goal").transform;
+        //Debug.Log(playerHandheld.position);
+        _goalQuestScrollPos = playerHandheld.position;
+        _goalQuestScrollRot = playerHandheld.rotation;
+        _goalQuestScrollScale = playerHandheld.localScale;
+        questScroll.transform.localScale = Vector3.Lerp(questScroll.transform.localScale, _goalQuestScrollScale, Time.deltaTime * _inst._questCineScrollFlySmooth);
+        questScroll.transform.position = Vector3.Lerp(questScroll.transform.position, _goalQuestScrollPos, Time.deltaTime * _inst._questCineScrollFlySmooth);
+        questScroll.transform.rotation = Quaternion.Slerp(questScroll.transform.rotation, _goalQuestScrollRot, Time.deltaTime * _inst._questCineScrollFlySmooth);
+    }
+
+    /*public static void setState(gameStates state)
     {
         //Debug.Log("Game state changed to "+state);
         Expedition.state = state;
@@ -269,7 +331,9 @@ public sealed class Expedition : MonoBehaviour
                     break;
             }
         }
-    }
+    }*/
+
+
 
     /*public static Region getActiveRegion()
     {
@@ -292,7 +356,7 @@ public sealed class Expedition : MonoBehaviour
         else return null;
     }*/
 
-    public static gameStates getState()
+    /*public static gameStates getState()
     {
         return state;
     }
@@ -333,7 +397,7 @@ public sealed class Expedition : MonoBehaviour
 		ex.transform.LookAt(bo.transform);
         CameraOperator.ObjectToFollow = null;
 		//inst.StartCoroutine(flyToStart(Application.isEditor ? 0.1f : 5f));
-    }
+    }*/
 
     /*public static GameObject getTraveller()
     {

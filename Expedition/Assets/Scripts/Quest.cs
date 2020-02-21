@@ -6,9 +6,12 @@ using UnityEngine;
 
 public sealed class Quest : MonoBehaviour
 {
-    public static List<Quest> AllQuests;
+    public static List<Quest> AllQuests = new List<Quest>();
 
     #region [Public]
+
+    public Transform proxyScroll { get; private set; }
+
     [Tooltip("All quests to show after this one is completed")]
     [SerializeField] private List<Quest> _QuestsToUnlockOnCompletion;
 
@@ -52,6 +55,8 @@ public sealed class Quest : MonoBehaviour
     private void Awake() {
         _StartPoint = transform.Find("StartPoint").GetComponent<QuestBall>();
         _EndPoint = transform.Find("EndPoint").GetComponent<QuestBall>();
+        proxyScroll = transform.Find("Quest Scroll Proxy");
+        proxyScroll.gameObject.SetActive(false);
         AllQuests.Add(this);
     }
 
@@ -81,31 +86,6 @@ public sealed class Quest : MonoBehaviour
         }
         setState((_isVisibleOnStart) ? QuestState.undiscovered : QuestState.hidden);
     }
-
-    /*(private void OnTriggerEnter(Collider other) {
-        if(_triggerActive && other.gameObject == S_Player.Explorer) {
-            _isInsideTrigger = true;
-            setColorFade();
-            if(_state == QuestState.next) { // meaning this questpoint was paired with another one, now they are both ready to be connected by a redline.
-                _ParentQuest.setState(QuestState.completeable);
-                setState(QuestState.completeable);
-            }
-            else if(_state == QuestState.undiscovered) {
-                setState(QuestState.discovered);
-            }
-            //CameraOperator.lookAtObject = _lookTarget;
-            //CameraOperator.doLookAtObject = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other) {
-        if(_triggerActive && other.gameObject == S_Player.Explorer) {
-            _isInsideTrigger = false;
-            setColorFade();
-            //CameraOperator.lookAtObject = null;
-            //CameraOperator.doLookAtObject = false;
-        }
-    }*/
     #endregion;
 
 
@@ -116,19 +96,11 @@ public sealed class Quest : MonoBehaviour
 
     }
 
-    /*private void setColorFade() {
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        block.SetColor("_BaseColor", _ballColor);
-        block.SetFloat("_SoftParticlesFarFadeDistance", 2);
-        //_StartPointBallEffectObj.GetComponent<Renderer>().SetPropertyBlock(block);
-        //_mapIconBorderObj.GetComponent<Renderer>().SetPropertyBlock(block);
-    }*/
-
     private void setVisibility(bool showStart, bool showEnd, bool showStartIcon, bool showEndIcon) {
-        _EndPoint.gameObject.SetActive(showEnd);
-        _StartPoint.gameObject.SetActive(showStart);
         _EndPoint._MinimapIconObj.SetActive(showEndIcon);
         _StartPoint._MinimapIconObj.SetActive(showStartIcon);
+        _EndPoint.gameObject.SetActive(showEnd);
+        _StartPoint.gameObject.SetActive(showStart);
     }
 
     public void setState(QuestState state) {
@@ -162,11 +134,49 @@ public sealed class Quest : MonoBehaviour
         }
         _EndPoint.SetBallColor(_ballColor);
         _StartPoint.SetBallColor(_ballColor);
-        Debug.Log("Questpoint set to "+_state);
+        //Debug.Log("Questpoint set to "+_state);
+    }
+
+    public void onStartpointEnter() {
+        //Debug.Log("Entered Startpoint");
+        switch(_state) {
+            case QuestState.undiscovered: { // Quest can be found by exploring on foot.
+                setState(QuestState.discovered);
+                Expedition.CinematicGetQuest(this);
+                break;
+            }
+            case QuestState.discovered: { // Quest goal is visible on the minimap.
+                break;
+            }
+            case QuestState.completeable: { // Quest is ready to be red-lined.
+                break;
+            }
+            case QuestState.complete: { // Quest is done.
+                break;
+            }
+        }
+    }
+
+    public void onStartpointExit() {
+        //Debug.Log("Exited Startpoint");
+        switch(_state) {
+            case QuestState.undiscovered: { // Quest can be found by exploring on foot.
+                break;
+            }
+            case QuestState.discovered: { // Quest goal is visible on the minimap.
+                break;
+            }
+            case QuestState.completeable: { // Quest is ready to be red-lined.
+                break;
+            }
+            case QuestState.complete: { // Quest is done.
+                break;
+            }
+        }
     }
 
     public void onEndpointEnter() {
-        Debug.Log("Entered Endpoint");
+        //Debug.Log("Entered Endpoint");
         switch(_state) {
             case QuestState.undiscovered: { // Quest can be found by exploring on foot.
                 return;
@@ -186,7 +196,7 @@ public sealed class Quest : MonoBehaviour
     }
 
     public void onEndpointExit() {
-        Debug.Log("Exited Endpoint");
+        //Debug.Log("Exited Endpoint");
         switch(_state) {
             case QuestState.undiscovered: { // Quest can be found by exploring on foot.
                 return;
@@ -204,42 +214,6 @@ public sealed class Quest : MonoBehaviour
         }
     }
 
-    public void onStartpointEnter() {
-        Debug.Log("Entered Startpoint");
-        switch(_state) {
-            case QuestState.undiscovered: { // Quest can be found by exploring on foot.
-                setState(QuestState.discovered);
-                break;
-            }
-            case QuestState.discovered: { // Quest goal is visible on the minimap.
-                break;
-            }
-            case QuestState.completeable: { // Quest is ready to be red-lined.
-                break;
-            }
-            case QuestState.complete: { // Quest is done.
-                break;
-            }
-        }
-    }
-
-    public void onStartpointExit() {
-        Debug.Log("Exited Startpoint");
-        switch(_state) {
-            case QuestState.undiscovered: { // Quest can be found by exploring on foot.
-                break;
-            }
-            case QuestState.discovered: { // Quest goal is visible on the minimap.
-                break;
-            }
-            case QuestState.completeable: { // Quest is ready to be red-lined.
-                break;
-            }
-            case QuestState.complete: { // Quest is done.
-                break;
-            }
-        }
-    }
     #endregion
     
 }

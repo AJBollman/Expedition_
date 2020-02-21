@@ -13,7 +13,7 @@ public class Transition : MonoBehaviour
     private bool isInside;
     private bool insideA;
     private bool insideB;
-    private bool loaderIsRunning;
+    private static bool loaderIsRunning;
     public static List<string> names = new List<string>();
 
     void Awake()
@@ -77,7 +77,7 @@ public class Transition : MonoBehaviour
         isInside = isIn;
     }
 
-    IEnumerator LoadYourAsyncScene(string scene)
+    public static IEnumerator LoadYourAsyncScene(string scene)
     {
         if (Application.CanStreamedLevelBeLoaded(scene))
         {
@@ -98,7 +98,7 @@ public class Transition : MonoBehaviour
         else throw new Exception("Scene '" + scene + "' doesn't exist!");
     }
 
-    IEnumerator UnloadAsyncScene(string scene)
+    public static IEnumerator UnloadAsyncScene(string scene)
     {
         if (Application.CanStreamedLevelBeLoaded(scene))
         {

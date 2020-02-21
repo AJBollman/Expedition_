@@ -60,7 +60,7 @@ public class QuestBall : MonoBehaviour
 
     #region [Methods]
     public void SetBallColor(Color color) {
-        Debug.Log("Setting color");
+        //Debug.Log("Setting color");
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         block.SetColor("_BaseColor", color);
         //block.SetFloat("_SoftParticlesFarFadeDistance", 2);

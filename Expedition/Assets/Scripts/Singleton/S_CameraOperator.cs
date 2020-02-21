@@ -47,18 +47,16 @@ public sealed class S_CameraOperator : MonoBehaviour
     private bool _doLookAtObject;
     public bool DoLookAtObject { 
         get => _doLookAtObject; 
-        set { 
-            if(ObjectToLookAt != null) _doLookAtObject = value; 
-        } 
+        set => _doLookAtObject = value;
     }
 
     public Camera StableCamera { get; private set; }
+    [SerializeField] public float defaultFOV { get; private set; } = 90f;
     #endregion
 
 
 
     #region [Private]
-    [SerializeField][Range(0.01f, 180f)] private float _defaultFOV = 90f;
     [SerializeField] private float _sensitivity = 10f;
     [SerializeField] private float _maxFOVTweak = 7f;
     [SerializeField] private float _maxLookUpAngle = 80f;
@@ -84,7 +82,7 @@ public sealed class S_CameraOperator : MonoBehaviour
     {
         instance = this;
         try {
-            FOV = _defaultFOV;
+            FOV = defaultFOV;
             _Animator = Camera.main.GetComponent<Animator>();
             _MainCameraContainer = transform.Find("Main Camera Container").gameObject;
             StableCamera = _MainCameraContainer.transform.Find("Stable Camera").GetComponent<Camera>();
@@ -133,7 +131,7 @@ public sealed class S_CameraOperator : MonoBehaviour
             rotDelta.y = Mathf.Clamp(rotDelta.y, _maxLookDownAngle, _maxLookUpAngle);
 
             // Slight widening of FOV for high/low angles.
-            _goalFOV = _defaultFOV + Mathf.Clamp(((Mathf.Pow(Mathf.Abs(rotDelta.y), 2)) / 200) - 8, 0, _maxFOVTweak);
+            _goalFOV = defaultFOV + Mathf.Clamp(((Mathf.Pow(Mathf.Abs(rotDelta.y), 2)) / 200) - 8, 0, _maxFOVTweak);
 
             // Lerp camera rotation. DO THE THING!
             _goalRot = Quaternion.Euler(-rotDelta.y, rotDelta.x, 0);
@@ -146,11 +144,11 @@ public sealed class S_CameraOperator : MonoBehaviour
         else if(_doLookAtObject)
         {
             // Look at object.
-            _MainCameraContainer.transform.LookAt(ObjectToLookAt.transform.position);
+            transform.LookAt(ObjectToLookAt.transform.position);
 
             // TODO zoom in FOV based on how far away it is.
-            _goalFOV = _defaultFOV + 10f;
-            Mathf.Clamp(_goalFOV, 15f, _defaultFOV + 10f);
+            _goalFOV = FOV + 10f;
+            Mathf.Clamp(_goalFOV, 15f, FOV + 10f);
         }
         
         // Lerp FOV.

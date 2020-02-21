@@ -58,10 +58,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf629a694e01487b8a0195d5e974755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miniMapZoom: 32
-  fullMapZoom: 64
-  minimapCam: {fileID: 0}
-  handheldSmooth: 40
   drawDebugLines: 0
   cameraDrawButton: Fire1
   cameraDrawMaxDistance: 15
@@ -97,6 +93,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf78f3842e44148408bbcb92100df0b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mapSizeMini: 32
+  _mapSizeFull: 64
+  _smoothHandheldPosition: 40
 --- !u!114 &8134645575640543033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +330,14 @@ MonoBehaviour:
   - name: PlaceVertex
     soundsList:
     - {fileID: 8300000, guid: 6de87869947b848f3841b768d7a9c55a, type: 3}
+    volume: 1
+  - name: GetQuest
+    soundsList:
+    - {fileID: 8300000, guid: 55f21dec52024431f99f8556cd28a11c, type: 3}
+    volume: 1
+  - name: RevealQuest
+    soundsList:
+    - {fileID: 8300000, guid: 6c0d1426831d94473b05e06abaaf8802, type: 3}
     volume: 1
 --- !u!82 &4081490390107586918
 AudioSource:

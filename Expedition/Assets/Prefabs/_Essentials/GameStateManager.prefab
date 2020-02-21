@@ -234,6 +234,110 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &3573298920856030034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8705763352303418631}
+  - component: {fileID: 6267852816832119035}
+  - component: {fileID: 6573456778668561145}
+  m_Layer: 0
+  m_Name: Quest Scroll
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8705763352303418631
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3573298920856030034}
+  m_LocalRotation: {x: -0.9990104, y: 0.030731397, z: -0.0071850475, w: 0.031341635}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.20661, y: 0.20661005, z: 0.20661014}
+  m_Children: []
+  m_Father: {fileID: 5411000736441797892}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: -176.435, y: -0.93499756, z: 3.5529938}
+--- !u!137 &6267852816832119035
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3573298920856030034}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: c4731cc3320b14e879115cfe76549c6c, type: 2}
+  - {fileID: 2100000, guid: ef9652e489d284ecea553ae6ea68a58e, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 1
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 7774054858252667537, guid: 6ceac544382384c14ad68b3fcad4d348, type: 3}
+  m_Bones: []
+  m_BlendShapeWeights:
+  - 0
+  - 0
+  m_RootBone: {fileID: 0}
+  m_AABB:
+    m_Center: {x: 0, y: -0.0048435926, z: 0.06633337}
+    m_Extent: {x: 0.7544834, y: 1.0094746, z: 0.09884612}
+  m_DirtyAABB: 0
+--- !u!95 &6573456778668561145
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3573298920856030034}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 6ceac544382384c14ad68b3fcad4d348, type: 3}
+  m_Controller: {fileID: 9100000, guid: 99d397b41f78744cf8149cc0a8984ef9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3762483314006337653
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,6 +564,7 @@ Transform:
   - {fileID: 2012434045284007550}
   - {fileID: 2132260867982494919}
   - {fileID: 7151711029326144913}
+  - {fileID: 8705763352303418631}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -495,6 +600,8 @@ MonoBehaviour:
   _lineProjectionOvershootDistance: 4
   _lineProjectionSolverMaxRange: 30
   _lineProjectionStartDistance: 3
+  _questCineDuration: 1.4
+  _questCineScrollFlySmooth: 12
   autoStartGameWhileEditor: 0
 --- !u!114 &1967208465128380198
 MonoBehaviour:
