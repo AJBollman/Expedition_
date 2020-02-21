@@ -14,7 +14,7 @@ public class glowWorm : MonoBehaviour
 
     public Light glowLight;
 
-   
+    
 
     void OnMouseDown()
     {
@@ -27,6 +27,7 @@ public class glowWorm : MonoBehaviour
         {
             lifeTime += Time.deltaTime;
             glowLight.intensity += lightstep * Time.deltaTime;
+            
         }
     }
 
