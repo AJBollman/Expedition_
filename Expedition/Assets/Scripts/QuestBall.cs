@@ -28,11 +28,11 @@ public class QuestBall : MonoBehaviour
         var DebugDraw = transform.Find("TempDebugDrawOffset").gameObject;
         if(DebugDraw) Destroy(DebugDraw);
 
-        _Owner              = transform.parent.gameObject.GetComponent<Quest>();
-        _SoundPlayer        = GetComponent<SoundPlayer>();
-        _MinimapIconObj     = transform.Find("MapIcon").gameObject;
-        _BallEffectObj      = transform.Find("BallEffect").gameObject;
-        _mapIconBorderObj   = _MinimapIconObj.transform.Find("MapIconBackground").gameObject;
+        _Owner = transform.parent.gameObject.GetComponent<Quest>();
+        _SoundPlayer = GetComponent<SoundPlayer>();
+        _MinimapIconObj = transform.Find("MapIcon").gameObject;
+        _BallEffectObj = transform.Find("BallEffect").gameObject;
+        _mapIconBorderObj = _MinimapIconObj.transform.Find("MapIconBackground").gameObject;
 
         if(!(_Owner || _SoundPlayer || _MinimapIconObj || _mapIconBorderObj || _BallEffectObj) ) {
             enabled = false;
@@ -40,6 +40,7 @@ public class QuestBall : MonoBehaviour
         }
 
         _BallEffectObj.GetComponent<Renderer>().enabled = true;
+        _MinimapIconObj.transform.localScale = new Vector3(11,11,11);
         GetComponent<Renderer>().enabled = false;
     }
 

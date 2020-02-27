@@ -5,22 +5,14 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-/// <summary> All the stuff the Explorer can do. </summary>
+/// <summary> Dispatches function calls to other classes based on player input. </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(S_Movement))]
 [RequireComponent(typeof(SoundPlayer))]
 public sealed class S_Player : MonoBehaviour
 {
-    public static bool isInQuestZone;
-    /*private GameObject pickupScroll;
-    private GameObject handheldScrollTarget;
-    private Vector3 pickupScrollGoalPos;
-    private Quaternion pickupScrollGoalRot;*/
-
-
-
     /// <summary> The Explorer gameobject. </summary>
-    public static GameObject Explorer {get; private set;}
+    public static GameObject Explorer { get; private set; }
 
     [SerializeField] private bool drawDebugLines;
     public RaycastHit lastRaycastHit { get; private set; }
@@ -36,7 +28,7 @@ public sealed class S_Player : MonoBehaviour
     public string cameraDrawButton = "Fire1";
     public float cameraDrawMaxDistance = 15;
     public LayerMask raycastIgnoreLayers;
-    public float coordPlaneSizeFudgeFactor = 1f;
+    public float coordPlaneSizeFudgeFactor = 1f; //0.82821
 
     public bool undoRedoAllowed = true;
     public string undoKey = "z";
@@ -92,6 +84,12 @@ public sealed class S_Player : MonoBehaviour
         try {
             Explorer = gameObject;
             _Sound = GetComponent<SoundPlayer>();
+            coordOrigin = GameObject.Find("Lower Left Corner"); if (!coordOrigin) throw new System.Exception("Hand Map coordinate origin not found. Make sure there is a 'coordOrigin'");
+            measure = GameObject.Find("Upper Right Corner"); if (!measure) throw new System.Exception("Measure not found. Make sure there is a 'Measure'");
+            coordPlaneBounds = new Vector2(
+                Vector3.Distance(coordOrigin.transform.position, measure.transform.position),
+                Vector3.Distance(coordOrigin.transform.position, measure.transform.position)
+            );
             /*sound = GetComponent<SoundPlayer>();
             jumpLoopSrc = gameObject.AddComponent<AudioSource>();
             jumpLoopSrc.clip = jumpLoop;
@@ -169,12 +167,29 @@ public sealed class S_Player : MonoBehaviour
             EditorApplication.isPaused = true;
         }
 
+        // if we are in fullmap mode while inside a completeable quest,
+        Vector2 mapPos = Vector2.zero;
+        Vector3 globalPos =  Vector3.zero;
+        bool mapWasHit = false;
+        if(_playerState == playerStates.full && Quest.Active != null && Quest.Active.state == QuestState.completeable) {
+            // check if the mouse cursor is on a valid spot on the map.
+            mapPos = mousePosToMapPos();
+            globalPos = Expedition.Map.MapToWorldPos(mapPos);
+            if(mapPos != Vector2.zero){
+                mapWasHit = true;
+                Expedition.Map.MoveLatestVertex(globalPos);
+            }
+        }
+
         // mouse down.
-        if (Input.GetButtonDown(cameraDrawButton) && cameraDrawAllowed && _playerState == playerStates.drawing) {
-            if(Expedition.Drawing.hasLOS) {
+        if (Input.GetButtonDown(cameraDrawButton) && cameraDrawAllowed) {
+            if(_playerState == playerStates.drawing && Expedition.Drawing.hasLOS) {
                 _Sound.Play("PlaceVertex");
                 Expedition.Drawing.placeVertex();
                 Expedition.Drawing._Indicator.transform.localScale = new Vector3(0.5f, 1, 0.5f);
+            }
+            else if(mapWasHit) {
+                Expedition.Map.placeRedVertex(globalPos);
             }
         }
 
@@ -207,11 +222,13 @@ public sealed class S_Player : MonoBehaviour
 
     #region [Methods]
     public void setPlayerState(playerStates state) {
+        if(Expedition.isCinematic) return;
         _playerState = state;
         if(Expedition.Drawing.IsDrawing) {
             Expedition.Drawing.cancelLine();
             _Sound.Play("DrawFail");
         }
+        Expedition.Map.CancelRedLine();
         switch(_playerState) {
             case playerStates.clear: {
                 Expedition.CameraOperator.AllowInput = true;
@@ -246,6 +263,10 @@ public sealed class S_Player : MonoBehaviour
                 Expedition.Drawing.AllowCameraDrawing = false;
                 Expedition.Map.IsMapVisible = true;
                 Expedition.Map.IsFullMap = true;
+                if(Quest.Active != null && Quest.Active.state == QuestState.completeable) {
+                    Expedition.Map.centerCameraOnQuest(Quest.Active);
+                    Expedition.Map.StartNewRedline();
+                }
 
                 break;
             }
@@ -261,6 +282,29 @@ public sealed class S_Player : MonoBehaviour
         }
         else return false;
     }
+
+    public Vector2 mousePosToMapPos()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 10))
+        {
+            if (hit.collider.gameObject.name == "Hand Map")
+            {
+                // coordinate geometry horribleness.
+                var correctedBounds = coordPlaneBounds.y * coordPlaneSizeFudgeFactor;
+                Vector2 pos = new Vector2(
+                    (Mathf.Abs(coordOrigin.transform.InverseTransformPoint(hit.point).x - coordOrigin.transform.localPosition.x) / correctedBounds) / 100f,
+                    (Mathf.Abs(coordOrigin.transform.localPosition.y - coordOrigin.transform.InverseTransformPoint(hit.point).y) / correctedBounds) / 100f
+                );
+                return pos;
+            }
+            // Else the mouse is off the map.
+        }
+        // Else the ray didn't hit anything.
+        return Vector2.zero;
+    }
+
     #endregion
 
 

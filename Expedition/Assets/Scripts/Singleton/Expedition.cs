@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 
@@ -31,9 +32,7 @@ public sealed class Expedition : MonoBehaviour
     /// <summary> This class handles the player's ability to use the map. </summary>
     public static S_Map Map { get => S_Map.instance; }
 
-    //public static S_Map Map { get => S_Map.instance; }
     //public static S_Interaction Interaction { get => S_Interaction.instance; }
-    //public static S_Drawing Drawing { get => S_Drawing.instance; }
     //public static S_Codex Codex { get => S_Codex.instance; }
     //public static S_SaveManager SaveManager { get => S_SaveManager.instance; }
     #endregion
@@ -46,25 +45,25 @@ public sealed class Expedition : MonoBehaviour
     [SerializeField] private LayerMask _raycastIgnoreLayers;
     public static LayerMask raycastIgnoreLayers { get => _inst._raycastIgnoreLayers; }
 
-    /// <summary> The map line prefab. Doesn't really do anything unless you also give it some points. </summary>
-    [SerializeField] private GameObject _linePrefab;
-    public static GameObject linePrefab { get => _inst._linePrefab; }
-
-    /// <summary> The prefab used for drawing red lines. </summary>
-    [SerializeField] private GameObject _redlinePrefab;
-    public static GameObject redLinePrefab { get => _inst._redlinePrefab; }
+    /// <summary>  </summary>
+    [SerializeField] private GameObject _RedLineVertexPrefab;
+    public static GameObject RedLineVertexPrefab { get => _inst._RedLineVertexPrefab; }
 
     /// <summary>  </summary>
-    [SerializeField] private GameObject _lineVertexPrefab;
-    public static GameObject lineVertexPrefab { get => _inst._lineVertexPrefab; }
+    [SerializeField] private GameObject _RedLineEdgePrefab;
+    public static GameObject RedLineEdgePrefab { get => _inst._RedLineEdgePrefab; }
 
     /// <summary>  </summary>
-    [SerializeField] private GameObject _lineEdgePrefab;
-    public static GameObject lineEdgePrefab { get => _inst._lineEdgePrefab; }
+    [SerializeField] private GameObject _LineVertexPrefab;
+    public static GameObject LineVertexPrefab { get => _inst._LineVertexPrefab; }
+
+    /// <summary>  </summary>
+    [SerializeField] private GameObject _LineEdgePrefab;
+    public static GameObject LineEdgePrefab { get => _inst._LineEdgePrefab; }
 
     /// <summary> The renderTexture used by the handheld map's material. Regions cameras can use this as their target texture. </summary>
-    [SerializeField] private RenderTexture _mapTexure;
-    public static RenderTexture mapTexture { get => _inst._mapTexure; }
+    [SerializeField] private RenderTexture _MapTexure;
+    public static RenderTexture MapTexture { get => _inst._MapTexure; }
 
     [SerializeField] private Color _questColorUndiscovered;
     public static Color questColorUniscovered { get => _inst._questColorUndiscovered; }
@@ -100,6 +99,7 @@ public sealed class Expedition : MonoBehaviour
     public static LineRenderer IndicatorLine { get; private set; }
     public static AudioSource DrawDroneClear;
     public static AudioSource DrawDroneUnclear;
+    public static bool isCinematic { get; private set; }
 
 
 
@@ -117,7 +117,7 @@ public sealed class Expedition : MonoBehaviour
     private static Vector3 _goalQuestScrollPos;
     private static Vector3 _goalQuestScrollScale;
     private static Quaternion _goalQuestScrollRot;
-    private bool _isCinematic;
+    private GameObject _hmapTempReference;
 
 
 
@@ -133,6 +133,7 @@ public sealed class Expedition : MonoBehaviour
     //////////////////////////////////////////////////////////////////////////////////////////////////  Events
     private void Awake() {
         questScroll = transform.Find("Quest Scroll").gameObject;
+        _hmapTempReference = GameObject.Find("Hand Map");
         questScroll.SetActive(false);
         IndicatorLine = GetComponentInChildren<LineRenderer>();
         DrawDroneClear = GetComponents<AudioSource>()[0];
@@ -163,11 +164,16 @@ public sealed class Expedition : MonoBehaviour
     }
 
     private void Update() {
+        if(isCinematic) {
+            if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q)) {
+                CinematicGetQuestCancel();
+            }
+            else CinematicGetQuestUpdate();
+        }
         if(Input.GetKeyDown(KeyCode.Escape)) {
             SetGamePaused(!_paused);
         }
         Time.timeScale = Mathf.Lerp(Time.timeScale, _timeScaleGoal, Time.fixedUnscaledDeltaTime * 2);
-        if(_isCinematic) CinematicGetQuestUpdate();
     }
 
 
@@ -177,7 +183,7 @@ public sealed class Expedition : MonoBehaviour
         gameplayStarted = false;
         try {
             if(_inst == null) throw new System.Exception("Expedition.cs singleton instance was SOMEHOW not assigned!");
-            if(linePrefab == null || redLinePrefab == null || mapTexture == null) throw new System.Exception("Expedition.cs is missing prefabs. Assign them in the inspector!");
+            if(_RedLineVertexPrefab == null || _RedLineEdgePrefab == null || _LineEdgePrefab == null || _LineVertexPrefab == null || _MapTexure == null) throw new System.Exception("Expedition.cs is missing prefabs. Assign them in the inspector!");
 
             // Check CameraOperator
             CameraOperator.ObjectToFollow = GameObject.Find("The Explorer");
@@ -233,12 +239,19 @@ public sealed class Expedition : MonoBehaviour
     }
 
     public IEnumerator IECinematicGetQuest(Quest quest) {
+        /*MaterialPropertyBlock block = new MaterialPropertyBlock();
+        block.SetTexture("_BaseMap", quest.QuestIcon);
+        questScroll.GetComponent<Renderer>().SetPropertyBlock(block);*/
+
+        var r = questScroll.GetComponent<Renderer>();
+        //r.material.EnableKeyword ("_BaseMap");
+        r.materials[1].SetTexture("_BaseMap", quest.QuestIcon);
+
         yield return new WaitForSeconds(0.5f);
         // pre
         Expedition.Player.gameObject.GetComponent<SoundPlayer>().Play("GetQuest");
         Player.setPlayerState(playerStates.mini);
-        var hmap = GameObject.Find("Hand Map");
-        hmap.SetActive(false);
+        _hmapTempReference.SetActive(false);
         Movement.AllowInput = false;
         CameraOperator.DoLookAtObject = true;
         CameraOperator.FOV = 55;
@@ -249,7 +262,7 @@ public sealed class Expedition : MonoBehaviour
         questScroll.SetActive(true);
         questScroll.GetComponent<Animator>().SetBool("IsOpen", false);
         yield return new WaitForSeconds(0.5f);
-        _isCinematic = true;
+        isCinematic = true;
 
         // throw scroll
         yield return new WaitForSeconds(_inst._questCineDuration);
@@ -259,15 +272,7 @@ public sealed class Expedition : MonoBehaviour
         questScroll.GetComponent<Animator>().SetBool("IsOpen", true);
         yield return new WaitForSeconds(2);
 
-        // post
-        Player.setPlayerState(playerStates.mini);
-        hmap.SetActive(true);
-        Movement.AllowInput = true;
-        CameraOperator.DoLookAtObject = false;
-        CameraOperator.FOV = CameraOperator.defaultFOV;
-        CameraOperator.ObjectToLookAt = null;
-        questScroll.SetActive(false);
-        _isCinematic = false;
+        CinematicGetQuestCancel();
     }
 
     public void CinematicGetQuestUpdate() {
@@ -279,6 +284,26 @@ public sealed class Expedition : MonoBehaviour
         questScroll.transform.localScale = Vector3.Lerp(questScroll.transform.localScale, _goalQuestScrollScale, Time.deltaTime * _inst._questCineScrollFlySmooth);
         questScroll.transform.position = Vector3.Lerp(questScroll.transform.position, _goalQuestScrollPos, Time.deltaTime * _inst._questCineScrollFlySmooth);
         questScroll.transform.rotation = Quaternion.Slerp(questScroll.transform.rotation, _goalQuestScrollRot, Time.deltaTime * _inst._questCineScrollFlySmooth);
+    }
+
+    public void CinematicGetQuestCancel() {
+        _inst.StopCoroutine("IECinematicGetQuest");
+        Player.setPlayerState(playerStates.mini);
+        _hmapTempReference.SetActive(true);
+        Movement.AllowInput = true;
+        CameraOperator.DoLookAtObject = false;
+        CameraOperator.FOV = CameraOperator.defaultFOV;
+        CameraOperator.ObjectToLookAt = null;
+        questScroll.SetActive(false);
+        questScroll.GetComponent<Animator>().SetBool("IsOpen", false);
+        isCinematic = false;
+    }
+
+    public void LoadBiomeInEditor(string name, bool remove) {
+        if(remove) {
+            EditorSceneManager.CloseScene(EditorSceneManager.GetSceneByName(name), false);
+        }
+        else EditorSceneManager.OpenScene("Assets/Scenes/"+name+".unity", OpenSceneMode.Additive);
     }
 
     /*public static void setState(gameStates state)

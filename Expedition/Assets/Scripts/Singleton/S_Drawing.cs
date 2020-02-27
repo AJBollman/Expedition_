@@ -18,8 +18,6 @@ public sealed class S_Drawing : MonoBehaviour
     public bool hasLOS { get; private set; } = true;
     #endregion
 
-
-
     #region [Private]
     [SerializeField] private Gradient _ColorCanDrawLine;
     [SerializeField] private Gradient _ColorCannotDrawLine;
@@ -29,11 +27,13 @@ public sealed class S_Drawing : MonoBehaviour
     [SerializeField] private float _maxRaycastDistance = 15f;
     [SerializeField] private float _volumeDrawDrone = 0.5f;
     private LineVertex _NewVert;
+    private LineVertex _NewRedVert;
     public GameObject _Indicator;
     private GameObject _LastIndicator;
     private GameObject _IndicatorTip;
     private GameObject _LastIndicatorTip;
     private LineVertex _LastVertex;
+    public LineVertex _LastRedVertex { get; private set; }
     private Vector3 _goalIndicatorPos;
     private Quaternion _goalIndicatorRot;
     private bool _canPlaceLine;
@@ -124,6 +124,7 @@ public sealed class S_Drawing : MonoBehaviour
 
     #region [Methods]
     public void cancelLine() {
+        _LastIndicator.SetActive(false);
         _LastVertex = null;
         hasLOS = true;
     }
@@ -137,9 +138,10 @@ public sealed class S_Drawing : MonoBehaviour
 
     public void connectVertex() {
         if(!_allowCameraDrawing) return; // TODO give some feedback to the player
-        if(_LastVertex != null) LineVertex.connectVertices(_LastVertex, _NewVert);
+        if(_LastVertex != null) LineVertex.ConnectVertices(_LastVertex, _NewVert);
         _LastVertex = _NewVert;
     }
+
     #endregion
 
 

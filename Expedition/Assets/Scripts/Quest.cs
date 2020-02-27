@@ -10,7 +10,11 @@ public sealed class Quest : MonoBehaviour
 
     #region [Public]
 
-    public Transform proxyScroll { get; private set; }
+    [HideInInspector] public Transform proxyScroll { get; private set; }
+    [HideInInspector] public static Quest Active { get; private set; }
+    [HideInInspector] public QuestBall StartPoint { get; private set; }
+    [HideInInspector] public QuestBall EndPoint { get; private set; }
+    [HideInInspector] public QuestState state { get; private set; } = QuestState.hidden;
 
     [Tooltip("All quests to show after this one is completed")]
     [SerializeField] private List<Quest> _QuestsToUnlockOnCompletion;
@@ -21,8 +25,8 @@ public sealed class Quest : MonoBehaviour
     [Tooltip("The least number of redline points that can be used to beat this quest")]
     [SerializeField] private int _bestPossibleScore;
 
-    [Tooltip("Icon to show on the map")]
-    [SerializeField] private Texture2D _QuestIcon;
+    //[Tooltip("Icon to show on the map")]
+    [SerializeField] public Texture2D QuestIcon { get; private set; }
 
     [Tooltip("Generate icon procedurally using the quest icon camera")]
     [SerializeField] private bool _generateIconFromCamera;
@@ -36,13 +40,12 @@ public sealed class Quest : MonoBehaviour
     [Tooltip("If this quest is initially visible on game start")]
     [SerializeField] private bool _isVisibleOnStart;
 
+    private List<LineVertex> RedLine;
+
     #endregion
 
     #region [Private]
-    private QuestState _state = QuestState.hidden;
     private Quest _ParentQuest;
-    private QuestBall _StartPoint;
-    private QuestBall _EndPoint;
     private Camera _QuestIconCamera;
     private Color _ballColor;
 
@@ -53,8 +56,8 @@ public sealed class Quest : MonoBehaviour
 
     #region [Events]
     private void Awake() {
-        _StartPoint = transform.Find("StartPoint").GetComponent<QuestBall>();
-        _EndPoint = transform.Find("EndPoint").GetComponent<QuestBall>();
+        StartPoint = transform.Find("StartPoint").GetComponent<QuestBall>();
+        EndPoint = transform.Find("EndPoint").GetComponent<QuestBall>();
         proxyScroll = transform.Find("Quest Scroll Proxy");
         proxyScroll.gameObject.SetActive(false);
         AllQuests.Add(this);
@@ -74,15 +77,15 @@ public sealed class Quest : MonoBehaviour
             RenderTexture currentRT = RenderTexture.active;
             RenderTexture.active = Cam.targetTexture;
             Cam.Render();
-            _QuestIcon = new Texture2D(Cam.targetTexture.width, Cam.targetTexture.height);
-            _QuestIcon.ReadPixels(new Rect(0, 0, Cam.targetTexture.width, Cam.targetTexture.height), 0, 0);
-            _QuestIcon.Apply();
+            QuestIcon = new Texture2D(Cam.targetTexture.width, Cam.targetTexture.height);
+            QuestIcon.ReadPixels(new Rect(0, 0, Cam.targetTexture.width, Cam.targetTexture.height), 0, 0);
+            QuestIcon.Apply();
             RenderTexture.active = currentRT;
 
             MaterialPropertyBlock block = new MaterialPropertyBlock();
-            block.SetTexture("_BaseMap", _QuestIcon);
-            _EndPoint._MinimapIconObj.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
-            _StartPoint._MinimapIconObj.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
+            block.SetTexture("_BaseMap", QuestIcon);
+            EndPoint._MinimapIconObj.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
+            StartPoint._MinimapIconObj.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
         }
         setState((_isVisibleOnStart) ? QuestState.undiscovered : QuestState.hidden);
     }
@@ -97,49 +100,50 @@ public sealed class Quest : MonoBehaviour
     }
 
     private void setVisibility(bool showStart, bool showEnd, bool showStartIcon, bool showEndIcon) {
-        _EndPoint._MinimapIconObj.SetActive(showEndIcon);
-        _StartPoint._MinimapIconObj.SetActive(showStartIcon);
-        _EndPoint.gameObject.SetActive(showEnd);
-        _StartPoint.gameObject.SetActive(showStart);
+        EndPoint._MinimapIconObj.SetActive(showEndIcon);
+        StartPoint._MinimapIconObj.SetActive(showStartIcon);
+        EndPoint.gameObject.SetActive(showEnd);
+        StartPoint.gameObject.SetActive(showStart);
     }
 
     public void setState(QuestState state) {
-        _state = state;
-        switch(_state) {
+        this.state = state;
+        switch(this.state) {
             case QuestState.hidden: { // Quest is invisible.
-                setVisibility(false, false, false, false);
-                _ballColor = Expedition.questColorUniscovered;
+                    setVisibility(false, false, false, false);
+                    _ballColor = Expedition.questColorUniscovered;
                 break;
             }
             case QuestState.undiscovered: { // Quest can be found by exploring on foot.
-                setVisibility(true, false, false, false);
-                _ballColor = Expedition.questColorUniscovered;
+                    setVisibility(true, false, false, false);
+                    _ballColor = Expedition.questColorUniscovered;
                 break;
             }
             case QuestState.discovered: { // Quest goal is visible on the minimap.
-                setVisibility(true, true, true, false);
-                _ballColor = Expedition.questColorUncompleted;
+                    setVisibility(true, true, true, false);
+                    _ballColor = Expedition.questColorUncompleted;
                 break;
             }
             case QuestState.completeable: { // Quest is ready to be red-lined.
-                setVisibility(true, true, true, true);
-                _ballColor = Expedition.questColorCompleteable;
+                    setVisibility(true, true, true, true);
+                    _ballColor = Expedition.questColorCompleteable;
                 break;
             }
             case QuestState.complete: { // Quest is done.
-                setVisibility(true, true, true, true);
-                _ballColor = Expedition.questColorCompleted;
+                    setVisibility(true, true, true, true);
+                    _ballColor = Expedition.questColorCompleted;
                 break;
             }
         }
-        _EndPoint.SetBallColor(_ballColor);
-        _StartPoint.SetBallColor(_ballColor);
+        EndPoint.SetBallColor(_ballColor);
+        StartPoint.SetBallColor(_ballColor);
         //Debug.Log("Questpoint set to "+_state);
     }
 
     public void onStartpointEnter() {
+        Active = this;
         //Debug.Log("Entered Startpoint");
-        switch(_state) {
+        switch(state) {
             case QuestState.undiscovered: { // Quest can be found by exploring on foot.
                 setState(QuestState.discovered);
                 Expedition.CinematicGetQuest(this);
@@ -158,8 +162,9 @@ public sealed class Quest : MonoBehaviour
     }
 
     public void onStartpointExit() {
+        Active = null;
         //Debug.Log("Exited Startpoint");
-        switch(_state) {
+        switch(state) {
             case QuestState.undiscovered: { // Quest can be found by exploring on foot.
                 break;
             }
@@ -176,8 +181,9 @@ public sealed class Quest : MonoBehaviour
     }
 
     public void onEndpointEnter() {
+        Active = this;
         //Debug.Log("Entered Endpoint");
-        switch(_state) {
+        switch(state) {
             case QuestState.undiscovered: { // Quest can be found by exploring on foot.
                 return;
                 break;
@@ -196,8 +202,9 @@ public sealed class Quest : MonoBehaviour
     }
 
     public void onEndpointExit() {
+        Active = null;
         //Debug.Log("Exited Endpoint");
-        switch(_state) {
+        switch(state) {
             case QuestState.undiscovered: { // Quest can be found by exploring on foot.
                 return;
                 break;
@@ -212,6 +219,12 @@ public sealed class Quest : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void SetRedLine(List<LineVertex> redLine) {
+        // validation
+        RedLine = redLine;
+        // setstate complete
     }
 
     #endregion

@@ -1,45 +1,64 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 //[RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(LineRenderer))]
 public sealed class LineEdge : MonoBehaviour
 {
-    public bool IsRed { get => _IsRed; }
-    [SerializeField] private bool _IsRed;
+    #region [Public]
+    public LineVertex _VertexFrom {get; private set;}
+    public LineVertex _VertexTo {get; private set;}
+    #endregion
 
-    public LineVertex from {get; private set;}
-    public LineVertex to {get; private set;}
-
+    #region [Private]
     private LineRenderer lineRenderer;
     private BoxCollider boxCollider;
+    private GameObject _Effect;
+    #endregion
 
+
+
+    #region [Events]
     private void Awake() {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
-        //SceneManager.MoveGameObjectToScene
+        SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName("Overlay"));
+    }
+    #endregion
+
+    #region [Methods]
+    public void SetVertices(LineVertex a, LineVertex b) {
+        _VertexFrom = a;
+        _VertexTo = b;
+        if(_VertexFrom.isRed) _Effect = transform.Find("Effect").gameObject;
+        RecalculateLine();
     }
 
-    public void setVertices(LineVertex a, LineVertex b) {
-        from = a;
-        to = b;
-        transform.position = Vector3.Lerp(a.transform.position, b.transform.position, 0.5f);
-        recalculateLine();
-    }
-
-    private void recalculateLine() {
-        // recalc boxcollider
-        //lineRenderer.SetPosition(0, transform.InverseTransformPoint(from.transform.position));
-        //lineRenderer.SetPosition(1, transform.InverseTransformPoint(to.transform.position));
-        projectLineVisual();
+    public void RecalculateLine() {
+        transform.position = Vector3.Lerp(_VertexFrom.transform.position, _VertexTo.transform.position, 0.5f);
+        lineRenderer.SetPosition(0, transform.InverseTransformPoint(_VertexFrom.transform.position));
+        lineRenderer.SetPosition(1, transform.InverseTransformPoint(_VertexTo.transform.position));
+        if(_VertexFrom.isRed) {
+            if(_VertexFrom.isRedLineFinalized) {
+                _Effect.SetActive(false);
+            }
+            else {
+                _Effect.SetActive(true);
+                _Effect.transform.position = _VertexFrom.transform.position;
+                _Effect.transform.LookAt(_VertexTo.transform.position, Vector3.up);
+                _Effect.transform.localScale = new Vector3(_Effect.transform.localScale.x, _Effect.transform.localScale.y, Vector3.Distance(_VertexFrom.transform.position, _VertexTo.transform.position) );
+            }
+        }
+        //projectLineVisual();
     }
 
     // Generate a line of black ink between two lineVertices by projecting onto the surface between them.
     private void projectLineVisual() {
-        if(to == null) {Debug.LogWarning("No endpoint"); return;}
-        Transform one = from.transform;
-        Transform two = to.transform;
+        if(_VertexTo == null) {Debug.LogWarning("No endpoint"); return;}
+        Transform one = _VertexFrom.transform;
+        Transform two = _VertexTo.transform;
 
         lineRenderer.positionCount = 0; // clear line points.
         lineRenderer.positionCount = Expedition.lineQualityIterations;
@@ -103,4 +122,5 @@ public sealed class LineEdge : MonoBehaviour
         // Reduce the number of lineRenderer vertices.
         //lineRenderer.Simplify(0.05f);
     }
+    #endregion
 }
