@@ -17,6 +17,8 @@ public sealed class S_Player : MonoBehaviour
     [SerializeField] private bool drawDebugLines;
     public RaycastHit lastRaycastHit { get; private set; }
     public playerStates PlayerState { get => _playerState; }
+    // What distance from the cursor should be considered valid for completing a quest's redline.
+    [SerializeField] private float validRedLineDistance;
     private SoundPlayer _Sound;
     private Vector3 lastEditorTP;
     private playerStates _playerState;
@@ -171,6 +173,7 @@ public sealed class S_Player : MonoBehaviour
         Vector2 mapPos = Vector2.zero;
         Vector3 globalPos =  Vector3.zero;
         bool mapWasHit = false;
+        bool questSolutionIsValid = false;
         if(_playerState == playerStates.full && Quest.Active != null && Quest.Active.state == QuestState.completeable) {
             // check if the mouse cursor is on a valid spot on the map.
             mapPos = mousePosToMapPos();
@@ -178,6 +181,11 @@ public sealed class S_Player : MonoBehaviour
             if(mapPos != Vector2.zero){
                 mapWasHit = true;
                 Expedition.Map.MoveLatestVertex(globalPos);
+                Vector3 levelledQuestEndpointPos = new Vector3(Quest.Active.EndPoint.transform.position.x, globalPos.y, Quest.Active.EndPoint.transform.position.z);
+                questSolutionIsValid = Vector3.Distance( globalPos, levelledQuestEndpointPos ) < validRedLineDistance;
+                if(questSolutionIsValid) {
+                    // particle effect
+                }
             }
         }
 
@@ -189,7 +197,13 @@ public sealed class S_Player : MonoBehaviour
                 Expedition.Drawing._Indicator.transform.localScale = new Vector3(0.5f, 1, 0.5f);
             }
             else if(mapWasHit) {
-                Expedition.Map.placeRedVertex(globalPos);
+                if(questSolutionIsValid) {
+                    Expedition.Map.placeRedVertex(globalPos);
+                    Expedition.Map.SolveQuest();
+                }
+                else {
+                    Expedition.Map.placeRedVertex(globalPos);
+                }
             }
         }
 
@@ -264,8 +278,10 @@ public sealed class S_Player : MonoBehaviour
                 Expedition.Map.IsMapVisible = true;
                 Expedition.Map.IsFullMap = true;
                 if(Quest.Active != null && Quest.Active.state == QuestState.completeable) {
-                    Expedition.Map.centerCameraOnQuest(Quest.Active);
-                    Expedition.Map.StartNewRedline();
+                    if(!Expedition.Map.isSolving) {
+                        Expedition.Map.centerCameraOnQuest(Quest.Active);
+                        Expedition.Map.StartNewRedline();
+                    }
                 }
 
                 break;

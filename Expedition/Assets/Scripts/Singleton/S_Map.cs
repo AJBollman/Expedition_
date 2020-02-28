@@ -13,6 +13,7 @@ public sealed class S_Map : MonoBehaviour
     public bool IsFullMap { get => IsFullMap; set => _isFullMap = value; }
     public bool IsMapVisible { get => _isMapVisible; set => _isMapVisible = value; }
     public LineVertex LastRedlineVertex { get => _ActiveRedline[_ActiveRedline.Count - 1]; }
+    public bool isSolving { get; private set; }
     #endregion
 
 
@@ -106,7 +107,7 @@ public sealed class S_Map : MonoBehaviour
             // map camera follows player.
             _goalMapCameraPos = new Vector3(
                 S_Player.Explorer.transform.position.x,
-                _MapCamera.transform.position.y,
+                100,
                 S_Player.Explorer.transform.position.z
             );
         }
@@ -152,7 +153,24 @@ public sealed class S_Map : MonoBehaviour
     public void StartNewRedline() {
         CancelRedLine();
         if(Quest.Active == null) throw new Exception("Can't start a redline, not in an active quest!");
-        placeRedVertex(Quest.Active.transform.position);
+        placeRedVertex(Quest.Active.StartPoint.transform.position);
+        placeRedVertex(Quest.Active.StartPoint.transform.position);
+    }
+
+    public void SolveQuest() {
+        isSolving = true;
+        // check if a traveller is already on the map whose type matches the type needed to solve the quest.
+        Traveller trav = Traveller.FindExistingTraveller( Quest.Active.travellerType );
+        if(trav != null) {
+            // move the found traveller to the quest start
+        }
+        else {
+            // create a new traveller at quest start
+            trav = Traveller.InstantiateTraveller( Quest.Active.travellerType, Quest.Active.StartPoint.transform.position + new Vector3(0, 2, 0) );
+        }
+        Traveller.SetActive(trav);
+        trav.GivePath(_ActiveRedline, Quest.Active);
+        trav.RunPath();
     }
     #endregion
 
