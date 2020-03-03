@@ -197,12 +197,12 @@ public sealed class S_Player : MonoBehaviour
                 Expedition.Drawing._Indicator.transform.localScale = new Vector3(0.5f, 1, 0.5f);
             }
             else if(mapWasHit) {
+                Expedition.Map.placeRedVertex(globalPos);
                 if(questSolutionIsValid) {
-                    Expedition.Map.placeRedVertex(globalPos);
                     Expedition.Map.SolveQuest();
                 }
                 else {
-                    Expedition.Map.placeRedVertex(globalPos);
+                    
                 }
             }
         }
@@ -250,7 +250,7 @@ public sealed class S_Player : MonoBehaviour
                 Expedition.Drawing.AllowCameraDrawing = false;
                 Expedition.Map.IsMapVisible = false;
                 Expedition.Map.IsFullMap = false;
-
+                Expedition.Map.HideMapSpecial();
                 break;
             }
             case playerStates.mini: {
@@ -259,7 +259,7 @@ public sealed class S_Player : MonoBehaviour
                 Expedition.Drawing.AllowCameraDrawing = false;
                 Expedition.Map.IsMapVisible = true;
                 Expedition.Map.IsFullMap = false;
-
+                Expedition.Map.ShowMapSpecial();
                 break;
             }
             case playerStates.drawing: {
@@ -268,7 +268,7 @@ public sealed class S_Player : MonoBehaviour
                 Expedition.Drawing.AllowCameraDrawing = true;
                 Expedition.Map.IsMapVisible = true;
                 Expedition.Map.IsFullMap = false;
-
+                Expedition.Map.ShowMapSpecial();
                 break;
             }
             case playerStates.full: {
@@ -277,13 +277,11 @@ public sealed class S_Player : MonoBehaviour
                 Expedition.Drawing.AllowCameraDrawing = false;
                 Expedition.Map.IsMapVisible = true;
                 Expedition.Map.IsFullMap = true;
+                Expedition.Map.ShowMapSpecial();
                 if(Quest.Active != null && Quest.Active.state == QuestState.completeable) {
-                    if(!Expedition.Map.isSolving) {
-                        Expedition.Map.centerCameraOnQuest(Quest.Active);
-                        Expedition.Map.StartNewRedline();
-                    }
+                    Expedition.Map.centerCameraOnQuest(Quest.Active);
+                    Expedition.Map.StartNewRedline();
                 }
-
                 break;
             }
         }

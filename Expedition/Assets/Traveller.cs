@@ -16,17 +16,19 @@ public class Traveller : MonoBehaviour
     public static List<Traveller> AllActiveTravellers =  new List<Traveller>();
 
     /// <summary> If this traveller is 'real' or just for validating redlines. </summary>
-    [SerializeField] private bool isReal;
+    [SerializeField] private bool isReal = true;
 
     [SerializeField] private TravellerType type;
+    [SerializeField] private float _reachDestinationRadius;
+    public Quest QuestToComplete { get; private set; }
     #endregion
 
     #region [Private]
     private NavMeshAgent _Agent;
     private GameObject _Model;
-    private List<LineVertex> _RedLineToFollow;
-    private Quest _QuestToComplete;
+    private List<Vector3> _Path;
     private bool _isRunningPath;
+    private int _pathIndex;
     #endregion
 
 
@@ -45,7 +47,15 @@ public class Traveller : MonoBehaviour
     }
 
     private void Update() {
-        
+        if( _isRunningPath && Vector3.Distance(transform.position, _Path[_pathIndex]) < _reachDestinationRadius) {
+            if(_pathIndex < _Path.Count-1) {
+                _pathIndex++;
+                Vector3 destination = _Path[_pathIndex];
+                _Agent.SetDestination(destination);
+            }
+            else _isRunningPath = false;
+        }
+        Debug.DrawLine(transform.position, _Agent.destination, Color.yellow, 0.1f);
     }
     #endregion
 
@@ -60,7 +70,7 @@ public class Traveller : MonoBehaviour
     public static Traveller InstantiateTraveller(TravellerType type, Vector3 pos) {
         foreach(TravellerPrefab pref in Expedition.Travellers) {
             if(pref.type == type && pref.Variants != null && pref.Variants.Count > 0) {
-                return GameObject.Instantiate(pref.Variants[UnityEngine.Random.Range(0, pref.Variants.Count - 1)]).GetComponent<Traveller>();
+                return GameObject.Instantiate(pref.Variants[UnityEngine.Random.Range(0, pref.Variants.Count - 1)], pos, Quaternion.identity).GetComponent<Traveller>();
             }
         }
         throw new Exception("Could not find traveller of that type. Check to make sure one is assigned");
@@ -71,6 +81,11 @@ public class Traveller : MonoBehaviour
             Destroy(t.gameObject);
         }
         AllActiveTravellers = new List<Traveller>();
+    }
+
+    public static void DestroyActive() {
+        Destroy(Active);
+        Active = null;
     }
 
     public static Traveller FindExistingTraveller(TravellerType type) {
@@ -86,8 +101,14 @@ public class Traveller : MonoBehaviour
         if(path.Count > 0) {
             if(questBeingRan == null) throw new Exception("Can't give traveller a path without a quest");
             if(questBeingRan.state != QuestState.completeable) throw new Exception("Traveller cannot run a quest that is not in state 'completeable'!");
-            _QuestToComplete = questBeingRan;
-            _RedLineToFollow = path;
+            QuestToComplete = questBeingRan;
+
+            // convert vertex list into a list of basic vec3's
+            var convertedPath = new List<Vector3>();
+            foreach(LineVertex v in path) {
+                convertedPath.Add(v.transform.position);
+            }
+            _Path = convertedPath;
         }
         else throw new Exception("Can't give traveller a zero-length path");
     }
@@ -98,8 +119,11 @@ public class Traveller : MonoBehaviour
     }
 
     public void RunPath() {
-        if(_RedLineToFollow == null) return;
+        if(_Path == null) return;
         _isRunningPath = true;
+        _pathIndex = 1; // start at one because he's already at the starting point, which is always where vert 0 is.
+        Vector3 destination = _Path[_pathIndex];
+        _Agent.SetDestination(destination);
     }
 
 

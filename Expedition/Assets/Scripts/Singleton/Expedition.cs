@@ -317,6 +317,20 @@ public sealed class Expedition : MonoBehaviour
         else EditorSceneManager.OpenScene("Assets/Scenes/"+name+".unity", OpenSceneMode.Additive);
     }
 
+    public static void CheckGameCompletion() {
+        int completeQuestCount = 0;
+        foreach(Quest q in Quest.AllQuests) {
+            if(q.state == QuestState.complete) completeQuestCount++;
+        }
+        float check = completeQuestCount / Quest.AllQuests.Count;
+        if(check == 1) {
+            Debug.Log("<color=lime><size=18>GAME COMPLETE!!</size></color>");
+        }
+        else {
+            Debug.Log("<color=cyan><size=18>"+ check * 100f +" % complete</size></color>");
+        }
+    }
+
     /*public static void setState(gameStates state)
     {
         //Debug.Log("Game state changed to "+state);

@@ -132,6 +132,13 @@ public sealed class Quest : MonoBehaviour
             case QuestState.complete: { // Quest is done.
                     setVisibility(true, true, true, true);
                     _ballColor = Expedition.questColorCompleted;
+                    foreach(GameObject g in _ObjectsToToggleOnCompletion) {
+                        g.SetActive(!g.activeSelf);
+                    }
+                    foreach(Quest q in _QuestsToUnlockOnCompletion) {
+                        q.setState(QuestState.undiscovered);
+                    }
+                    Expedition.CheckGameCompletion();
                 break;
             }
         }
@@ -225,6 +232,12 @@ public sealed class Quest : MonoBehaviour
         // validation
         RedLine = redLine;
         // setstate complete
+    }
+
+    public void onTravellerEnter() {
+        setState(QuestState.complete);
+        Traveller.DestroyActive();
+        Expedition.Map.ConfirmRedline();
     }
 
     #endregion

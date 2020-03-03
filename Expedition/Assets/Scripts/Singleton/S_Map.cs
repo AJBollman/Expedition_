@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,8 +13,7 @@ public sealed class S_Map : MonoBehaviour
     /// <summary> Set wether the character can draw lines. </summary>
     public bool IsFullMap { get => IsFullMap; set => _isFullMap = value; }
     public bool IsMapVisible { get => _isMapVisible; set => _isMapVisible = value; }
-    public LineVertex LastRedlineVertex { get => _ActiveRedline[_ActiveRedline.Count - 1]; }
-    public bool isSolving { get; private set; }
+    public LineVertex LastRedlineVertex { get => (_ActiveRedline.Count > 0) ? _ActiveRedline[_ActiveRedline.Count - 1] : null; }
     #endregion
 
 
@@ -21,6 +21,7 @@ public sealed class S_Map : MonoBehaviour
     #region [Private]
     [SerializeField] private float _mapSizeMini = 32f;
     [SerializeField] private float _mapSizeFull = 64f;
+    [SerializeField] private float _mapCameraHeight = 100f;
     [SerializeField] private float _smoothHandheldPosition = 40f;
     private List<LineVertex> _ActiveRedline = new List<LineVertex>();
     private GameObject _MapCamera;
@@ -28,6 +29,7 @@ public sealed class S_Map : MonoBehaviour
     private GameObject _HandheldPos;
     private GameObject _FullmapPos;
     private GameObject _HiddenMapPos;
+    private GameObject _HandheldMap;
     private Vector3 _goalMapCameraPos;
     private Vector3 _goalHandheldMapPos;
     private Quaternion _goalHandheldMapRot;
@@ -47,6 +49,7 @@ public sealed class S_Map : MonoBehaviour
             _FullmapPos = GameObject.Find("Full Map Goal");
             _HiddenMapPos = GameObject.Find("Hidden Map Goal");
             _MapCamera = GameObject.Find("Map Camera");
+            _HandheldMap = _HandheldContainer.transform.Find("HandMap Offset").gameObject;
 
             if(_HandheldContainer == null) throw new Exception("Could not find Handheld Items Container");
             if(_HandheldPos == null) throw new Exception("Could not find Hand Map Goal");
@@ -107,7 +110,7 @@ public sealed class S_Map : MonoBehaviour
             // map camera follows player.
             _goalMapCameraPos = new Vector3(
                 S_Player.Explorer.transform.position.x,
-                100,
+                _mapCameraHeight,
                 S_Player.Explorer.transform.position.z
             );
         }
@@ -117,6 +120,19 @@ public sealed class S_Map : MonoBehaviour
 
 
     #region [Methods]
+    public IEnumerator IEHideMapSpecial() {
+        yield return new WaitForSeconds(0.5f);
+        _HandheldMap.SetActive(false);
+    }
+
+    public void HideMapSpecial() {
+        StartCoroutine("IEHideMapSpecial");
+    }
+
+    public void ShowMapSpecial() {
+        _HandheldMap.SetActive(true);
+    }
+
     public Vector3 MapToWorldPos(Vector2 pos) {
         return _MapCamera.GetComponent<Camera>().ViewportToWorldPoint(pos);
     }
@@ -139,6 +155,7 @@ public sealed class S_Map : MonoBehaviour
     }
 
     public void MoveLatestVertex(Vector3 pos) {
+        if(LastRedlineVertex == null) return;
         var correctedPos = new Vector3(pos.x, 0, pos.z);
         LastRedlineVertex.Move(correctedPos);
     }
@@ -158,19 +175,23 @@ public sealed class S_Map : MonoBehaviour
     }
 
     public void SolveQuest() {
-        isSolving = true;
         // check if a traveller is already on the map whose type matches the type needed to solve the quest.
-        Traveller trav = Traveller.FindExistingTraveller( Quest.Active.travellerType );
+        /*Traveller trav = Traveller.FindExistingTraveller( Quest.Active.travellerType );
         if(trav != null) {
             // move the found traveller to the quest start
         }
         else {
             // create a new traveller at quest start
             trav = Traveller.InstantiateTraveller( Quest.Active.travellerType, Quest.Active.StartPoint.transform.position + new Vector3(0, 2, 0) );
-        }
+        }*/
+        Traveller trav = Traveller.InstantiateTraveller( Quest.Active.travellerType, Quest.Active.StartPoint.transform.Find("TravellerSpawnLocation").position + new Vector3(0, 2, 0) );
         Traveller.SetActive(trav);
         trav.GivePath(_ActiveRedline, Quest.Active);
         trav.RunPath();
+    }
+
+    public void ConfirmRedline() {
+        _ActiveRedline = new List<LineVertex>();
     }
     #endregion
 

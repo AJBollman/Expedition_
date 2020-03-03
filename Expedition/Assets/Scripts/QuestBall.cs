@@ -49,6 +49,12 @@ public class QuestBall : MonoBehaviour
             if(_isEndpoint) _Owner.onEndpointEnter();
             else _Owner.onStartpointEnter();
         }
+        else if(other.gameObject.tag == "Traveler" && _isEndpoint) {
+            var tcheck = other.gameObject.GetComponent<Traveller>();
+            if(tcheck == null) return; // traveler tag that does not have a traveller component
+            var qcheck = tcheck.QuestToComplete;
+            if(qcheck == _Owner && other.gameObject == Traveller.Active.gameObject) _Owner.onTravellerEnter();
+        }
     }
 
     private void OnTriggerExit(Collider other) {

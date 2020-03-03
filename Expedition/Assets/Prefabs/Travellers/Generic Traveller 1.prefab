@@ -11,12 +11,11 @@ GameObject:
   - component: {fileID: 5081673964577279761}
   - component: {fileID: 5081673964577279762}
   - component: {fileID: 5081673964577279789}
-  - component: {fileID: 5081673964577279790}
   - component: {fileID: 2834967329696853120}
   - component: {fileID: 5081673964577279785}
   - component: {fileID: 4787931717801576719}
   m_Layer: 0
-  m_Name: Traveller
+  m_Name: Generic Traveller 1
   m_TagString: Traveler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,7 +54,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5000001
-  m_Speed: 4
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -67,26 +66,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5081673964577279790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5081673964577279791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 347fce1037a10f54bade5c7a8ca155d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  agent: {fileID: 5081673964577279789}
-  home: {fileID: 0}
-  destination: {fileID: 0}
-  moveSpeed: 4
-  failedPath: 0
-  canMove: 0
-  pointList: []
 --- !u!54 &2834967329696853120
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,6 +108,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2034ebe518e75441da1dce5eb86eadc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isReal: 1
+  type: 0
+  _reachDestinationRadius: 5
 --- !u!114 &2834967329384260807
 MonoBehaviour:
   m_ObjectHideFlags: 0
