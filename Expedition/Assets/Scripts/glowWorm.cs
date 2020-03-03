@@ -46,7 +46,7 @@ public class glowWorm : MonoBehaviour
         if (timerStart == false && glowLight.intensity > min)
         {
             lifeTime -= Time.deltaTime;
-            glowLight.intensity -= lightstep/5 * Time.deltaTime;
+            glowLight.intensity -= lightstep/30 * Time.deltaTime;
         }
     }
 
