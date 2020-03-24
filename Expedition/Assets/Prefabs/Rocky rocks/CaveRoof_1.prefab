@@ -39,6 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6587803428891960875}
+  - component: {fileID: 2167956134414785031}
   m_Layer: 0
   m_Name: CaveRoof_1
   m_TagString: Untagged
@@ -62,6 +63,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &2167956134414785031
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7869984859775718456}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 0}
 --- !u!1 &8190498622808632445
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,6 +88,7 @@ GameObject:
   - component: {fileID: 3498419064849374494}
   - component: {fileID: 2664739431289279990}
   - component: {fileID: 7865973251156820980}
+  - component: {fileID: 2167956134414785029}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -88,7 +104,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8190498622808632445}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 1.0813814, z: 0}
+  m_LocalPosition: {x: -0, y: 0.4, z: 0}
   m_LocalScale: {x: 2.9750528, y: 2.9750528, z: 2.9750528}
   m_Children: []
   m_Father: {fileID: 6587803428891960875}
@@ -119,7 +135,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0fa0e32d87ecfd14aad4f89da6dcb7a4, type: 2}
+  - {fileID: 2100000, guid: e9dec0923012947e6a274f9cfcd1d6df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -140,3 +156,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &2167956134414785029
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8190498622808632445}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -462981019419857548, guid: 72dbc3085050a9a459cf4bcf102d4a12, type: 3}
