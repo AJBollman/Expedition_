@@ -110,7 +110,7 @@ public sealed class S_Map : MonoBehaviour
             // map camera follows player.
             _goalMapCameraPos = new Vector3(
                 S_Player.Explorer.transform.position.x,
-                _mapCameraHeight,
+                S_Player.Explorer.transform.position.y + _mapCameraHeight,
                 S_Player.Explorer.transform.position.z
             );
         }
