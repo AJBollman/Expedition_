@@ -181,8 +181,7 @@ public sealed class S_Player : MonoBehaviour
             if(mapPos != Vector2.zero){
                 mapWasHit = true;
                 Expedition.Map.MoveLatestVertex(globalPos);
-                Vector3 levelledQuestEndpointPos = new Vector3(Quest.Active.EndPoint.transform.position.x, globalPos.y, Quest.Active.EndPoint.transform.position.z);
-                questSolutionIsValid = Vector3.Distance( globalPos, levelledQuestEndpointPos ) < validRedLineDistance;
+                questSolutionIsValid = Vector3.Distance( globalPos, Quest.Active.EndPoint.transform.position ) < validRedLineDistance;
                 if(questSolutionIsValid) {
                     // particle effect
                 }
@@ -238,6 +237,7 @@ public sealed class S_Player : MonoBehaviour
     public void setPlayerState(playerStates state) {
         if(Expedition.isCinematic) return;
         _playerState = state;
+        Expedition.Drawing.attemptToHideLastLine();
         if(Expedition.Drawing.IsDrawing) {
             Expedition.Drawing.cancelLine();
             _Sound.Play("DrawFail");

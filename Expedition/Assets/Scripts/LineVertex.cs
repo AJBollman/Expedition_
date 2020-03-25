@@ -8,6 +8,7 @@ public class LineVertex : MonoBehaviour
 
     #region [Public]
     public bool isRed { get => _isRed; }
+    public LineEdge getEdge { get => Edge; }
     [SerializeField] private bool _isRed;
     public bool isRedLineFinalized { get; private set; }
     #endregion

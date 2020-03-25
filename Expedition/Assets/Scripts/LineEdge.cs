@@ -10,6 +10,12 @@ public sealed class LineEdge : MonoBehaviour
     #region [Public]
     public LineVertex _VertexFrom {get; private set;}
     public LineVertex _VertexTo {get; private set;}
+    public bool isVisibleOffMap {
+        set {
+            if(value) gameObject.layer = LayerMask.NameToLayer("Ink");
+            else gameObject.layer = LayerMask.NameToLayer("MinimapOnly");
+        }
+    }
     #endregion
 
     #region [Private]
@@ -55,7 +61,7 @@ public sealed class LineEdge : MonoBehaviour
     }
 
     // Generate a line of black ink between two lineVertices by projecting onto the surface between them.
-    private void projectLineVisual() {
+    /*private void projectLineVisual() {
         if(_VertexTo == null) {Debug.LogWarning("No endpoint"); return;}
         Transform one = _VertexFrom.transform;
         Transform two = _VertexTo.transform;
@@ -121,6 +127,6 @@ public sealed class LineEdge : MonoBehaviour
         }
         // Reduce the number of lineRenderer vertices.
         //lineRenderer.Simplify(0.05f);
-    }
+    }*/
     #endregion
 }

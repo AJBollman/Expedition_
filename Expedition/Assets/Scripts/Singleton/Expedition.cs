@@ -83,7 +83,7 @@ public sealed class Expedition : MonoBehaviour
 
     [SerializeField] private Color _questColorCompleteable;
     public static Color questColorCompleteable { get => _inst._questColorCompleteable; }
-
+    /*
     /// <summary> Initial number of line points samples to project onto surfaces. Will be decimated after. </summary>
     [SerializeField] private int _lineQualityIterations;
     public static int lineQualityIterations { get => _inst._lineQualityIterations;}
@@ -99,10 +99,18 @@ public sealed class Expedition : MonoBehaviour
     /// <summary>  </summary>
     [SerializeField] private int _lineProjectionStartDistance;
     public static int lineProjectionStartDistance { get => _inst._lineProjectionStartDistance;}
-
+    */
     /// <summary>  </summary>
     [SerializeField] private List<TravellerPrefab> _Travellers;
     public static List<TravellerPrefab> Travellers { get => _inst._Travellers; }
+
+    /// <summary> Travellers's line-of-sight raycast will be raised by this height. </summary>
+    [SerializeField] private float _travellerLOSHeight;
+    public static float travellerLOSHeight { get => _inst._travellerLOSHeight; }
+
+    /// <summary> Layers that a traveller can see through during LOS check. </summary>
+    [SerializeField] private LayerMask _travellerLOSMask;
+    public static LayerMask travellerLOSMask { get => _inst._travellerLOSMask; }
 
     [SerializeField] private float _questCineDuration;
     [SerializeField] private float _questCineScrollFlySmooth; // how fast the scroll flies toward you

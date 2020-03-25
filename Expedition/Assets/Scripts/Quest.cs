@@ -34,8 +34,8 @@ public sealed class Quest : MonoBehaviour
     [Tooltip("Description to show in some places")]
     [SerializeField] private string _flavorText;
 
-    //[Tooltip("The Traveller associated with this quest")]
-    [SerializeField] public TravellerType travellerType { get; private set; }
+    [Tooltip("The Traveller associated with this quest")]
+    [SerializeField] public TravellerType travellerType;
 
     [Tooltip("If this quest is initially visible on game start")]
     [SerializeField] private bool _isVisibleOnStart;

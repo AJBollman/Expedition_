@@ -26,6 +26,7 @@ public sealed class S_Drawing : MonoBehaviour
     [SerializeField] private float _smoothIndicatorRot = 10f;
     [SerializeField] private float _maxRaycastDistance = 15f;
     [SerializeField] private float _volumeDrawDrone = 0.5f;
+    [SerializeField] private bool _hideAfterPlacement; 
     private LineVertex _NewVert;
     private LineVertex _NewRedVert;
     public GameObject _Indicator;
@@ -134,12 +135,19 @@ public sealed class S_Drawing : MonoBehaviour
         _NewVert = LineVertex.SpawnVertex(_goalIndicatorPos, _goalIndicatorRot);
         _LastIndicator.transform.position = _Indicator.transform.position;
         _LastIndicator.transform.rotation = _Indicator.transform.rotation;
+        attemptToHideLastLine();
     }
 
     public void connectVertex() {
         if(!_allowCameraDrawing) return; // TODO give some feedback to the player
         if(_LastVertex != null) LineVertex.ConnectVertices(_LastVertex, _NewVert);
         _LastVertex = _NewVert;
+    }
+
+    public void attemptToHideLastLine() {
+        if(_LastVertex != null && _hideAfterPlacement && _LastVertex.getEdge != null) {
+            _LastVertex.getEdge.isVisibleOffMap = false;
+        }
     }
 
     #endregion

@@ -134,19 +134,22 @@ public sealed class S_Map : MonoBehaviour
     }
 
     public Vector3 MapToWorldPos(Vector2 pos) {
-        return _MapCamera.GetComponent<Camera>().ViewportToWorldPoint(pos);
+        //return _MapCamera.GetComponent<Camera>().ViewportToWorldPoint(pos);
+        if ( Physics.Raycast(_MapCamera.GetComponent<Camera>().ViewportPointToRay(pos), out RaycastHit hit, float.PositiveInfinity, Expedition.raycastIgnoreLayers) ) {
+            return hit.point;
+        }
+        else return Vector3.zero;
     }
 
     public void centerCameraOnQuest(Quest quest) {
         var b = new Bounds(_MapCamera.transform.position, Vector2.zero);
         b.Encapsulate(quest.StartPoint.gameObject.GetComponent<Renderer>().bounds);
         b.Encapsulate(quest.EndPoint.gameObject.GetComponent<Renderer>().bounds);
-        _goalMapCameraPos = b.center;
+        _goalMapCameraPos = new Vector3(b.center.x, _MapCamera.transform.position.y, b.center.z);
     }
 
     public void placeRedVertex(Vector3 pos) {
-        var correctedPos = new Vector3(pos.x, 0, pos.z);
-        _ActiveRedline.Add(LineVertex.SpawnVertex(correctedPos, Quaternion.identity, true));
+        _ActiveRedline.Add(LineVertex.SpawnVertex(pos, Quaternion.identity, true));
         connectLastRedVertex();
     }
 
@@ -156,8 +159,7 @@ public sealed class S_Map : MonoBehaviour
 
     public void MoveLatestVertex(Vector3 pos) {
         if(LastRedlineVertex == null) return;
-        var correctedPos = new Vector3(pos.x, 0, pos.z);
-        LastRedlineVertex.Move(correctedPos);
+        LastRedlineVertex.Move(pos);
     }
 
     public void CancelRedLine() {
@@ -184,6 +186,7 @@ public sealed class S_Map : MonoBehaviour
             // create a new traveller at quest start
             trav = Traveller.InstantiateTraveller( Quest.Active.travellerType, Quest.Active.StartPoint.transform.position + new Vector3(0, 2, 0) );
         }*/
+        Traveller.DestroyActive();
         Traveller trav = Traveller.InstantiateTraveller( Quest.Active.travellerType, Quest.Active.StartPoint.transform.Find("TravellerSpawnLocation").position + new Vector3(0, 2, 0) );
         Traveller.SetActive(trav);
         trav.GivePath(_ActiveRedline, Quest.Active);

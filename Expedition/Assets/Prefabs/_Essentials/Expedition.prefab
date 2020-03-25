@@ -596,15 +596,15 @@ MonoBehaviour:
   _questColorUncompleted: {r: 0.8113208, g: 0.77571434, b: 0.22579211, a: 1}
   _questColorCompleted: {r: 0.2775454, g: 0.764151, b: 0.39159358, a: 1}
   _questColorCompleteable: {r: 1, g: 0.46226415, b: 0.3160377, a: 1}
-  _lineQualityIterations: 100
-  _lineProjectionOvershootDistance: 4
-  _lineProjectionSolverMaxRange: 30
-  _lineProjectionStartDistance: 3
   _Travellers:
   - name: Traveller
     Variants:
     - {fileID: 5081673964577279791, guid: b15249eec8c364d5b9d911b979c0b758, type: 3}
     type: 0
+  _travellerLOSHeight: 2
+  _travellerLOSMask:
+    serializedVersion: 2
+    m_Bits: 1
   _questCineDuration: 1.4
   _questCineScrollFlySmooth: 12
   autoStartGameWhileEditor: 0
@@ -1389,7 +1389,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 5
-  far clip plane: 100
+  far clip plane: 150
   field of view: 60
   orthographic: 1
   orthographic size: 32
