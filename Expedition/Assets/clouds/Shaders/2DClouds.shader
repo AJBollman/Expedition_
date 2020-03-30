@@ -51,13 +51,13 @@ Shader "FStarVR/2DClouds" {
 			v2f vert (appdata v) {
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
-				#if defined(UNITY_REVERSED_Z)
+				/*#if defined(UNITY_REVERSED_Z)
 				//when using reversed-Z, make the z be just a tiny bit abve 0.0
 				o.pos.z = 1.0e-9f;
 				#else
 				//when not using reversed z make Z/W be just a tiny bit below 1.0
 				o.pos.z = o.vertex.w - 1.0e-6f;
-				#endif
+				#endif*/
 				o.uv0.xy = TRANSFORM_TEX(v.texcoord, _ScatterMap0)* fixed2(2, 2) + _Time.x * _Speed * fixed2(1.5, 1.0);
 				o.uv0.zw = TRANSFORM_TEX(v.texcoord, _ScatterMap1)* fixed2(2, 2) + _Time.x * _Speed * fixed2(1.0, 1.2);
 				o.uv1.xy = TRANSFORM_TEX(v.texcoord, _DensityMap) * fixed2(10, 10.5) + _Time.x * _Speed * fixed2(0.75, 0.5);

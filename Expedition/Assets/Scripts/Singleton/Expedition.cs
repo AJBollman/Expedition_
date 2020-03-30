@@ -2,10 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public enum gameStates { menu, paused, normal, redline };
 public enum playerStates { clear, mini, drawing, full };
@@ -24,7 +23,6 @@ public enum TravellerType { generic, rockdude, frogwizard, mushroom, wisp };
 [DisallowMultipleComponent]
 public sealed class Expedition : MonoBehaviour
 {
-
     #region [Important]
     /// <summary> All the stuff the Explorer can do. Handles all input. </summary>
     public static S_Player Player { get => S_Player.instance; }
@@ -38,6 +36,8 @@ public sealed class Expedition : MonoBehaviour
     public static S_Drawing Drawing { get => S_Drawing.instance; }
     /// <summary> This class handles the player's ability to use the map. </summary>
     public static S_Map Map { get => S_Map.instance; }
+    /// <summary> </summary>
+    public static S_Atmosphere Atmosphere { get => S_Atmosphere.instance; }
 
     //public static S_Interaction Interaction { get => S_Interaction.instance; }
     //public static S_Codex Codex { get => S_Codex.instance; }
@@ -228,15 +228,24 @@ public sealed class Expedition : MonoBehaviour
             // Check UI
             if(!UserInterface.isReady) throw new System.Exception("UserInterface not ready");
             Debug.Log("<color=green><size=18>UI Ready</size></color>");
-            Debug.Log("<color=lime><size=18>Starting Game...</size></color>");
 
-            StartCoroutine(Transition.LoadYourAsyncScene("Overlay"));
+            // Check Atmosphere
+            if(!Atmosphere.isReady) throw new System.Exception("Atmosphere not ready");
+            Debug.Log("<color=green><size=18>Atmosphere Ready</size></color>");
+            Debug.Log("<color=lime><size=18>Starting Game...</size></color>");
         }
         catch(Exception e) {
             Debug.LogException(e);
             Debug.LogError("<color=red><size=18>Could not start game</size></color>");
             return;
         }
+        try {
+            // 'Spawn' the explorer at the first 'spawn' prefab found.
+            AutoInitializer[] spawns = GameObject.FindObjectsOfType<AutoInitializer>();
+            if(spawns.Length > 0) Player.gameObject.transform.position = spawns[0].transform.position + (Vector3.up);
+            else Debug.Log("No spawns found");
+        }
+        catch(Exception e2) {Debug.LogException(e2);}
         UserInterface.startupMenuActive = false;
         CameraOperator.AllowInput = true;
         Movement.AllowInput = true;

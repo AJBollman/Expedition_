@@ -90,7 +90,6 @@ public sealed class S_CameraOperator : MonoBehaviour
             if(_Animator == null) throw new Exception("CameraOperator has no animator");
             if(_MainCameraContainer == null) throw new Exception("CameraOperator has no main camera container");
             if(StableCamera == null) throw new Exception("CameraOperator has no stable camera");
-            
             isReady = true;
         }
         catch(Exception e) {
