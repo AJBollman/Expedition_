@@ -62,7 +62,7 @@ public class HoldItems : MonoBehaviour
     {
         if (startWithObject != null) Pickup(startWithObject.gameObject);
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        if(PlankImg) PlankImg.active = false;
+        if(PlankImg) PlankImg.SetActive(false);
     }
 
 
@@ -104,7 +104,7 @@ public class HoldItems : MonoBehaviour
             sound.Play("Grab");
         }
 
-        if(PlankImg) PlankImg.active = true;
+        if(PlankImg) PlankImg.SetActive(true);
         checkOnDropped = null;
         heldObject.GetComponent<Renderer>().material.renderQueue = 0;
     }
@@ -135,7 +135,7 @@ public class HoldItems : MonoBehaviour
         checkOnDropped = heldObject;
         heldObject = null;
 
-        if(PlankImg) PlankImg.active = false;
+        if(PlankImg) PlankImg.SetActive(false);
     }
 
 
@@ -162,7 +162,7 @@ public class HoldItems : MonoBehaviour
 
         StartCoroutine(unparentAndReenable(0.5f, at));
 
-        if(PlankImg) PlankImg.active = false;
+        if(PlankImg) PlankImg.SetActive(false);
         checkOnDropped = null;
     }
 

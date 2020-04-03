@@ -193,7 +193,6 @@ public sealed class Quest : MonoBehaviour
         switch(state) {
             case QuestState.undiscovered: { // Quest can be found by exploring on foot.
                 return;
-                break;
             }
             case QuestState.discovered: { // Quest goal is visible on the minimap.
                 setState(QuestState.completeable);
@@ -214,7 +213,6 @@ public sealed class Quest : MonoBehaviour
         switch(state) {
             case QuestState.undiscovered: { // Quest can be found by exploring on foot.
                 return;
-                break;
             }
             case QuestState.discovered: { // Quest goal is visible on the minimap.
                 break;

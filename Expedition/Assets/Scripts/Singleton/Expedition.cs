@@ -11,11 +11,18 @@ public enum playerStates { clear, mini, drawing, full };
 public enum crosshairTypes { draw, yeet, drop, grab, place, nope, none };
 public enum QuestState { next, hidden, undiscovered, discovered, completeable, complete };
 public enum TravellerType { generic, rockdude, frogwizard, mushroom, wisp };
+public enum BiomeScene { overlay, world, plains, glowcaves, foggyforest, crystalcaves, shipwreck }
 
 [Serializable] public struct TravellerPrefab {
     public string name;
     public List<GameObject> Variants;
     public TravellerType type;
+}
+[Serializable] public struct BiomeData {
+    public BiomeScene scene;
+    public AudioClip music;
+    public Color32 sunColor;
+    public GameObject boundingBox;
 }
 
 
@@ -30,6 +37,7 @@ public sealed class Expedition : MonoBehaviour
     public static S_CameraOperator CameraOperator { get => S_CameraOperator.instance; }
     /// <summary> This class controls WASD movement and jumping. Boing. </summary>
     public static S_Movement Movement { get => S_Movement.instance; }
+
     /// <summary> Controls user interface elements. </summary>
     public static S_UserInterface UserInterface { get => S_UserInterface.instance; }
     /// <summary> This class handles the player's ability to draw lines. </summary>
@@ -44,7 +52,7 @@ public sealed class Expedition : MonoBehaviour
     //public static S_SaveManager SaveManager { get => S_SaveManager.instance; }
     #endregion
 
-    /////////////////////////////////////////////////   Public properties
+    #region [Public]
     /// <summary> If the game has successfully started or not. </summary>
     public static bool gameplayStarted {get; private set;}
 
@@ -112,17 +120,30 @@ public sealed class Expedition : MonoBehaviour
     [SerializeField] private LayerMask _travellerLOSMask;
     public static LayerMask travellerLOSMask { get => _inst._travellerLOSMask; }
 
+    /// <summary>  </summary>
+    [SerializeField] private List<BiomeData> _Biomes;
+    public static List<BiomeData> Biomes { get => _inst._Biomes; }
+
+    /// <summary> Return info on the biome the Explorer is currently in. </summary>
+    public static BiomeData activeBiome => _inst._Biomes[activeBiomeIndex];
+
     [SerializeField] private float _questCineDuration;
     [SerializeField] private float _questCineScrollFlySmooth; // how fast the scroll flies toward you
+    [SerializeField] private float _smoothMusicTransition;
+
+    /// <summary> Sunlight color transition speed. </summary>
+    public static float smoothLightTransition => _inst._smoothLightTransition;
+    [SerializeField] private float _smoothLightTransition;
+    [SerializeField] private float _musicVolume;
 
     public static LineRenderer IndicatorLine { get; private set; }
     public static AudioSource DrawDroneClear;
     public static AudioSource DrawDroneUnclear;
     public static bool isCinematic { get; private set; }
+    #endregion
 
 
-
-    /////////////////////////////////////////////////   Private fields
+    #region [Private]
     [SerializeField] private bool autoStartGameWhileEditor;
     private static Camera activeRegionCamera;
     private static S_CameraOperator cam;
@@ -137,19 +158,16 @@ public sealed class Expedition : MonoBehaviour
     private static Vector3 _goalQuestScrollScale;
     private static Quaternion _goalQuestScrollRot;
     private GameObject _hmapTempReference;
-
-
-
-    // Singleton instance.
-    private static Expedition _inst;
-
-
+    private static int activeBiomeIndex;
+    private static AudioSource MusicSource;
+    private static bool _musicIsMuted;
+    private static AudioClip _QueuedClip;
+    #endregion
 
 
 
 
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////  Events
+    #region [Events]
     private void Awake() {
         questScroll = transform.Find("Quest Scroll").gameObject;
         _hmapTempReference = GameObject.Find("Hand Map");
@@ -157,6 +175,7 @@ public sealed class Expedition : MonoBehaviour
         IndicatorLine = GetComponentInChildren<LineRenderer>();
         DrawDroneClear = GetComponents<AudioSource>()[0];
         DrawDroneUnclear = GetComponents<AudioSource>()[1];
+        MusicSource = GetComponents<AudioSource>()[2];
         DrawDroneClear.volume = 0;
         DrawDroneUnclear.volume = 0;
         _inst = this;
@@ -193,11 +212,13 @@ public sealed class Expedition : MonoBehaviour
             SetGamePaused(!_paused);
         }
         Time.timeScale = Mathf.Lerp(Time.timeScale, _timeScaleGoal, Time.fixedUnscaledDeltaTime * 2);
+
+        MusicSource.volume = Mathf.Lerp(MusicSource.volume, (_musicIsMuted) ? 0 : _musicVolume, Time.deltaTime * _smoothMusicTransition);
     }
+    #endregion
 
 
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////  Methods
+    #region [Methods]
     private void startGameplay() {
         gameplayStarted = false;
         try {
@@ -250,6 +271,8 @@ public sealed class Expedition : MonoBehaviour
         CameraOperator.AllowInput = true;
         Movement.AllowInput = true;
         Player.setPlayerState(playerStates.mini);
+        BiomeTransition(1);
+        SetMusicMute(false);
         gameplayStarted = true;
     }
 
@@ -348,391 +371,21 @@ public sealed class Expedition : MonoBehaviour
         }
     }
 
-    /*public static void setState(gameStates state)
-    {
-        //Debug.Log("Game state changed to "+state);
-        Expedition.state = state;
-
-        switch(Expedition.state)
-        {
-            case gameStates.normal: {
-                    //cam.defaultFOV = 90f;
-                    //cam.enableControls = true;
-                    //cam.enableLookAt = false;
-                    //cam.followPoint = GameObject.Find("The Explorer");
-                    Camera.main.nearClipPlane = 0.01f;
-                    Cursor.visible = false;
-                    Cursor.lockState = CursorLockMode.Locked;
-                    //cam.smoothTime = 32;
-                    Time.timeScale = 1f;
-                    //cam.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 85f, 0));
-                    break;
-            }
-            case gameStates.menu:
-            {
-                    //cam.defaultFOV = 30f;
-                    //cam.enableControls = false;
-                    //cam.enableLookAt = true;
-                    //cam.lookAt = camInitialLookAt;
-                    //cam.followPoint = camInitialFollowPoint;
-                    Camera.main.GetComponent<Animator>().enabled = true;
-                    Camera.main.nearClipPlane = 1;
-                    //cam.smoothTime = 2;
-                    S_UserInterface.SetCursor(crosshairTypes.none);
-                    break;
-            }
-            case gameStates.paused:
-            {
-                    Time.timeScale = 0f;
-                    Cursor.visible = true;
-                    Cursor.lockState = CursorLockMode.None;
-                    //cam.enableControls = false;
-                    break;
-            }
-            case gameStates.redline:
-            {
-                    Time.timeScale = 0.5f;
-                    Cursor.visible = true;
-                    Cursor.lockState = CursorLockMode.None;
-                    //cam.enableControls = false;
-                    break;
-            }
-        }
-    }*/
-
-
-
-    /*public static Region getActiveRegion()
-    {
-        return activeRegion;
+    public static void BiomeTransition(int sceneIndex) {
+        if(sceneIndex < 1 || sceneIndex > Biomes.Count-1) throw new Exception("Transition index out of bounds");
+        activeBiomeIndex = sceneIndex;
+        Atmosphere.GoalSunColor = Biomes[sceneIndex].sunColor;
+        _QueuedClip = Biomes[sceneIndex].music;
     }
-
-    public static void setActiveRegion(Region region)
-    {
-        activeRegion = region;
-        if(region != null)
-        {
-            //activeRegion.setRenderTexture();
+    
+    public static void SetMusicMute(bool mute) {
+        _musicIsMuted = mute;
+        if(!_musicIsMuted) {
+            MusicSource.clip = _QueuedClip;
+            MusicSource.Play();
         }
     }
+    #endregion
 
-    public static Portal getPortalOfActiveRegion()
-    {
-        var r = getActiveRegion();
-        if (r != null) return r.getActivePortal();
-        else return null;
-    }*/
-
-    /*public static gameStates getState()
-    {
-        return state;
-    }
-
-    private static IEnumerator checkIfGameIsReady(float delay) {
-        yield return new WaitForSeconds(delay);
-    }
-
-    private static IEnumerator flyToStart(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        setState(gameStates.normal);
-        Destroy(GameObject.Find("HideAfterTransition"));
-        transitionDinghy.SetActive(true);
-        Camera.main.GetComponent<Animator>().enabled = false;
-        //inst.StartCoroutine(camr(0.1f));
-        
-    }
-
-    private static IEnumerator camr(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        cam.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 85f, 0));
-    }
-
-    public static void StartGame()
-    {
-        //if (!canStartup) return;
-        GameObject mm = GameObject.Find("MainMenu");
-        if (mm != null) mm.SetActive(false);
-		GameObject bo = GameObject.Find("S_Boat");
-        GameObject ex = GameObject.Find("The Explorer");
-        GameObject.Find("Logo").SetActive(false);
-        //cam.followPoint = ex;
-        //cam.defaultFOV = 90f;
-        //cam.lookAt = bo;
-        //cam.smoothTime = 0.75f;
-		ex.transform.LookAt(bo.transform);
-        CameraOperator.ObjectToFollow = null;
-		//inst.StartCoroutine(flyToStart(Application.isEditor ? 0.1f : 5f));
-    }*/
-
-    /*public static GameObject getTraveller()
-    {
-        return GameObject.Findb;
-    }*/
-
-    /*public static void startTraveller()
-    {
-        var trav = Expedition.getTraveller().GetComponent<NavMeshMovement>();
-        trav.spawn(activePortal.transform.position);
-        trav.givePath(activeRegion.getLatestRedLine());
-        trav.navMove();
-    }*/
+    private static Expedition _inst;
 }
-
-// Menu: In the main menu of the game.
-// Paused: Game is paused.
-// Normal: Explorer can move around and do stuff.
-// Fullmap: We are in fullscreen map mode; no movement allowed.
-// Guiding: TODO not sure about this one.
-
-/*using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
-
-public enum BiomeTypes { None, Tutorial, Foggy, Mountain, Desert, Caves, };
-public class Region : MonoBehaviour
-{
-    public BiomeTypes biome = BiomeTypes.None;
-    public string name = "Region";
-    public bool completed;
-    public int lineLimit = 25;
-    public RenderTexture textureTarget;
-    public bool isStartingRegion;
-
-    //private List<Vector3> redLine = new List<Vector3>();
-    private GameObject background;
-    private Camera cam;
-    public GameObject templateLine;
-    public GameObject templateRedLine;
-    private List<GameObject> lines =  new List<GameObject>();
-    private List<GameObject> redLines = new List<GameObject>();
-    private List<GameObject> redoLines = new List<GameObject>();
-    private List<Portal> portals = new List<Portal>();
-
-    void Awake()
-    {
-        if (transform.childCount != 2) throw new System.Exception("Region '" + name + "' has an invalid number of children!");
-        background = transform.Find("Map Background").gameObject;
-        if(!background) throw new System.Exception("Region '" + name + "' does not have a background!");
-        cam = GetComponentInChildren<Camera>();
-        if (!cam) throw new System.Exception("Region '" + name + "' does not have a camera!");
-        //templateLine = GameObject.Find("Line");
-        //templateRedLine = GameObject.Find("RedLine");
-        if (!templateLine) throw new System.Exception("Region does not have 'Line' prefab!");
-        if (!templateRedLine) throw new System.Exception("Region does not have 'Redline' prefab!");
-
-        // Check for overlapping map regions.
-        if (Application.isEditor)
-        {
-            // https://docs.unity3d.com/ScriptReference/Physics.OverlapBox.html
-            //Use the OverlapBox to detect if there are any other colliders within this box area.
-            //Use the GameObject's centre, half the size (as a radius) and rotation. This creates an invisible box around your GameObject.
-            Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity);
-            int i = 0;
-            //Check when there is a new collider coming into contact with the box
-            while (i < hitColliders.Length)
-            {
-                if (hitColliders[i].tag == tag && hitColliders[i].gameObject != gameObject)
-                {
-                    // https://gamedev.stackexchange.com/questions/172151/how-to-change-material-color-lwrp
-                    MaterialPropertyBlock block = new MaterialPropertyBlock();
-                    block.SetColor("_BaseColor", Color.red);
-                    GetComponent<Renderer>().SetPropertyBlock(block);
-                    hitColliders[i].gameObject.GetComponent<Renderer>().SetPropertyBlock(block);
-                    throw new System.Exception("Intersecting regions!");
-                }
-                if(hitColliders[i].tag == "Portal" && hitColliders[i].gameObject != gameObject)
-                {
-                    Debug.Log("region '"+name+"' found an intersecting portal");
-                    var p = hitColliders[i].transform.gameObject.GetComponent<Portal>();
-                    p.addOwnerRegion(this);
-                    portals.Add(p);
-                }
-                i++;
-            }
-        }
-    }
-
-    private void Start()
-    {
-        if (isStartingRegion) activateCamera(true);
-    }
-
-    // Set the active region upon entering.
-    void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
-            StateController.activeRegion = this;
-            StateController.activeRegionCamera = GetComponentInChildren<Camera>();
-            activateCamera(true);
-            //Debug.Log("Active region: " + StateController.activeRegion.name);
-            foreach (GameObject l in lines) {l.SetActive(true);} // Show lines.
-            GetComponent<SoundPlayer>().Play("Enter");
-        }
-    }
-
-    // Set active region to null on exit. If the player just walked into a new region, it'll become active a moment after this.
-    void OnTriggerExit(Collider other) {
-        if (other.tag == "Player") {
-            other.GetComponent<Player>().endCameraLine(false);
-            activateCamera(false);
-            StateController.activeRegion = null;
-            StateController.activeRegionCamera = null;
-            foreach (GameObject l in lines) {l.SetActive(false);} // Hide lines.
-        }
-    }
-
-    private IEnumerator checkIfEmptyRegion(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        if (!StateController.activeRegion)
-        {
-            //Debug.Log("Active region: none");
-        }
-    }
-
-
-
-
-
-
-    // Instantiate a new Line using the template Line.
-    public void addLineToRegion(Vector3 pos)
-    {
-        if (transform.childCount - 2 >= lineLimit) {
-            Debug.LogWarning("Cannot add line to region '" + name + "', limit reached!");
-            return;
-        }
-        GameObject createdLine = Instantiate(templateLine, pos, Quaternion.identity, transform);
-        redoLines = new List<GameObject>(); // Gets rid of redo lines.
-        lines.Add(createdLine);
-
-    }
-
-    // Add a new point to this region's latest Line.
-    public void addLinePointToRegion(Vector3 pos)
-    {
-        if (lines.Count < 1) {
-            Debug.LogWarning("Cannot add points; this region has no active line!");
-            return;
-        }
-        lines[lines.Count - 1].GetComponent<Line>().addPoint(pos);
-    }
-
-
-
-    //////////////////////////////////////////////////////////////////////////
-    // Instantiate a new Line using the template red Line.
-    public void addRedLineToRegion(Vector3 pos)
-    {
-        foreach (GameObject x in redLines) {
-            Destroy(x);
-        }
-        redLines = new List<GameObject>();
-        if (pos == Vector3.zero)
-        {
-            Debug.LogWarning("Cannot add RED line, vector zero recieved!");
-            return;
-        }
-        if (transform.childCount - 2 >= lineLimit)
-        {
-            Debug.LogWarning("Cannot add RED line to region '" + name + "', limit reached!");
-            return;
-        }
-        GameObject createdLine = Instantiate(templateRedLine, pos, Quaternion.identity, transform);
-        redLines.Add(createdLine);
-
-    }
-
-    // Add a new point to this region's latest red Line.
-    public void addRedLinePointToRegion(Vector3 pos)
-    {
-        if (pos == Vector3.zero)
-        {
-            Debug.LogWarning("Cannot add RED line, vector zero recieved!");
-            return;
-        }
-        if (redLines.Count < 1)
-        {
-            Debug.LogWarning("Cannot add RED line points; this region has no active line!");
-            return;
-        }
-        redLines[redLines.Count - 1].GetComponent<Line>().addPoint(pos);
-    }
-
-
-
-
-    //////////////////////////////////////////////////////////////////////////
-    // Set this Region's camera to use the renderTexture used by the handheld map material.
-    private void activateCamera(bool tf)
-    {
-        cam.targetTexture = tf ? textureTarget : null;
-    }
-
-    // Sink the latest Line.
-    public void sinkLatestLine()
-    {
-        if(lines.Count > 0)
-        {
-            lines[lines.Count - 1].GetComponent<Line>().sinkLine(true);
-        }
-        else Debug.Log("Cannot sink latest line, no lines to sink");
-    }
-
-
-
-
-    //////////////////////////////////////////////////////////////////////////
-    // Removes a Line and adds it to the redo list.
-    public void undoLine()
-    {
-        if (lines.Count == 0)
-        {
-            Debug.LogWarning("Cannot undo, no lines left!");
-            return;
-        }
-        redoLines.Add(lines[lines.Count - 1]);
-        lines[lines.Count - 1].SetActive(false);
-        lines.RemoveAt(lines.Count - 1);
-    }
-
-    // Removes a Line from the redo list and adds it to the normal list.
-    public void redoLine()
-    {
-        if (redoLines.Count == 0)
-        {
-            Debug.LogWarning("Nothing to redo.");
-            return;
-        }
-        redoLines[redoLines.Count - 1].SetActive(true);
-        lines.Add(redoLines[redoLines.Count - 1]);
-        redoLines.RemoveAt(redoLines.Count - 1);
-    }
-
-    // Check if all this region's portals are finished.
-    public bool checkForCompletion()
-    {
-        foreach(Portal x in portals)
-        {
-            if (!x.isComplete())
-            {
-                completed = false;
-                return false;
-            }
-        }
-        Debug.Log("REGION COMPLETE!");
-        completed = true;
-        return true;
-    }
-
-    public List<Vector3> getLatestRedLine()
-    {
-        if (redLines.Count == 0) Debug.LogWarning("Can't get redline, region has no redlines.");
-        var r = redLines[redLines.Count - 1].GetComponent<Line>().getPoints();
-        
-        return r;
-    }
-}*/
-

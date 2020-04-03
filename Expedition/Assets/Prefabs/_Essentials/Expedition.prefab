@@ -542,6 +542,7 @@ GameObject:
   - component: {fileID: 5579923288347504438}
   - component: {fileID: 7733988077981584572}
   - component: {fileID: 8385193682601007425}
+  - component: {fileID: 7790565844631121310}
   m_Layer: 0
   m_Name: Expedition
   m_TagString: Untagged
@@ -621,9 +622,54 @@ MonoBehaviour:
   _travellerLOSMask:
     serializedVersion: 2
     m_Bits: 1
+  _Biomes:
+  - scene: 0
+    music: {fileID: 0}
+    sunColor:
+      serializedVersion: 2
+      rgba: 4293132543
+    boundingBox: {fileID: 0}
+  - scene: 1
+    music: {fileID: 8300000, guid: f7bf2764b031e7145a30431f6497036a, type: 3}
+    sunColor:
+      serializedVersion: 2
+      rgba: 4292277503
+    boundingBox: {fileID: 0}
+  - scene: 2
+    music: {fileID: 8300000, guid: bbcef7c15b58c104da3a26bd2290ced2, type: 3}
+    sunColor:
+      serializedVersion: 2
+      rgba: 4292277503
+    boundingBox: {fileID: 0}
+  - scene: 3
+    music: {fileID: 8300000, guid: 24596243825833d4992bc82651576f2a, type: 3}
+    sunColor:
+      serializedVersion: 2
+      rgba: 4278190080
+    boundingBox: {fileID: 0}
+  - scene: 4
+    music: {fileID: 8300000, guid: 6562a36f4607f394dab8aff6a2634c52, type: 3}
+    sunColor:
+      serializedVersion: 2
+      rgba: 4291153837
+    boundingBox: {fileID: 0}
+  - scene: 5
+    music: {fileID: 0}
+    sunColor:
+      serializedVersion: 2
+      rgba: 0
+    boundingBox: {fileID: 0}
+  - scene: 6
+    music: {fileID: 0}
+    sunColor:
+      serializedVersion: 2
+      rgba: 4292277503
+    boundingBox: {fileID: 0}
   _questCineDuration: 1.4
   _questCineScrollFlySmooth: 12
-  _Clouds: {fileID: 0}
+  _smoothMusicTransition: 1
+  _smoothLightTransition: 1
+  _musicVolume: 1
   autoStartGameWhileEditor: 0
 --- !u!114 &1967208465128380198
 MonoBehaviour:
@@ -879,6 +925,102 @@ AudioSource:
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &7790565844631121310
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5411000736441797894}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 4
+  DopplerLevel: 0
+  MinDistance: 1
+  MaxDistance: 20000
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.00033333333
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.9750023
+      inSlope: 0.000007797843
+      outSlope: 0.000007797843
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.25997365
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

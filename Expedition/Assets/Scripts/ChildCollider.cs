@@ -4,6 +4,13 @@ public class ChildCollider : MonoBehaviour
 {
     public bool isA;
     public bool isMid;
+
+    private void Awake() {
+        if(gameObject.GetComponent<MeshRenderer>()) {
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")

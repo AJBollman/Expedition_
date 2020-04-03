@@ -44,9 +44,11 @@ public sealed class S_UserInterface : MonoBehaviour
     [SerializeField] private GameObject item;
     [SerializeField] private GameObject startupMenu;
     [SerializeField] private GameObject background;
+    [SerializeField] public GameObject loadingIndicator;
     private crosshairTypes currentCrosshair;
     private static float pauseMenuOpacityGoal;
     private static Image pauseMenuFill;
+    private RectTransform loadingIndicatorRect;
     #endregion
 
 
@@ -58,12 +60,13 @@ public sealed class S_UserInterface : MonoBehaviour
         instance = this;
         try {
             if(crosshair == null || vignette == null || redlineVignette == null || pauseMenu == null ||
-            optionsMenu == null || mainMenu == null || item == null || startupMenu == null) {
+            optionsMenu == null || mainMenu == null || item == null || startupMenu == null || loadingIndicator == null) {
                 enabled = false;
                 throw new System.Exception("All UI child gameObjects are required! Check the 'User Interface' in the inspector");
             }
             background.SetActive(true);
             pauseMenuFill = background.GetComponent<Image>();
+            loadingIndicatorRect = loadingIndicator.GetComponent<RectTransform>();
             if(pauseMenuFill == null) throw new System.Exception("Pause Menu Background image missing.");
             startupMenuActive = true;
 
@@ -78,6 +81,9 @@ public sealed class S_UserInterface : MonoBehaviour
 
     private void Update() {
         pauseMenuFill.fillAmount = Mathf.Lerp(pauseMenuFill.fillAmount, pauseMenuOpacityGoal, Time.fixedUnscaledDeltaTime * 4f);
+        if(loadingIndicator.activeInHierarchy) {
+            loadingIndicatorRect.Rotate( new Vector3( 0, 0, loadingIndicatorRect.rotation.z + (30 * Time.unscaledDeltaTime) ) );
+        }
     }
     #endregion
 
