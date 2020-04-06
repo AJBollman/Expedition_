@@ -73,6 +73,10 @@ public sealed class Transition : MonoBehaviour {
             asyncLoad.completed += (asyncOperation) => {
                 loaderIsRunning = false;
                 Expedition.UserInterface.loadingIndicator.SetActive(false);
+                try {
+                    SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneIndex));
+                }
+                catch(Exception e){Debug.LogException(e);}
             };
             if (!asyncLoad.isDone) {
                 loaderIsRunning = true;

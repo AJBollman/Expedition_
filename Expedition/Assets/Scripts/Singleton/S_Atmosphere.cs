@@ -8,6 +8,8 @@ using UnityEngine;
 public sealed class S_Atmosphere : MonoBehaviour
 {
     public Color32 GoalSunColor;
+    public Color32 GoalFogColor;
+    public float goalFogDensity;
     public GameObject _Clouds;
     private Light _Sunlight;
 
