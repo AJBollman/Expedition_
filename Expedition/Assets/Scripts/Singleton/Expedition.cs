@@ -11,7 +11,7 @@ public enum playerStates { clear, mini, drawing, full };
 public enum crosshairTypes { draw, yeet, drop, grab, place, nope, none };
 public enum QuestState { next, hidden, undiscovered, discovered, completeable, complete };
 public enum TravellerType { generic, rockdude, frogwizard, mushroom, wisp };
-public enum BiomeScene { overlay, world, plains, glowcaves, foggyforest, crystalcaves, shipwreck }
+public enum BiomeScene { overlay, world, plains, glowcaves, foggyforest, crystalcaves, shipwreck, mountain, credits }
 
 [Serializable] public struct TravellerPrefab {
     public string name;
