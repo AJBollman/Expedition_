@@ -153,12 +153,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367271471982985139}
-  m_LocalRotation: {x: 0.4999127, y: 0.50008726, z: 0.4999127, w: 0.50008726}
-  m_LocalPosition: {x: -2.1543362, y: 0.46577927, z: 0.442757}
-  m_LocalScale: {x: 4.041385, y: 6.285632, z: 0.37471426}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -16.435438, y: -9.158108, z: 5.8724647}
+  m_LocalScale: {x: 2.880377, y: 4.4798965, z: 0.26706642}
   m_Children: []
-  m_Father: {fileID: 3125494384129729256}
-  m_RootOrder: 3
+  m_Father: {fileID: 5379148402715186883}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &6483452072544696214
 MeshFilter:
@@ -254,9 +254,8 @@ Transform:
   - {fileID: 454602549638055554}
   - {fileID: 7920810899002449620}
   - {fileID: 2760817272065461845}
-  - {fileID: 2639918554291686816}
   m_Father: {fileID: 5379148402715186883}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &6198354046123301086
 MeshFilter:
@@ -347,6 +346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyedVersion: {fileID: 6505027688138337398, guid: 3de2d418cd60edb49b25a5eea39ca9a8,
     type: 3}
+  destroyedVersionOther: {fileID: 1367271471982985139}
   sound1: {fileID: 2255877034061151811}
   sound2: {fileID: 4574410953242517342}
   lookingatSound: {fileID: 5079876116277767007}
@@ -513,7 +513,7 @@ Transform:
   m_LocalScale: {x: 4.853792, y: 2.3121533, z: 6.422725}
   m_Children: []
   m_Father: {fileID: 5379148402715186883}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &8400616248857331716
 MeshFilter:
@@ -823,6 +823,7 @@ Transform:
   m_LocalScale: {x: 0.9395375, y: 0.9395375, z: 0.9395375}
   m_Children:
   - {fileID: 707062148468416048}
+  - {fileID: 2639918554291686816}
   - {fileID: 3125494384129729256}
   - {fileID: 707062149403062834}
   m_Father: {fileID: 0}

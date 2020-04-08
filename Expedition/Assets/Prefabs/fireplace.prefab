@@ -4764,7 +4764,6 @@ GameObject:
   - component: {fileID: 1982774452905166613}
   - component: {fileID: 1982774452905166614}
   - component: {fileID: 1982774452905166615}
-  - component: {fileID: 1982774452905166612}
   m_Layer: 0
   m_Name: Quad (3)
   m_TagString: Untagged
@@ -4832,20 +4831,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &1982774452905166612
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982774452905166610}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1982774453582332534
 GameObject:
   m_ObjectHideFlags: 0
@@ -4857,7 +4842,6 @@ GameObject:
   - component: {fileID: 1982774453582332489}
   - component: {fileID: 1982774453582332490}
   - component: {fileID: 1982774453582332491}
-  - component: {fileID: 1982774453582332488}
   m_Layer: 0
   m_Name: Quad (1)
   m_TagString: Untagged
@@ -4925,20 +4909,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &1982774453582332488
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982774453582332534}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1982774453753303143
 GameObject:
   m_ObjectHideFlags: 0
@@ -4950,7 +4920,6 @@ GameObject:
   - component: {fileID: 1982774453753303142}
   - component: {fileID: 1982774453753303163}
   - component: {fileID: 1982774453753303160}
-  - component: {fileID: 1982774453753303161}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -5018,20 +4987,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &1982774453753303161
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982774453753303143}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1982774453980896200
 GameObject:
   m_ObjectHideFlags: 0
@@ -5097,7 +5052,6 @@ GameObject:
   - component: {fileID: 1982774454389670718}
   - component: {fileID: 1982774454389670707}
   - component: {fileID: 1982774454389670704}
-  - component: {fileID: 1982774454389670705}
   m_Layer: 0
   m_Name: Quad (2)
   m_TagString: Untagged
@@ -5165,20 +5119,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &1982774454389670705
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982774454389670719}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &4485600246629925368
 GameObject:
   m_ObjectHideFlags: 0
@@ -5479,7 +5419,8 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.052055035
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 110104766331792756, guid: 71daf8fbb73b2d9489e02e23f2c6432c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 71daf8fbb73b2d9489e02e23f2c6432c, type: 3}
 --- !u!4 &8373107608370168820 stripped
 Transform:
@@ -5569,7 +5510,8 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.04620953
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 110104766331792756, guid: 71daf8fbb73b2d9489e02e23f2c6432c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 71daf8fbb73b2d9489e02e23f2c6432c, type: 3}
 --- !u!4 &8373107607120218931 stripped
 Transform:
@@ -5659,7 +5601,8 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.052055035
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 110104766331792756, guid: 71daf8fbb73b2d9489e02e23f2c6432c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 71daf8fbb73b2d9489e02e23f2c6432c, type: 3}
 --- !u!4 &8373107607925615711 stripped
 Transform:

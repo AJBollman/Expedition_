@@ -5,6 +5,7 @@ using UnityEngine;
 public class RemoveClick : MonoBehaviour
 {
     public GameObject destroyedVersion;
+    public GameObject destroyedVersionOther;
     public AudioSource sound1;
     public AudioSource sound2;
     public AudioSource lookingatSound;
@@ -71,6 +72,7 @@ public class RemoveClick : MonoBehaviour
           
             Instantiate(destroyedVersion, transform.position, transform.rotation);
             Destroy(gameObject);
+            Destroy(destroyedVersionOther);
         }
 
     }
