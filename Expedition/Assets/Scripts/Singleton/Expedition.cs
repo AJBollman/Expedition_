@@ -271,7 +271,7 @@ public sealed class Expedition : MonoBehaviour
         CameraOperator.AllowInput = true;
         Movement.AllowInput = true;
         Player.setPlayerState(playerStates.mini);
-        BiomeTransition(1);
+        BiomeTransition(SceneManager.GetActiveScene().buildIndex);
         SetMusicMute(false, true);
         gameplayStarted = true;
     }

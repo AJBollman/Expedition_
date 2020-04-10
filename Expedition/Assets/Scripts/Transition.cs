@@ -16,15 +16,18 @@ public sealed class Transition : MonoBehaviour {
     [SerializeField] private BiomeScene ABlue;
     [SerializeField] private BiomeScene BOrange;
     private bool _isInside;
-    private bool _insideA;
-    private bool _insideB;
+    private bool _isA;
+    private BoxCollider _ACollider;
+    private BoxCollider _BCollider;
     #endregion
 
 
 
     #region [Events]
     void Awake() {
-        Application.backgroundLoadingPriority = ThreadPriority.Low;
+        Application.backgroundLoadingPriority = ThreadPriority.High;
+        _ACollider = transform.Find("SCENE A TRANSIT").GetComponent<BoxCollider>();
+        _BCollider = transform.Find("SCENE B TRANSIT").GetComponent<BoxCollider>();
     }
     #endregion
 
@@ -35,23 +38,26 @@ public sealed class Transition : MonoBehaviour {
     }
 
     public void OnExit(bool isA) {
-        if (isA) {
+        _isA = isA;
+        if (_isA) {
             if(_isInside) { // entered from A
-                Debug.Log("entered from B");
+                _ACollider.isTrigger = false;
+                _BCollider.isTrigger = false;
                 startSceneLoad(ABlue, false);
             }
             else { // exited from A
-                Debug.Log("exited from B");
+                _BCollider.isTrigger = true;
                 startSceneLoad(ABlue, true);
             }
         }
         else {
             if (_isInside) { // entered from B 
-                Debug.Log("entered from A");
+                _ACollider.isTrigger = false;
+                _BCollider.isTrigger = false;
                 startSceneLoad(BOrange, false);
             }
             else { // exited from B
-                Debug.Log("exited from A");
+                _ACollider.isTrigger = true;
                 startSceneLoad(BOrange, true);
             }
         }
@@ -62,7 +68,7 @@ public sealed class Transition : MonoBehaviour {
         _isInside = isIn;
     }
 
-    public static IEnumerator LoadAsyncScene(int sceneIndex) {
+    public IEnumerator LoadAsyncScene(int sceneIndex) {
 
         if(!SceneManager.GetSceneByBuildIndex(sceneIndex).isLoaded) {
             Expedition.BiomeTransition(sceneIndex);
@@ -77,6 +83,8 @@ public sealed class Transition : MonoBehaviour {
                     SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneIndex));
                 }
                 catch(Exception e){Debug.LogException(e);}
+                if(!_isA) {_ACollider.isTrigger = true;}
+                else _BCollider.isTrigger = true;
             };
             if (!asyncLoad.isDone) {
                 loaderIsRunning = true;
