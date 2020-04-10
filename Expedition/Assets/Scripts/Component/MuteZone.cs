@@ -2,11 +2,13 @@
 
 public class MuteZone : MonoBehaviour
 {
+    [SerializeField] private bool isTransition;
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
-            Expedition.SetMusicMute(true);
+            Expedition.SetMusicMute(true, isTransition);
         }
     }
 
@@ -14,7 +16,7 @@ public class MuteZone : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Expedition.SetMusicMute(false);
+            Expedition.SetMusicMute(false, isTransition);
         }
     }
 }

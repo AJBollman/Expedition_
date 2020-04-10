@@ -272,7 +272,7 @@ public sealed class Expedition : MonoBehaviour
         Movement.AllowInput = true;
         Player.setPlayerState(playerStates.mini);
         BiomeTransition(1);
-        SetMusicMute(false);
+        SetMusicMute(false, true);
         gameplayStarted = true;
     }
 
@@ -378,9 +378,9 @@ public sealed class Expedition : MonoBehaviour
         _QueuedClip = Biomes[sceneIndex].music;
     }
     
-    public static void SetMusicMute(bool mute) {
+    public static void SetMusicMute(bool mute, bool isTransition) {
         _musicIsMuted = mute;
-        if(!_musicIsMuted) {
+        if(!_musicIsMuted && isTransition) {
             MusicSource.clip = _QueuedClip;
             MusicSource.Play();
         }
