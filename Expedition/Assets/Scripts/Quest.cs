@@ -86,6 +86,7 @@ public sealed class Quest : MonoBehaviour
             block.SetTexture("_BaseMap", QuestIcon);
             EndPoint._MinimapIconObj.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
             StartPoint._MinimapIconObj.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
+            Cam.enabled = false;
         }
         setState((_isVisibleOnStart) ? QuestState.undiscovered : QuestState.hidden);
     }
