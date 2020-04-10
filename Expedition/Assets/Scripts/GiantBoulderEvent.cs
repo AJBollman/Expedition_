@@ -10,6 +10,7 @@ public class GiantBoulderEvent : MonoBehaviour
     public GameObject FungalUnlock;
     public GameObject WispooUnlock;
     public GameObject GiantBoulder;
+    public GameObject firstmountquest;
 
     void Update()
     {
@@ -17,6 +18,7 @@ public class GiantBoulderEvent : MonoBehaviour
             WispooUnlock.activeSelf == true)
         {
             GiantBoulder.SetActive(false);
+            firstmountquest.SetActive(true);
         }
     }
 }
