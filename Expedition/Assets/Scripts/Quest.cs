@@ -22,6 +22,10 @@ public sealed class Quest : MonoBehaviour
     [Tooltip("Each object in this list has it's active state toggled on/off on completion of this quest")]
     [SerializeField] private List<GameObject> _ObjectsToToggleOnCompletion;
 
+    //---------------------------
+    [SerializeField] private List<GameObject> _ObjectsToTurnOffWhenCompleted;
+    //-----------------------------
+
     [Tooltip("The least number of redline points that can be used to beat this quest")]
     [SerializeField] private int _bestPossibleScore;
 
@@ -136,7 +140,13 @@ public sealed class Quest : MonoBehaviour
                     foreach(GameObject g in _ObjectsToToggleOnCompletion) {
                         g.SetActive(!g.activeSelf);
                     }
-                    foreach(Quest q in _QuestsToUnlockOnCompletion) {
+                    //--------------------
+                    foreach (GameObject g in _ObjectsToTurnOffWhenCompleted)
+                    {
+                        g.SetActive(false);
+                    }
+                    //-----------------
+                    foreach (Quest q in _QuestsToUnlockOnCompletion) {
                         q.setState(QuestState.undiscovered);
                     }
                     Expedition.CheckGameCompletion();
