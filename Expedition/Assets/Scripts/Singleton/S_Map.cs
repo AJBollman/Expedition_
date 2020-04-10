@@ -23,6 +23,7 @@ public sealed class S_Map : MonoBehaviour
     [SerializeField] private float _mapSizeFull = 64f;
     [SerializeField] private float _mapCameraHeight = 100f;
     [SerializeField] private float _smoothHandheldPosition = 40f;
+    [SerializeField] private float _fullmapMoveSpeed = 1f;
     private List<LineVertex> _ActiveRedline = new List<LineVertex>();
     private GameObject _MapCamera;
     private GameObject _HandheldContainer;
@@ -104,7 +105,7 @@ public sealed class S_Map : MonoBehaviour
         // only if in fullmap mode
         if(_isFullMap) {
             // move map camera based on player input.
-            _goalMapCameraPos += new Vector3( (Input.GetAxis("Horizontal")), 0, (Input.GetAxis("Vertical")) );
+            _goalMapCameraPos += new Vector3( (Input.GetAxis("Horizontal")), 0, (Input.GetAxis("Vertical")) ) * _fullmapMoveSpeed;
         }
         else {
             // map camera follows player.
