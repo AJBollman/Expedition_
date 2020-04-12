@@ -8,6 +8,10 @@ public sealed class Quest : MonoBehaviour
 {
     public static List<Quest> AllQuests = new List<Quest>();
 
+    //------------------------
+    public AudioSource QuestCompletedSound;
+        //----------------------
+
     #region [Public]
 
     [HideInInspector] public Transform proxyScroll { get; private set; }
@@ -137,6 +141,7 @@ public sealed class Quest : MonoBehaviour
             case QuestState.complete: { // Quest is done.
                     setVisibility(true, true, true, true);
                     _ballColor = Expedition.questColorCompleted;
+                    QuestCompletedSound.Play();
                     foreach(GameObject g in _ObjectsToToggleOnCompletion) {
                         g.SetActive(!g.activeSelf);
                     }
