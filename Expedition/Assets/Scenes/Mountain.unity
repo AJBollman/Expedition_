@@ -111,7 +111,7 @@ NavMeshSettings:
     agentRadius: 0.5
     agentHeight: 2
     agentSlope: 45
-    agentClimb: 1
+    agentClimb: 1.1
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -2615,6 +2615,31 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8d77cf82459908c4ca1ea430ff5c3f77, type: 2}
+    - target: {fileID: 1367271471982985139, guid: d7916812f66897045a13f6b0b3216288,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2090977880863478011, guid: d7916812f66897045a13f6b0b3216288,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 273623377778187905, guid: d7916812f66897045a13f6b0b3216288,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703512957756487359, guid: d7916812f66897045a13f6b0b3216288,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 3692554533605303445, guid: d7916812f66897045a13f6b0b3216288,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 3125494384129729256, guid: d7916812f66897045a13f6b0b3216288,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2644,31 +2669,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1367271471982985139, guid: d7916812f66897045a13f6b0b3216288,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 2090977880863478011, guid: d7916812f66897045a13f6b0b3216288,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 273623377778187905, guid: d7916812f66897045a13f6b0b3216288,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4703512957756487359, guid: d7916812f66897045a13f6b0b3216288,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 3692554533605303445, guid: d7916812f66897045a13f6b0b3216288,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7916812f66897045a13f6b0b3216288, type: 3}
@@ -19223,6 +19223,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: cave roof 6 (hole) (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2095865489365991789, guid: c72b67c5e4bc83649ad19a47e8ab127f,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3120250541918122878, guid: c72b67c5e4bc83649ad19a47e8ab127f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -20072,6 +20077,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: cave roof 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8999786903209248129, guid: ec088c983d12b2a438ace252e597225a,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5386009770167039890, guid: ec088c983d12b2a438ace252e597225a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -20307,6 +20317,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: cave roof 5(flip)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2291200477907145396, guid: dc8fa685c1a57b24aaab5d6477dbe89c,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2995073431844331687, guid: dc8fa685c1a57b24aaab5d6477dbe89c,
         type: 3}
@@ -21822,6 +21837,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7967847207375241355, guid: d6032c5b5180bb741a1ac92018fabf4b,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6397401793242231448, guid: d6032c5b5180bb741a1ac92018fabf4b,
         type: 3}
@@ -57122,6 +57142,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: cave roof 6 (hole)
       objectReference: {fileID: 0}
+    - target: {fileID: 2095865489365991789, guid: c72b67c5e4bc83649ad19a47e8ab127f,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3120250541918122878, guid: c72b67c5e4bc83649ad19a47e8ab127f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -57358,6 +57383,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7967847207375241355, guid: d6032c5b5180bb741a1ac92018fabf4b,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6397401793242231448, guid: d6032c5b5180bb741a1ac92018fabf4b,
         type: 3}
@@ -61978,6 +62008,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7967847207375241355, guid: d6032c5b5180bb741a1ac92018fabf4b,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6397401793242231448, guid: d6032c5b5180bb741a1ac92018fabf4b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -66125,6 +66160,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7967847207375241355, guid: d6032c5b5180bb741a1ac92018fabf4b,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6397401793242231448, guid: d6032c5b5180bb741a1ac92018fabf4b,
         type: 3}
