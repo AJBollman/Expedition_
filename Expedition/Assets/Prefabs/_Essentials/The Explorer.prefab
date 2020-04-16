@@ -97,6 +97,7 @@ MonoBehaviour:
   _mapSizeFull: 64
   _mapCameraHeight: 100
   _smoothHandheldPosition: 40
+  _fullmapMoveSpeed: 1
 --- !u!114 &8134645575640543033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,10 +575,20 @@ PrefabInstance:
       propertyPath: m_CullingMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 649242864570326922, guid: 9b285d9202a224c35bbe15728f600966,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -7603304478522945553, guid: 9b285d9202a224c35bbe15728f600966,
         type: 3}
       propertyPath: m_CastShadows
-      value: 3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7603304478522945553, guid: 9b285d9202a224c35bbe15728f600966,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1363867978534932809, guid: 9b285d9202a224c35bbe15728f600966,
         type: 3}
