@@ -15,8 +15,12 @@ public class RemoveClick : MonoBehaviour
     public bool makeSound = false;
     public float lifeTime = 10f;
 
+    public GameObject UnhideThis;
+    public GameObject UnhideThis2;
+    public GameObject UnhideThis3;
 
-  
+
+
 
     void OnMouseDown()
     {
@@ -73,6 +77,9 @@ public class RemoveClick : MonoBehaviour
             Instantiate(destroyedVersion, transform.position, transform.rotation);
             Destroy(gameObject);
             Destroy(destroyedVersionOther);
+            UnhideThis.SetActive(true);
+            UnhideThis2.SetActive(true);
+            UnhideThis3.SetActive(true);
         }
 
     }
