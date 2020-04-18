@@ -203,12 +203,12 @@ public sealed class Expedition : MonoBehaviour
 
     private void Update() {
         if(isCinematic) {
-            if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q)) {
+            if(Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Q)) {
                 CinematicGetQuestCancel();
             }
             else CinematicGetQuestUpdate();
         }
-        if(Input.GetKeyDown(KeyCode.Escape)) {
+        if(Input.GetKeyDown(KeyCode.Tab)) {
             SetGamePaused(!_paused);
         }
         Time.timeScale = Mathf.Lerp(Time.timeScale, _timeScaleGoal, Time.fixedUnscaledDeltaTime * 2);
