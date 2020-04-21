@@ -99,7 +99,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 112000002, guid: 32154620ae9e04bcbbc00e1f418baac9,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -121,7 +121,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 89c95ac6723efcf4ba2588683d44dc30, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 4d283886ecb93d8408c18d85ac3fac0c, type: 2}
 --- !u!1001 &8922135
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -788,7 +788,7 @@ PrefabInstance:
     - target: {fileID: 9213316242323826998, guid: 6c304ab5b333d4efd94c393aae138773,
         type: 3}
       propertyPath: m_Text
-      value: 'Press the escape key to view your Controls.
+      value: 'Press the Tab key to view your Controls.
 
         Press the Journal Text while paused
 
@@ -3820,6 +3820,11 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 1.0697054
       objectReference: {fileID: 0}
+    - target: {fileID: 1378724138081722252, guid: e0405ffdfa44ce8479344c893eb7da71,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0405ffdfa44ce8479344c893eb7da71, type: 3}
 --- !u!1001 &141094918
@@ -4860,7 +4865,7 @@ GameObject:
   - component: {fileID: 174190803}
   - component: {fileID: 174190805}
   - component: {fileID: 174190804}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: hangingblob (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11617,6 +11622,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shroom5 (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 8310353234494173675, guid: 58271913be66d30408bc139f43eca177,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4976222383361606648, guid: 58271913be66d30408bc139f43eca177,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11691,6 +11701,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Lightmapping
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6559476850778478064, guid: 58271913be66d30408bc139f43eca177,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58271913be66d30408bc139f43eca177, type: 3}
@@ -18179,7 +18194,7 @@ GameObject:
   - component: {fileID: 662108113}
   - component: {fileID: 662108115}
   - component: {fileID: 662108114}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: hangingblob (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23386,6 +23401,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.08
       objectReference: {fileID: 0}
+    - target: {fileID: 1378724138081722252, guid: e0405ffdfa44ce8479344c893eb7da71,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0405ffdfa44ce8479344c893eb7da71, type: 3}
 --- !u!1001 &891892657
@@ -24669,6 +24689,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shroom5 (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 8310353234494173675, guid: 58271913be66d30408bc139f43eca177,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4976222383361606648, guid: 58271913be66d30408bc139f43eca177,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24743,6 +24768,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Lightmapping
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6559476850778478064, guid: 58271913be66d30408bc139f43eca177,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58271913be66d30408bc139f43eca177, type: 3}
@@ -26280,6 +26310,11 @@ PrefabInstance:
       propertyPath: _ObjectsToTurnOffWhenCompleted.Array.data[0]
       value: 
       objectReference: {fileID: 7915958668219271553}
+    - target: {fileID: 1393118063716512639, guid: 37a1f3fcff16849ca9a8de131b9e9b2e,
+        type: 3}
+      propertyPath: QuestCompletedSound
+      value: 
+      objectReference: {fileID: 1161213437}
     - target: {fileID: 4133775603474826185, guid: 37a1f3fcff16849ca9a8de131b9e9b2e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -28296,11 +28331,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1568fb9a8aeb3c94a915d29b4db95b77, type: 2}
-    - target: {fileID: 8794749359629155738, guid: 4c8de22edb48768428339b04b07f09d1,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 8d77cf82459908c4ca1ea430ff5c3f77, type: 2}
     - target: {fileID: 2370336678492630729, guid: 4c8de22edb48768428339b04b07f09d1,
         type: 3}
       propertyPath: m_Enabled
@@ -28311,6 +28341,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8794749359629155738, guid: 4c8de22edb48768428339b04b07f09d1,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8d77cf82459908c4ca1ea430ff5c3f77, type: 2}
     m_RemovedComponents:
     - {fileID: 5302880410695490778, guid: 4c8de22edb48768428339b04b07f09d1, type: 3}
     - {fileID: 246425293540352101, guid: 4c8de22edb48768428339b04b07f09d1, type: 3}
@@ -29050,7 +29085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1076836275
 Transform:
   m_ObjectHideFlags: 0
@@ -30328,6 +30363,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.11213997
       objectReference: {fileID: 0}
+    - target: {fileID: 1378724138081722252, guid: e0405ffdfa44ce8479344c893eb7da71,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0405ffdfa44ce8479344c893eb7da71, type: 3}
 --- !u!1001 &1140552803
@@ -30873,7 +30913,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 642892318, guid: 636168d3fd0fca94b8f072703aafb9b6, type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 636168d3fd0fca94b8f072703aafb9b6, type: 3}
@@ -33857,7 +33897,7 @@ GameObject:
   - component: {fileID: 1271557787}
   - component: {fileID: 1271557789}
   - component: {fileID: 1271557788}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: hangingblob (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36152,7 +36192,7 @@ PrefabInstance:
     - target: {fileID: 8808271108442249528, guid: 0298a21ed5caa964a879918eccce5de4,
         type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8808271108442249528, guid: 0298a21ed5caa964a879918eccce5de4,
         type: 3}
@@ -36172,7 +36212,7 @@ PrefabInstance:
     - target: {fileID: 5779992240565158157, guid: 0298a21ed5caa964a879918eccce5de4,
         type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5779992240565158157, guid: 0298a21ed5caa964a879918eccce5de4,
         type: 3}
@@ -36182,7 +36222,7 @@ PrefabInstance:
     - target: {fileID: 5374501431455269104, guid: 0298a21ed5caa964a879918eccce5de4,
         type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5374501431455269104, guid: 0298a21ed5caa964a879918eccce5de4,
         type: 3}
@@ -36197,7 +36237,7 @@ PrefabInstance:
     - target: {fileID: 7061702488132143607, guid: 0298a21ed5caa964a879918eccce5de4,
         type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7061702488132143607, guid: 0298a21ed5caa964a879918eccce5de4,
         type: 3}
@@ -37639,7 +37679,13 @@ PrefabInstance:
         type: 3}
       propertyPath: _Travellers.Array.data[4].Variants.Array.data[0]
       value: 
-      objectReference: {fileID: 4312689074211293223, guid: cc1190709fcc1f24cae63a8b9612cc82,
+      objectReference: {fileID: 3688641784362354821, guid: 64b670f0c7353ad4f85adbb6aeaf714c,
+        type: 3}
+    - target: {fileID: 5411000736441797893, guid: 39a44ab0d0ce7420fb35392a8c447526,
+        type: 3}
+      propertyPath: _Travellers.Array.data[3].Variants.Array.data[0]
+      value: 
+      objectReference: {fileID: 1977804172160037625, guid: f191ec609000f4d48b6688eaa80a947f,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39a44ab0d0ce7420fb35392a8c447526, type: 3}
@@ -40125,6 +40171,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.11214003
       objectReference: {fileID: 0}
+    - target: {fileID: 1378724138081722252, guid: e0405ffdfa44ce8479344c893eb7da71,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0405ffdfa44ce8479344c893eb7da71, type: 3}
 --- !u!1001 &1553712332
@@ -40219,6 +40270,11 @@ PrefabInstance:
       propertyPath: _ObjectsToToggleOnCompletion.Array.data[0]
       value: 
       objectReference: {fileID: 567148099}
+    - target: {fileID: 1393118063716512639, guid: 37a1f3fcff16849ca9a8de131b9e9b2e,
+        type: 3}
+      propertyPath: QuestCompletedSound
+      value: 
+      objectReference: {fileID: 1161213437}
     - target: {fileID: 4133775603474826185, guid: 37a1f3fcff16849ca9a8de131b9e9b2e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -42592,6 +42648,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shroom5 (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 8310353234494173675, guid: 58271913be66d30408bc139f43eca177,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4976222383361606648, guid: 58271913be66d30408bc139f43eca177,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -42666,6 +42727,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Lightmapping
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6559476850778478064, guid: 58271913be66d30408bc139f43eca177,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58271913be66d30408bc139f43eca177, type: 3}
@@ -42967,7 +43033,7 @@ GameObject:
   - component: {fileID: 1622276511}
   - component: {fileID: 1622276513}
   - component: {fileID: 1622276512}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: hangingblob (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44911,6 +44977,11 @@ PrefabInstance:
       propertyPath: _QuestsToUnlockOnCompletion.Array.data[0]
       value: 
       objectReference: {fileID: 983772926}
+    - target: {fileID: 1393118063716512639, guid: 37a1f3fcff16849ca9a8de131b9e9b2e,
+        type: 3}
+      propertyPath: QuestCompletedSound
+      value: 
+      objectReference: {fileID: 1161213437}
     - target: {fileID: 4133775603474826185, guid: 37a1f3fcff16849ca9a8de131b9e9b2e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -49148,6 +49219,11 @@ PrefabInstance:
     - target: {fileID: 1474343226567904272, guid: 9e6a649199833f94a8866baf8d206059,
         type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6847711174867460346, guid: 9e6a649199833f94a8866baf8d206059,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -50918,7 +50994,7 @@ GameObject:
   - component: {fileID: 1986242152}
   - component: {fileID: 1986242154}
   - component: {fileID: 1986242153}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: hangingblob
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51190,7 +51266,7 @@ GameObject:
   - component: {fileID: 1992826241}
   - component: {fileID: 1992826243}
   - component: {fileID: 1992826242}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: hangingblob (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52688,7 +52764,7 @@ PrefabInstance:
     - target: {fileID: 5779992240565158157, guid: 0298a21ed5caa964a879918eccce5de4,
         type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5779992240565158157, guid: 0298a21ed5caa964a879918eccce5de4,
         type: 3}
@@ -52713,7 +52789,7 @@ PrefabInstance:
     - target: {fileID: 7061702488132143607, guid: 0298a21ed5caa964a879918eccce5de4,
         type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7061702488132143607, guid: 0298a21ed5caa964a879918eccce5de4,
         type: 3}
