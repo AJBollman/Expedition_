@@ -141,6 +141,7 @@ public sealed class Quest : MonoBehaviour
             case QuestState.complete: { // Quest is done.
                     setVisibility(true, true, true, true);
                     _ballColor = Expedition.questColorCompleted;
+                   // EndPoint.gameObject.GetComponent<MuteZone>().enabled = false;
                     QuestCompletedSound.Play();
                     foreach(GameObject g in _ObjectsToToggleOnCompletion) {
                         g.SetActive(!g.activeSelf);

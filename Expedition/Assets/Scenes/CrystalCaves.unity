@@ -13920,6 +13920,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 588013072}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &592953488 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7508343263431376832, guid: f424432842726514d964020acc96f0eb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2036815320}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &592953489
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592953488}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 289301614986012343, guid: 8ab7458c8db9db347be935a44e978024, type: 3}
 --- !u!1001 &595096158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40927,6 +40947,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1830940999}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1838322503 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8485166317812027264, guid: f424432842726514d964020acc96f0eb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2036815320}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1838322504
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838322503}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 3163171260390484736, guid: 8ab7458c8db9db347be935a44e978024, type: 3}
 --- !u!1001 &1846228040
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45222,7 +45262,8 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 3.59196
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3062674551125854780, guid: f424432842726514d964020acc96f0eb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f424432842726514d964020acc96f0eb, type: 3}
 --- !u!4 &2036815321 stripped
 Transform:
