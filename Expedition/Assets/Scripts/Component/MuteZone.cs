@@ -8,7 +8,7 @@ public class MuteZone : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Expedition.SetMusicMute(true, isTransition);
+            Expedition.SetMusicMute(false, isTransition);
         }
     }
 
