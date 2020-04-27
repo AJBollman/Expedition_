@@ -134,11 +134,11 @@ public sealed class S_CameraOperator : MonoBehaviour
 
             // Lerp camera rotation. DO THE THING!
             _goalRot = Quaternion.Euler(-rotDelta.y, rotDelta.x, 0);
-            transform.rotation = Quaternion.Lerp(
+            transform.rotation = _goalRot;/*Quaternion.Lerp(
                 transform.rotation,
                 _goalRot,
                 Time.deltaTime * _smoothCamRotation
-            );
+            );*/
         }
         else if(_doLookAtObject)
         {

@@ -12,11 +12,16 @@ public class ErrorReporter : MonoBehaviour
     private void OnDisable() {Application.logMessageReceivedThreaded -= HandleLog;}
 
     private void Awake() {
+        if(!Application.isEditor) {
+            enabled = false; 
+            return;
+        }
         text = GetComponent<Text>();
     }
 
     private void HandleLog(string logString, string stackTrace, LogType type)
     {
+        if(!Application.isEditor) return;
         if (type != LogType.Log && logString != lastLog && type != LogType.Warning) {
             if(text.text.Length < 1) {
                 text.text = "<color=silver><size=36>(Press tab to remove)</size></color>";
