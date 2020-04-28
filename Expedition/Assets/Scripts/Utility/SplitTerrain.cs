@@ -1,3 +1,4 @@
+#if UnityEditor
 /// <summary>
 /// Dvornik
 /// </summary>
@@ -554,3 +555,4 @@ public class SplitTerrain : EditorWindow {
 		
 	
 }
+#endif

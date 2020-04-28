@@ -38,7 +38,7 @@ public class LineVertex : MonoBehaviour
     }
 
     public static void ConnectVertices(LineVertex a, LineVertex b) {
-        if(a == null || b == null || a == b) throw new System.Exception("Cannot connect invalid verticies");
+        if(a == null || b == null) throw new System.Exception("Cannot connect invalid verticies");
         if(a.isRed != b.isRed) throw new System.Exception("Cannot connect unlike vertices");
 
         GameObject newEdgeObj = GameObject.Instantiate(

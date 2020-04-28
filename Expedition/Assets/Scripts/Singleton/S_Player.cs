@@ -156,6 +156,7 @@ public sealed class S_Player : MonoBehaviour
     void Update()
     {
         // debug teleport.
+        #if UNITY_EDITOR
         if(Input.GetKeyDown(KeyCode.Z) && Application.isEditor) {
             if( viewRaycast(Mathf.Infinity, new Vector2(0.5f, 0.5f)) ) {
                 lastEditorTP = transform.position;
@@ -168,6 +169,7 @@ public sealed class S_Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.P) && Application.isEditor) {
             EditorApplication.isPaused = true;
         }
+        #endif
 
         // if we are in fullmap mode while inside a completeable quest,
         Vector2 mapPos = Vector2.zero;
@@ -243,6 +245,7 @@ public sealed class S_Player : MonoBehaviour
             _Sound.Play("DrawFail");
         }
         Expedition.Map.CancelRedLine();
+        Expedition.IndicatorLine.positionCount = 0;
         switch(_playerState) {
             case playerStates.clear: {
                 Expedition.CameraOperator.AllowInput = true;

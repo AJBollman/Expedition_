@@ -1,8 +1,9 @@
-﻿
+﻿#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+#endif
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -262,9 +263,11 @@ public sealed class Expedition : MonoBehaviour
         }
         try {
             // 'Spawn' the explorer at the first 'spawn' prefab found.
+            #if UNITY_EDITOR
             AutoInitializer[] spawns = GameObject.FindObjectsOfType<AutoInitializer>();
             if(spawns.Length > 0) Player.gameObject.transform.position = spawns[0].transform.position + (Vector3.up);
             else Debug.Log("No spawns found");
+            #endif
         }
         catch(Exception e2) {Debug.LogException(e2);}
         UserInterface.startupMenuActive = false;
@@ -349,13 +352,14 @@ public sealed class Expedition : MonoBehaviour
         questScroll.GetComponent<Animator>().SetBool("IsOpen", false);
         isCinematic = false;
     }
-
+#if UNITY_EDITOR
     public void LoadBiomeInEditor(string name, bool remove) {
         if(remove) {
             EditorSceneManager.CloseScene(EditorSceneManager.GetSceneByName(name), false);
         }
         else EditorSceneManager.OpenScene("Assets/Scenes/"+name+".unity", OpenSceneMode.Additive);
     }
+    #endif
 
     public static void CheckGameCompletion() {
         int completeQuestCount = 0;
@@ -372,7 +376,7 @@ public sealed class Expedition : MonoBehaviour
     }
 
     public static void BiomeTransition(int sceneIndex) {
-        if(sceneIndex < 1 || sceneIndex > Biomes.Count-1) throw new Exception("Transition index out of bounds");
+        if(sceneIndex < 1 || sceneIndex > Biomes.Count-1) return;//throw new Exception("Transition index out of bounds");
         activeBiomeIndex = sceneIndex;
         Atmosphere.GoalSunColor = Biomes[sceneIndex].sunColor;
         _QueuedClip = Biomes[sceneIndex].music;

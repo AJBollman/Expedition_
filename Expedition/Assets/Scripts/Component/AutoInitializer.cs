@@ -1,4 +1,6 @@
-﻿using UnityEditor.SceneManagement;
+﻿#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+#endif
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
@@ -8,6 +10,7 @@ public sealed class AutoInitializer : MonoBehaviour
     private static readonly string n = "Overlay";
     private static bool initInEditor;
     private bool b;
+    #if UNITY_EDITOR
     private void Update() {
         if(b) return;
         b=true;
@@ -20,4 +23,5 @@ public sealed class AutoInitializer : MonoBehaviour
             SceneManager.LoadScene(n, LoadSceneMode.Additive);
         }
     }
+    #endif
 }
