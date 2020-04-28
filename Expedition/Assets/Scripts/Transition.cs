@@ -13,8 +13,6 @@ public sealed class Transition : MonoBehaviour {
     #endregion
 
     #region [Private]
-    [SerializeField] private bool emergency;
-    [SerializeField] private Vector3 aihf;
     [SerializeField] private BiomeScene ABlue;
     [SerializeField] private BiomeScene BOrange;
     private bool _isInside;
@@ -27,7 +25,7 @@ public sealed class Transition : MonoBehaviour {
 
     #region [Events]
     void Awake() {
-        Application.backgroundLoadingPriority = ThreadPriority.Low;
+        Application.backgroundLoadingPriority = ThreadPriority.High;
         _ACollider = transform.Find("SCENE A TRANSIT").GetComponent<BoxCollider>();
         _BCollider = transform.Find("SCENE B TRANSIT").GetComponent<BoxCollider>();
     }
@@ -83,7 +81,6 @@ public sealed class Transition : MonoBehaviour {
                 Expedition.UserInterface.loadingIndicator.SetActive(false);
                 try {
                     SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneIndex));
-                    if(emergency) Expedition.Player.gameObject.transform.position = aihf;
                 }
                 catch(Exception e){Debug.LogException(e);}
                 if(!_isA) {_ACollider.isTrigger = true;}
