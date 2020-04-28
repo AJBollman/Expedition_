@@ -31,8 +31,8 @@ public sealed class S_Atmosphere : MonoBehaviour
 
     void Update()
     {
-        _Clouds.transform.position = Camera.main.transform.position;
-        _Sunlight.color = Color32.Lerp(_Sunlight.color, GoalSunColor, Time.deltaTime * Expedition.smoothLightTransition);
+        _Clouds.transform.position = Expedition.CameraOperator.StableCamera.transform.position;
+        _Sunlight.color = Color.Lerp(_Sunlight.color, GoalSunColor, Time.deltaTime * Expedition.smoothLightTransition);
     }
     #endregion
 

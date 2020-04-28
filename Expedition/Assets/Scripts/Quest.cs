@@ -77,7 +77,19 @@ public sealed class Quest : MonoBehaviour
 
     void Start()
     {
-        if(_generateIconFromCamera) {
+        setState((_isVisibleOnStart) ? QuestState.undiscovered : QuestState.hidden);
+    }
+    #endregion;
+
+
+    #region [Methods]
+    private IEnumerator QuestSequence() {
+        //_SoundPlayer.Play("Get");
+        yield return new WaitForSeconds(0.688f);
+
+    }
+
+    private void RenderIcon() {
             // https://forum.unity.com/threads/how-to-save-manually-save-a-png-of-a-camera-view.506269
             // rendering icon textures dynamically, using a camera.
             Camera Cam = GetComponentInChildren<Camera>();
@@ -95,17 +107,6 @@ public sealed class Quest : MonoBehaviour
             EndPoint._MinimapIconObj.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
             StartPoint._MinimapIconObj.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
             Cam.enabled = false;
-        }
-        setState((_isVisibleOnStart) ? QuestState.undiscovered : QuestState.hidden);
-    }
-    #endregion;
-
-
-    #region [Methods]
-    private IEnumerator QuestSequence() {
-        //_SoundPlayer.Play("Get");
-        yield return new WaitForSeconds(0.688f);
-
     }
 
     private void setVisibility(bool showStart, bool showEnd, bool showStartIcon, bool showEndIcon) {
@@ -141,7 +142,6 @@ public sealed class Quest : MonoBehaviour
             case QuestState.complete: { // Quest is done.
                     setVisibility(true, true, true, true);
                     _ballColor = Expedition.questColorCompleted;
-                   // EndPoint.gameObject.GetComponent<MuteZone>().enabled = false;
                     QuestCompletedSound.Play();
                     foreach(GameObject g in _ObjectsToToggleOnCompletion) {
                         g.SetActive(!g.activeSelf);
@@ -169,6 +169,7 @@ public sealed class Quest : MonoBehaviour
         //Debug.Log("Entered Startpoint");
         switch(state) {
             case QuestState.undiscovered: { // Quest can be found by exploring on foot.
+                RenderIcon();
                 setState(QuestState.discovered);
                 Expedition.CinematicGetQuest(this);
                 break;

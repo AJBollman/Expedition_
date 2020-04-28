@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 1249733677458310087}
   - component: {fileID: 4702730946056167436}
   - component: {fileID: 39595112903844620}
-  - component: {fileID: 6832396425086010558}
   m_Layer: 2
   m_Name: EndPoint
   m_TagString: Untagged
@@ -352,18 +351,6 @@ MonoBehaviour:
   _MinimapIconObj: {fileID: 0}
   _mapIconBorderObj: {fileID: 0}
   _BallEffectObj: {fileID: 0}
---- !u!114 &6832396425086010558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4360243047009033773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a41619896172477bbc28c1c5d0b3277, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4360243047549450072
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,7 +524,6 @@ GameObject:
   - component: {fileID: 1299700857536853494}
   - component: {fileID: 4764229799215748669}
   - component: {fileID: 417044423500651358}
-  - component: {fileID: 2832618914822031937}
   m_Layer: 2
   m_Name: StartPoint
   m_TagString: Untagged
@@ -756,18 +742,6 @@ MonoBehaviour:
   _MinimapIconObj: {fileID: 0}
   _mapIconBorderObj: {fileID: 0}
   _BallEffectObj: {fileID: 0}
---- !u!114 &2832618914822031937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4601610990112008220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a41619896172477bbc28c1c5d0b3277, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4641689890657465999
 GameObject:
   m_ObjectHideFlags: 0
@@ -971,8 +945,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3a2672f89ba54f398729dd1c8d17191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  QuestCompletedSound: {fileID: 0}
   _QuestsToUnlockOnCompletion: []
   _ObjectsToToggleOnCompletion: []
+  _ObjectsToTurnOffWhenCompleted: []
   _bestPossibleScore: 0
   _generateIconFromCamera: 1
   _flavorText: 
