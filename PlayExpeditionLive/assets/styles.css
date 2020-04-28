@@ -1,0 +1,102 @@
+. {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    background: black;
+}
+
+#main {
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+    position:absolute;
+}
+
+#logo {
+    width: auto;
+    height: 85%;
+    position: absolute;
+    top: -5em;
+    max-width: 100%;
+}
+
+#bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: 2s filter ease-in-out;
+}
+
+.center {
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.bgblur {
+    filter: brightness(1) blur(10px) !important;
+}
+
+.fadein {
+    transition: opacity 0.5s ease-in;
+    transition-delay: 0.5s;
+}
+
+button {
+    font-family: 'Kadwa', serif;
+    position: relative;
+    padding: 0 1em 0 1em;
+    background: #ffa864;
+    color: black;
+    border: 0.1em solid black;
+    font-size: 1em;
+    user-select: none;
+}
+
+#playnow {
+    position: absolute;
+    bottom: 25%;
+    font-size: 3em;
+    background: #00ffa4;
+}
+
+#playnow:active {
+    background: #5bffb8;
+    border: 0.1em solid #079264;
+    color: #b4ffa3;
+}
+
+.credits {
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 80%;
+    color: white;
+    font-family: 'Kadwa', serif;
+    padding: 0.2em;
+    display: block;
+}
+
+#teamroles {
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    bottom: 2em;
+    margin: auto;
+    background: #0f213191;
+    overflow: scroll;
+    min-width: 30em;
+}
+
+#header {
+    top: 8%;
+    width: 10em;
+    position: absolute;
+    font-family: 'Kadwa', serif;
+    color: white;
+}
+

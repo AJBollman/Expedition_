@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Expedition</title>
+</head>
+<link rel="stylesheet" type="text/css" href="assets/styles.css">
+<script type="application/javascript">
+    (function () {
+        setTimeout(function () {
+            console.log("derp");
+            document.getElementById("bg").classList.add("bgblur");
+            document.getElementById("logo").style.opacity = 1;
+            document.getElementById("playnow").style.opacity = 1;
+            document.getElementById("dlpc").style.opacity = 1
+            document.getElementById("dlmac").style.opacity = 1
+            document.getElementById("versions").style.opacity = 1;
+            document.getElementById("credits").style.opacity = 1;
+        }, 10);
+    })();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Kadwa:wght@700&display=swap" rel="stylesheet">
+<body>
+    <div id="main">
+        <img id="bg" class="center" style="filter: brightness(0);" src="assets/bg.jpg">
+        <img id="logo" class="center fadein" style="opacity: 0;" src="assets/logo.png">
+        <button id="playnow" onclick="location.href='play.html';" class="center fadein" style="opacity: 0; transition-delay: 1.5s" >PLAY NOW</button>
+        <div id="buttons">
+            <a href="assets/bg.jpg" download="Expedition"><button id="dlpc" class="center fadein" style="opacity: 0; transition-delay: 2s; bottom: 8%;">Download for PC</button></a>
+            <a href="assets/bg.jpg" download="Expedition"><button id="dlmac" class="center fadein" style="opacity: 0; transition-delay: 2.2s; bottom: 8%;" >Download for Mac</button></a>
+            <button onclick="location.href='versions.html';" id="versions" class="center fadein" style="opacity: 0; transition-delay: 2.4s; bottom: 15%;" >Past Versions</button>
+            <button onclick="location.href='team.html';" id="credits" class="center fadein" style="opacity: 0; transition-delay: 2.6s; bottom: 8%;" >Credits</button>
+        </div>
+    </div>
+</body>
+</html>
