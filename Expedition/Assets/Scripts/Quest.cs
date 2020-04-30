@@ -77,19 +77,7 @@ public sealed class Quest : MonoBehaviour
 
     void Start()
     {
-        setState((_isVisibleOnStart) ? QuestState.undiscovered : QuestState.hidden);
-    }
-    #endregion;
-
-
-    #region [Methods]
-    private IEnumerator QuestSequence() {
-        //_SoundPlayer.Play("Get");
-        yield return new WaitForSeconds(0.688f);
-
-    }
-
-    private void RenderIcon() {
+        if(_generateIconFromCamera) {
             // https://forum.unity.com/threads/how-to-save-manually-save-a-png-of-a-camera-view.506269
             // rendering icon textures dynamically, using a camera.
             Camera Cam = GetComponentInChildren<Camera>();
@@ -107,6 +95,18 @@ public sealed class Quest : MonoBehaviour
             EndPoint._MinimapIconObj.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
             StartPoint._MinimapIconObj.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
             Cam.enabled = false;
+            Debug.Log("icon");
+        }
+        setState((_isVisibleOnStart) ? QuestState.undiscovered : QuestState.hidden);
+    }
+    #endregion;
+
+
+    #region [Methods]
+    private IEnumerator QuestSequence() {
+        //_SoundPlayer.Play("Get");
+        yield return new WaitForSeconds(0.688f);
+
     }
 
     private void setVisibility(bool showStart, bool showEnd, bool showStartIcon, bool showEndIcon) {
@@ -169,7 +169,7 @@ public sealed class Quest : MonoBehaviour
         //Debug.Log("Entered Startpoint");
         switch(state) {
             case QuestState.undiscovered: { // Quest can be found by exploring on foot.
-                RenderIcon();
+                //RenderIcon();
                 setState(QuestState.discovered);
                 Expedition.CinematicGetQuest(this);
                 break;
