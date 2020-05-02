@@ -141,6 +141,7 @@ public sealed class Expedition : MonoBehaviour
     public static AudioSource DrawDroneClear;
     public static AudioSource DrawDroneUnclear;
     public static bool isCinematic { get; private set; }
+    public static bool isTitleScreen { get; private set; }
     #endregion
 
 
@@ -388,6 +389,54 @@ public sealed class Expedition : MonoBehaviour
             MusicSource.clip = _QueuedClip;
             MusicSource.Play();
         }
+    }
+
+    public static void EnterTitleScreenState() {
+        if(isTitleScreen) return;
+        isTitleScreen = true;
+
+        Player.setPlayerState(playerStates.clear);
+        Movement.AllowInput = false;
+        CameraOperator.FOV = 30f;
+        CameraOperator.DoLookAtObject = true;
+        CameraOperator.ObjectToLookAt = GameObject.Find("LookHere");
+        CameraOperator.ObjectToFollow = GameObject.Find("Camera anchor");
+        CameraOperator.OverrideCameraSmooth = 2;
+        CameraOperator.AllowInput = true;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Camera.main.nearClipPlane = 1;
+        UserInterface.MainMenuActive = true;
+    }
+
+    public static void StartTitleScreenTransition() {
+        UserInterface.MainMenuActive = false;
+        CameraOperator.OverrideCameraSmooth = 0.25f;
+        CameraOperator.ObjectToLookAt = GameObject.Find("LookHere2");
+        CameraOperator.ObjectToFollow = Player.gameObject;
+        CameraOperator.FOV = 60f;
+        GameObject.Find("Logo").SetActive(false);
+        _inst.StartCoroutine("ExitTitleScreenDelay");
+    }
+
+    private IEnumerator ExitTitleScreenDelay() {
+        yield return new WaitForSeconds(4f);
+        ExitTitleScreenState();
+    }
+
+    private static void ExitTitleScreenState() {
+        if(!isTitleScreen) return;
+        isTitleScreen = false;
+
+        Movement.AllowInput = true;
+        CameraOperator.FOV = CameraOperator.defaultFOV;
+        CameraOperator.DoLookAtObject = false;
+        CameraOperator.ObjectToLookAt = null;
+        CameraOperator.ObjectToFollow = Player.gameObject;
+        CameraOperator.OverrideCameraSmooth = 64f;
+        Camera.main.nearClipPlane = 0.05f;
+        UserInterface.MainMenuActive = false;
+        Player.setPlayerState(playerStates.mini);
     }
     #endregion
 

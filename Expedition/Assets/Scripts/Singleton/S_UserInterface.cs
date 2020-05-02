@@ -16,6 +16,12 @@ public sealed class S_UserInterface : MonoBehaviour
             startupMenu.SetActive(value);
         }
     }
+    public bool MainMenuActive {
+        get => mainMenu.activeInHierarchy;
+        set {
+            mainMenu.SetActive(value);
+        }
+    }
     public bool pauseMenuActive {
         get => pauseMenu.activeInHierarchy;
         set {

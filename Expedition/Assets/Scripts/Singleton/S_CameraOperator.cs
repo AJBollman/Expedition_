@@ -50,6 +50,11 @@ public sealed class S_CameraOperator : MonoBehaviour
         set => _doLookAtObject = value;
     }
 
+    public float OverrideCameraSmooth { 
+        get => _smoothCameraPosition; 
+        set => _smoothCameraPosition = value;
+    }
+
     public Camera StableCamera { get; private set; }
     [SerializeField] public float defaultFOV { get; private set; } = 90f;
     #endregion

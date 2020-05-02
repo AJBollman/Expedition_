@@ -118,7 +118,7 @@ public sealed class S_Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.X)) {
             Expedition.Drawing.Redo();
         }
-        
+
         #if UNITY_EDITOR
         if(Input.GetKeyDown(KeyCode.P) && Application.isEditor) {
             EditorApplication.isPaused = true;
@@ -199,6 +199,8 @@ public sealed class S_Player : MonoBehaviour
             _Sound.Play("DrawFail");
         }
         Expedition.Map.CancelRedLine();
+        Expedition.DrawDroneClear.volume = 0;
+        Expedition.DrawDroneUnclear.volume = 0;
         Expedition.IndicatorLine.positionCount = 0;
         switch(_playerState) {
             case playerStates.clear: {

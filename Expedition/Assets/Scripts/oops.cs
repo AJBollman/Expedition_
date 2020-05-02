@@ -10,6 +10,7 @@ public class oops : MonoBehaviour {
         if(other.gameObject.name == "The Explorer") {
             //SceneManager.LoadScene(1, LoadSceneMode.Additive);
             other.gameObject.transform.position = moveTo;
+            Expedition.EnterTitleScreenState();
         }
     }
 
@@ -17,6 +18,7 @@ public class oops : MonoBehaviour {
         if(other.gameObject.name == "The Explorer") {
             //SceneManager.LoadScene(1, LoadSceneMode.Additive);
             other.gameObject.transform.position = moveTo;
+            Expedition.EnterTitleScreenState();
         }
     }
 
@@ -24,6 +26,7 @@ public class oops : MonoBehaviour {
         if(other.gameObject.name == "The Explorer") {
             //SceneManager.LoadScene(1, LoadSceneMode.Additive);
             other.gameObject.transform.position = moveTo;
+            Expedition.EnterTitleScreenState();
         }
     }
 
@@ -31,6 +34,7 @@ public class oops : MonoBehaviour {
         if(other.gameObject.name == "The Explorer") {
             //SceneManager.LoadScene(1, LoadSceneMode.Additive);
             other.gameObject.transform.position = moveTo;
+            Expedition.EnterTitleScreenState();
         }
     }
 }

@@ -83,7 +83,10 @@ public sealed class Transition : MonoBehaviour {
                 Expedition.UserInterface.loadingIndicator.SetActive(false);
                 try {
                     SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneIndex));
-                    if(emergency) Expedition.Player.gameObject.transform.position = aihf;
+                    if(emergency) {
+                        Expedition.Player.gameObject.transform.position = aihf;
+                        Expedition.EnterTitleScreenState();
+                    }
                 }
                 catch(Exception e){Debug.LogException(e);}
                 if(!_isA) {_ACollider.isTrigger = true;}
