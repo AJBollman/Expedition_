@@ -1,11 +1,17 @@
-﻿
-using System;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary> Handles the player's ability to draw. </summary>
 [DisallowMultipleComponent]
 public sealed class S_Drawing : MonoBehaviour
 {
+
+    private struct HistoryItem {
+        public GameObject vertex;
+        public GameObject edge;
+    }
 
     #region [Public]
     /// <summary> Set wether the character can draw lines. </summary>
@@ -38,6 +44,9 @@ public sealed class S_Drawing : MonoBehaviour
     private Vector3 _goalIndicatorPos;
     private Quaternion _goalIndicatorRot;
     private bool _canPlaceLine;
+    private List<HistoryItem> _LineHistory = new List<HistoryItem>();
+    private List<HistoryItem> _UndoHistory = new List<HistoryItem>();
+    private int _historyIndex;
     #endregion
 
 
@@ -136,11 +145,18 @@ public sealed class S_Drawing : MonoBehaviour
         _LastIndicator.transform.position = _Indicator.transform.position;
         _LastIndicator.transform.rotation = _Indicator.transform.rotation;
         attemptToHideLastLine();
+        _UndoHistory.Clear();
     }
 
     public void connectVertex() {
         if(!_allowCameraDrawing) return; // TODO give some feedback to the player
-        if(_LastVertex != null) LineVertex.ConnectVertices(_LastVertex, _NewVert);
+        if(_LastVertex != null) {
+            LineVertex.ConnectVertices(_LastVertex, _NewVert);
+            _LineHistory.Add(new HistoryItem{
+                vertex = _LastVertex.gameObject,
+                edge = _LastVertex.getEdge.gameObject
+            });
+        }
         _LastVertex = _NewVert;
     }
 
@@ -148,6 +164,24 @@ public sealed class S_Drawing : MonoBehaviour
         if(_LastVertex != null && _hideAfterPlacement && _LastVertex.getEdge != null) {
             _LastVertex.getEdge.isVisibleOffMap = false;
         }
+    }
+
+    public void Undo() {
+        //if(!_allowCameraDrawing) return;
+        if(_LineHistory.Count < 1) return;
+        _UndoHistory.Add(_LineHistory.Last());
+        _LineHistory.Remove(_LineHistory.Last());
+        _UndoHistory.Last().edge.SetActive(false);
+        _UndoHistory.Last().vertex.SetActive(false);
+    }
+
+    public void Redo() {
+        //if(!_allowCameraDrawing) return;
+        if(_UndoHistory.Count < 1) return;
+        _LineHistory.Add(_UndoHistory.Last());
+        _UndoHistory.Remove(_UndoHistory.Last());
+        _LineHistory.Last().edge.SetActive(true);
+        _LineHistory.Last().vertex.SetActive(true);
     }
 
     #endregion
