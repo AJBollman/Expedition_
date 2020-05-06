@@ -33,6 +33,7 @@ public sealed class S_Atmosphere : MonoBehaviour
     {
         _Clouds.transform.position = Expedition.CameraOperator.StableCamera.transform.position;
         _Sunlight.color = Color.Lerp(_Sunlight.color, GoalSunColor, Time.deltaTime * Expedition.smoothLightTransition);
+        _Sunlight.enabled = (_Sunlight.color.r > 0.1f);
     }
     #endregion
 
