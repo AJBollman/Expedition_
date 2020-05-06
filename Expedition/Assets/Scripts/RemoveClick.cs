@@ -19,7 +19,7 @@ public class RemoveClick : MonoBehaviour
     public GameObject UnhideThis2;
     public GameObject UnhideThis3;
 
-    public ParticleSystem dust;
+   // public ParticleSystem dust;
 
 
 
@@ -31,7 +31,7 @@ public class RemoveClick : MonoBehaviour
         if (stoplookingSound == false)
         {
             lookingatSound.Play();
-            dust.Play();
+            //dust.Play();
             stoplookingSound = true;
             backonSound = true;
         }
@@ -58,7 +58,7 @@ public class RemoveClick : MonoBehaviour
     {
         if (timerStart == true)
         {
-            dust.Play();
+            //dust.Play();
             lifeTime -= Time.deltaTime;
         }
 
@@ -66,7 +66,7 @@ public class RemoveClick : MonoBehaviour
         if (backonSound == true)
         {
             //lookingatSound.Play();
-            dust.Play();
+            //dust.Play();
             backonSound = false;
         }
 
@@ -75,7 +75,7 @@ public class RemoveClick : MonoBehaviour
         if (lifeTime <= 0)
         {
             lookingatSound.Stop();
-            dust.Play();
+            //dust.Play();
             sound1.Play();
             sound2.Play();
           
