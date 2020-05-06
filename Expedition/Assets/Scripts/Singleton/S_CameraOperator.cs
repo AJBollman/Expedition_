@@ -62,7 +62,11 @@ public sealed class S_CameraOperator : MonoBehaviour
 
 
     #region [Private]
-    [SerializeField] private float _sensitivity = 10f;
+    #if UNITY_WEBGL
+    [SerializeField] public float sensitivity = 2f;
+    #else
+    [SerializeField] public float sensitivity = 10f;
+    #endif
     [SerializeField] private float _maxFOVTweak = 7f;
     [SerializeField] private float _maxLookUpAngle = 80f;
     [SerializeField] private float _maxLookDownAngle = -85f;
@@ -128,8 +132,8 @@ public sealed class S_CameraOperator : MonoBehaviour
         if (!_doLookAtObject && _allowInput)
         {
             // Set the rotation vectors based on input strength and sensitivity.
-            rotDelta.x += Mathf.Clamp(Input.GetAxis("Mouse X") / 10, -1, 1) * _sensitivity * 6;
-            rotDelta.y += Mathf.Clamp(Input.GetAxis("Mouse Y") / 10, -1, 1) * _sensitivity * 6;
+            rotDelta.x += Mathf.Clamp(Input.GetAxis("Mouse X") / 10, -1, 1) * sensitivity * 6;
+            rotDelta.y += Mathf.Clamp(Input.GetAxis("Mouse Y") / 10, -1, 1) * sensitivity * 6;
 
             // Limit vertical angle.
             rotDelta.y = Mathf.Clamp(rotDelta.y, _maxLookDownAngle, _maxLookUpAngle);

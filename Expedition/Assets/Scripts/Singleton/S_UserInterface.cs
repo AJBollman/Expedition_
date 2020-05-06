@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +27,11 @@ public sealed class S_UserInterface : MonoBehaviour
         get => pauseMenu.activeInHierarchy;
         set {
             pauseMenu.SetActive(value);
+            if(value == false) {
+                foreach(GameObject g in codexThings) {
+                    g.SetActive(false);
+                }
+            }
             if(!pauseMenu.activeInHierarchy && !optionsMenu.activeInHierarchy && !mainMenu.activeInHierarchy) {
                 pauseMenuOpacityGoal = 0f;
                 S_Player.cameraDrawAllowed = true;
@@ -51,6 +57,7 @@ public sealed class S_UserInterface : MonoBehaviour
     [SerializeField] private GameObject startupMenu;
     [SerializeField] private GameObject background;
     [SerializeField] public GameObject loadingIndicator;
+    [SerializeField] private List<GameObject> codexThings;
     private crosshairTypes currentCrosshair;
     private static float pauseMenuOpacityGoal;
     private static Image pauseMenuFill;

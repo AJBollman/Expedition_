@@ -118,6 +118,12 @@ public sealed class S_Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.X)) {
             Expedition.Drawing.Redo();
         }
+        if(Input.GetKeyDown(KeyCode.LeftBracket)) {
+            Expedition.CameraOperator.sensitivity -= 1;
+        }
+        if(Input.GetKeyDown(KeyCode.RightBracket)) {
+            Expedition.CameraOperator.sensitivity += 1;
+        }
 
         #if UNITY_EDITOR
         if(Input.GetKeyDown(KeyCode.P) && Application.isEditor) {
